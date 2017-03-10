@@ -44,15 +44,9 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   /transfers:
     x-swagger-router-controller: transfers
-    post:
-      description: Transfer money
+    get:
+      description: Get info for money transfer
       operationId: transfer
-      parameters:
-        - name: transfer
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/TransferRequest'        
       responses:
         200:
           description: Success
@@ -72,6 +66,20 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  ReceiverDTO:
+    properties:
+      name:
+        type: string     
+      address1:
+        type: string
+      address2:
+        type: string   
+  AccountDTO:
+    properties:
+      name:
+        type: string     
+      numer:
+        type: string
   HelloWorldResponse:
     required:
       - message
@@ -84,26 +92,9 @@ definitions:
     properties:
       message:
         type: string
-  TransferRequest:
-    type: object
-    required:
-      - receiver
-      - amount
-      - currency
+  TransferResponse:
     properties:
       receiver:
-        type: string
-      amount:
-        type: number
-        format: double
-      currency:
-        type: string
-        enum: ["PLN", "EUR", "USD"]
-      description:
-        type: string
-  TransferResponse:
-    required:
-      - message
-    properties:
-      message:
-        type: string        
+        $ref: "#/definitions/ReceiverDTO"     
+      account:
+        $ref: "#/definitions/AccountDTO"  

@@ -3,26 +3,16 @@
 var util = require('util');
 
 function transfer(req, res) {
-  var body = req.swagger.params.transfer.value,
-    receiver = body.receiver,
-    amount = body.amount,
-    currency = body.currency,
-    description = body.description;
-
-  if(!receiver || !amount || !currency) {
-    return res.status(400).json({
-      message: "Validation error!"
-    });
-  }
-
-  if(amount > 1000) {
-    return res.status(400).json({
-      message: "Amount to big!"
-    });
-  }
-
   res.json({
-    message: amount + " " + currency + " transfered to " + receiver
+    receiver: {
+      name: "Towarzystwo Opieki nad Zwierzętami",
+      address1: "ul. Ojca Beyzyma 17",
+      address2: "70-001 Szczecin"
+    },
+    account: {
+      name: "PKO BO II O/Szczecin",
+      number: "63102047950000940201035419"
+    }
   });
 }
 
