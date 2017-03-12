@@ -14,7 +14,17 @@ export default {
   name: 'transferData',
   data () {
     return {
-      transferData: {}
+      transferData: {
+        receiver: {
+          name: '',
+          address1: '',
+          address2: ''
+        },
+        account: {
+          name: '',
+          number: ''
+        }
+      }
     }
   },
   computed: {
@@ -28,7 +38,11 @@ export default {
   created () {
     this.$http.get(`http://localhost:10010/transfers`)
     .then(response => {
-      this.transferData = response.data
+      this.transferData.receiver.name = response.data.receiver.name
+      this.transferData.receiver.address1 = response.data.receiver.address1
+      this.transferData.receiver.address2 = response.data.receiver.address2
+      this.transferData.account.name = response.data.account.name
+      this.transferData.account.number = response.data.account.number
     })
     .catch(error => {
       console.log(error)
