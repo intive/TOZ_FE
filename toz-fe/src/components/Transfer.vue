@@ -6,6 +6,7 @@
     <h2>{{ transferData.receiver.address2 }}</h2>
     <h2>{{ transferData.account.name }}</h2>
     <h2>{{ formattedAccountNumber }}</h2>
+    <router-link to="/">Powrót do strony głównej</router-link>
   </div>
 </template>
 

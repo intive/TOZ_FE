@@ -7,9 +7,16 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Transfer',
+      path: '/transfer',
+      name: 'transfer',
       component: Transfer
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: {
+        template: '<router-link to="/transfer">Kliknij tutaj, aby wyświetlić dane do przelewu</router-link>'
+      }
     }
   ]
 })
