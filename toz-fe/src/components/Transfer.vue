@@ -6,6 +6,7 @@
     <h2>{{ transferData.receiver.address2 }}</h2>
     <h2>{{ transferData.account.name }}</h2>
     <h2>{{ formattedAccountNumber }}</h2>
+    <router-link to="/">Powrót do strony głównej</router-link>
   </div>
 </template>
 
@@ -30,7 +31,8 @@ export default {
   computed: {
     formattedAccountNumber () {
       let accountNumber = this.transferData.account.number
-      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
+      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} 
+        ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
     }
   },
   created () {
