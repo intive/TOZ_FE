@@ -1,11 +1,19 @@
 <template>
   <div class="transfer-data">
     <h1>Dane do przelewu</h1>
-    <h2>{{ transferData.receiver.name }}</h2>
-    <h2>{{ transferData.receiver.address1 }}</h2>
-    <h2>{{ transferData.receiver.address2 }}</h2>
-    <h2>{{ transferData.account.name }}</h2>
+    <h2>{{transferData.name}}</h2>
+    <h2>{{transferData.address.apartmentNumber}}</h2>
+    <h2>{{transferData.address.city}}</h2>
+    <h2>{{transferData.address.country}}</h2>
+    <h2>{{transferData.address.houseNumber}}</h2>
+    <h2>{{transferData.address.postCode}}</h2>
+    <h2>{{transferData.address.street}}</h2>
+    <h2>{{transferData.bankAccount.bankName}}</h2>
     <h2>{{ formattedAccountNumber }}</h2>
+    <h2>{{transferData.contact.email}}</h2>
+    <h2>{{transferData.contact.fax}}</h2>
+    <h2>{{transferData.contact.phone}}</h2>
+    <h2>{{transferData.contact.website}}</h2>
     <router-link to="/">Powrót do strony głównej</router-link>
   </div>
 </template>
@@ -16,33 +24,51 @@ export default {
   data () {
     return {
       transferData: {
-        receiver: {
-          name: '',
-          address1: '',
-          address2: ''
+        name: '',
+        address: {
+          apartmentNumber: '',
+          city: '',
+          country: '',
+          houseNumber: '',
+          postCode: '',
+          street: ''
         },
-        account: {
-          name: '',
+        bankAccount: {
+          bankName: '',
           number: ''
+        },
+        contact: {
+          email: '',
+          fax: '',
+          phone: '',
+          website: ''
         }
       }
     }
   },
   computed: {
     formattedAccountNumber () {
-      let accountNumber = this.transferData.account.number
+      let accountNumber = this.transferData.bankAccount.number
       return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} 
         ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
     }
   },
   created () {
-    this.$http.get(`http://localhost:10010/transfers`)
+    this.$http.get(`http://dev.patronage2017.intive-projects.com:2000/organization/info`)
     .then(response => {
-      this.transferData.receiver.name = response.data.receiver.name
-      this.transferData.receiver.address1 = response.data.receiver.address1
-      this.transferData.receiver.address2 = response.data.receiver.address2
-      this.transferData.account.name = response.data.account.name
-      this.transferData.account.number = response.data.account.number
+      this.transferData.address.apartmentNumber = response.data.address.apartmentNumber
+      this.transferData.address.city = response.data.address.city
+      this.transferData.address.country = response.data.address.country
+      this.transferData.address.houseNumber = response.data.address.houseNumber
+      this.transferData.address.postCode = response.data.address.postCode
+      this.transferData.address.street = response.data.address.street
+      this.transferData.bankAccount.bankName = response.data.bankAccount.bankName
+      this.transferData.bankAccount.number = response.data.bankAccount.number
+      this.transferData.contact.email = response.data.contact.email
+      this.transferData.contact.fax = response.data.contact.fax
+      this.transferData.contact.phone = response.data.contact.phone
+      this.transferData.contact.website = response.data.contact.website
+      this.transferData.name = response.data.name
     })
     .catch(error => {
       console.log(error)
