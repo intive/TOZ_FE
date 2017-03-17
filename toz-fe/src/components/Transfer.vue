@@ -51,7 +51,7 @@ export default {
     }
   },
   created () {
-    this.$http.get(`http://dev.patronage2017.intive-projects.com:2000/organization/info`)
+    this.$http.get(`http://dev.patronage2017.intive-projects.com/organization/info`)
     .then(response => {
       this.transferData = {...response.data}
     })
