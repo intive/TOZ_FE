@@ -10,6 +10,7 @@
       <h2>{{ transferData.address.postCode }} {{ transferData.address.city }}</h2>
       <h2>{{ transferData.bankAccount.bankName }}</h2>
       <h2>{{ formattedAccountNumber }}</h2>
+      <router-link to="/">Powrót do strony głównej</router-link>
     </div>
   </div>
 </template>
