@@ -1,12 +1,17 @@
 <template>
-  <div class="transfer-data">
-    <h1>Dane do przelewu</h1>
-    <h2>{{ transferData.receiver.name }}</h2>
-    <h2>{{ transferData.receiver.address1 }}</h2>
-    <h2>{{ transferData.receiver.address2 }}</h2>
-    <h2>{{ transferData.account.name }}</h2>
-    <h2>{{ formattedAccountNumber }}</h2>
-    <router-link to="/">Powrót do strony głównej</router-link>
+  <div class="transfer">
+    <div class="errors" v-if="errors && errors.length">
+    <h2 v-for="error of errors">{{ error.message }}</h2>
+    </div>
+    <div class="transfer-data" v-else>
+      <h1>Dane do przelewu</h1>
+      <h2>{{ transferData.name }}</h2>
+      <h2>{{ transferData.address.street }} {{ transferData.address.houseNumber }}</h2>
+      <h2>{{ transferData.address.postCode }} {{ transferData.address.city }}</h2>
+      <h2>{{ transferData.bankAccount.bankName }}</h2>
+      <h2>{{ formattedAccountNumber }}</h2>
+      <router-link to="/">Powrót do strony głównej</router-link>
+    </div>
   </div>
 </template>
 
@@ -16,36 +21,42 @@ export default {
   data () {
     return {
       transferData: {
-        receiver: {
-          name: '',
-          address1: '',
-          address2: ''
+        address: {
+          apartmentNumber: '',
+          city: '',
+          country: '',
+          houseNumber: '',
+          postCode: '',
+          street: ''
         },
-        account: {
-          name: '',
+        bankAccount: {
+          bankName: '',
           number: ''
-        }
-      }
+        },
+        contact: {
+          email: '',
+          fax: '',
+          phone: '',
+          website: ''
+        },
+        name: ''
+      },
+      errors: []
     }
   },
   computed: {
     formattedAccountNumber () {
-      let accountNumber = this.transferData.account.number
-      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} 
-        ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
+      const accountNumber = this.transferData.bankAccount.number
+      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
     }
   },
   created () {
-    this.$http.get(`http://localhost:10010/transfers`)
+    this.$http.get(`http://dev.patronage2017.intive-projects.com/organization/info`)
     .then(response => {
-      this.transferData.receiver.name = response.data.receiver.name
-      this.transferData.receiver.address1 = response.data.receiver.address1
-      this.transferData.receiver.address2 = response.data.receiver.address2
-      this.transferData.account.name = response.data.account.name
-      this.transferData.account.number = response.data.account.number
+      this.transferData = {...response.data}
     })
     .catch(error => {
-      console.log(error)
+      this.errors.push(error)
     })
   }
 }
