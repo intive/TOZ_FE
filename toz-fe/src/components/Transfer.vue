@@ -55,8 +55,7 @@ export default {
   computed: {
     formattedAccountNumber () {
       const accountNumber = this.transferData.bankAccount.number
-      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)}
-        ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
+      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
     }
   },
   created () {
@@ -65,7 +64,7 @@ export default {
       this.transferData.address = {...response.data.address}
       this.transferData.bankAccount = {...response.data.bankAccount}
       this.transferData.contact = {...response.data.contact}
-      this.transferData.receiver.name = response.data.receiver.name
+      this.transferData.name = response.data.name
     })
     .catch(error => {
       this.errors.push(error)

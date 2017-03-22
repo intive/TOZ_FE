@@ -6,34 +6,60 @@ describe('Transfer.vue', () => {
   const vm = new Constructor().$mount()
   it('should render correct contents', done => {
     vm.transferData = {
-      receiver: {
-        name: 'Towarzystwo Opieki nad Zwierzętami',
-        address1: 'ul. Ojca Beyzyma 17',
-        address2: '70-001 Szczecin'
+      address: {
+        apartmentNumber: 0,
+        city: 'string',
+        country: 'string',
+        houseNumber: 0,
+        postCode: '02-123',
+        street: 'string'
       },
-      account: {
-        name: 'PKO BO II O/Szczecin',
-        number: '63102047950000940201035419'
-      }
+      bankAccount: {
+        bankName: 'string',
+        number: '61109010140000071219812874'
+      },
+      contact: {
+        email: 'mail@example.com',
+        fax: '+48123123123',
+        phone: '+48123123123',
+        website: 'http://example.com/'
+      },
+      name: 'string'
     }
     Vue.nextTick(() => {
       expect(vm.$el.querySelectorAll('.transfer-data h2')[0].textContent)
-          .to.equal('Towarzystwo Opieki nad Zwierzętami')
+          .to.equal('string')
       expect(vm.$el.querySelectorAll('.transfer-data h2')[1].textContent)
-          .to.equal('ul. Ojca Beyzyma 17')
+          .to.equal('0')
       expect(vm.$el.querySelectorAll('.transfer-data h2')[2].textContent)
-          .to.equal('70-001 Szczecin')
+          .to.equal('string')
       expect(vm.$el.querySelectorAll('.transfer-data h2')[3].textContent)
-          .to.equal('PKO BO II O/Szczecin')
+          .to.equal('string')
       expect(vm.$el.querySelectorAll('.transfer-data h2')[4].textContent)
-          .to.equal('63 1020 4795 0000 9402 0103 5419')
+          .to.equal('0')
+      expect(vm.$el.querySelectorAll('.transfer-data h2')[5].textContent)
+          .to.equal('02-123')
+      expect(vm.$el.querySelectorAll('.transfer-data h2')[6].textContent)
+          .to.equal('string')
+      expect(vm.$el.querySelectorAll('.transfer-data h2')[7].textContent)
+          .to.equal('string')
+      expect(vm.$el.querySelectorAll('.transfer-data h2')[8].textContent)
+          .to.equal('61 1090 1014 0000 0712 1981 2874')
+      expect(vm.$el.querySelectorAll('.transfer-data h2')[9].textContent)
+          .to.equal('mail@example.com')
+      expect(vm.$el.querySelectorAll('.transfer-data h2')[10].textContent)
+          .to.equal('+48123123123')
+      expect(vm.$el.querySelectorAll('.transfer-data h2')[11].textContent)
+          .to.equal('+48123123123')
+      expect(vm.$el.querySelectorAll('.transfer-data h2')[12].textContent)
+          .to.equal('http://example.com/')
       done()
     })
   })
-  it('formattedAcountNumber should return proper format', done => {
-    const accountNumber = vm.transferData.account.number
-    const string = `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
-    expect(string).to.equal('63 1020 4795 0000 9402 0103 5419')
-    done()
+  it('should set formattedAcountNumber return value in proper format', done => {
+    Vue.nextTick(() => {
+      expect(vm.formattedAccountNumber).to.equal('61 1090 1014 0000 0712 1981 2874')
+      done()
+    })
   })
 })
