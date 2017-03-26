@@ -18,8 +18,8 @@
       <h2>{{transferData.contact.fax}}</h2>
       <h2>{{transferData.contact.phone}}</h2>
       <h2>{{transferData.contact.website}}</h2>
-      <router-link to="/">Powrót do strony głównej</router-link>
     </div>
+    <router-link to="/">Powrót do strony głównej</router-link>
   </div>
 </template>
 
