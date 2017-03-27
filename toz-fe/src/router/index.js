@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Transfer from '@/components/Transfer'
-import News from '@/components/News'
+import NewsDetails from '@/components/NewsDetails'
 import Home from '@/components/Home'
 import paths from './paths'
 
@@ -17,7 +17,7 @@ export default new Router({
     {
       path: paths.news,
       name: 'news',
-      component: News
+      component: NewsDetails
     },
     {
       path: paths.home,
