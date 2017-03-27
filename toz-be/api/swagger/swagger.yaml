@@ -3,7 +3,7 @@ info:
   version: "0.0.1"
   title: Hello World App
 # during dev, should point to your local machine
-host: localhost:10010
+host: http://dev.patronage2017.intive-projects.com/organization/info
 # basePath prefixes all resource paths 
 basePath: /
 # 
@@ -66,19 +66,37 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
-  ReceiverDTO:
+  name:
+    type: string
+  AddressDTO:
     properties:
-      name:
-        type: string     
-      address1:
+      postCode:
+        type: integer
+      city:
         type: string
-      address2:
-        type: string   
-  AccountDTO:
+      street:
+        type: string
+      country:
+        type: string
+      houseNumber:
+        type: string
+      apartmentNumber:
+         type: integer
+  ContactDTO:
     properties:
-      name:
-        type: string     
-      numer:
+      email:
+        type: string
+      phone:
+        type: integer
+      fax:
+        type: integer
+      website:
+        type: string
+  BankAccountDTO:
+    properties:
+      number:
+        type: integer
+      bankName:
         type: string
   HelloWorldResponse:
     required:
@@ -94,7 +112,9 @@ definitions:
         type: string
   TransferResponse:
     properties:
-      receiver:
-        $ref: "#/definitions/ReceiverDTO"     
-      account:
-        $ref: "#/definitions/AccountDTO"  
+      address:
+        $ref: "#/definitions/AddressDTO"     
+      contact:
+        $ref: "#/definitions/ContactDTO"  
+      bankAccount:
+        $ref: "#/definitions/BankAccountDTO"  
