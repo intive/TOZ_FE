@@ -1,4 +1,5 @@
 const transfer = '/transfer'
 const home = '/'
-
-export default { transfer, home }
+const pets = '/pets'
+const petDetails = '/petDetails'
+export default { transfer, home, pets, petDetails }

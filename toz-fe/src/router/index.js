@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Transfer from '@/components/Transfer'
 import PetsList from '@/components/PetsList'
+import Home from '@/components/Home'
 import paths from './paths'
-
+import petDetails from '@/components/petDetails'
 Vue.use(Router)
 
 export default new Router({
@@ -16,8 +17,18 @@ export default new Router({
     {
       path: paths.home,
       name: 'home',
-      component: PetsList
+      component: Home
         // template: '<router-link to="/transfer">Kliknij tutaj, aby wyświetlić dane do przelewu</router-link>'
+    },
+    {
+      path: paths.pets,
+      name: 'pets',
+      component: PetsList
+    },
+    {
+      path: paths.petDetails,
+      name: 'petDetails',
+      components: petDetails
     }
   ]
 })

@@ -9,18 +9,18 @@
       </div>
     </slide>
   </carousel>
-  <modal v-if="showModal" @close="showModal = false">
-    <h1 slot="header">{{ currentPet.name }}</h1>
-    <h2 slot="header">{{ currentPet.description }}</h2>
-  </modal>
-  <router-link to="/transfer">Kliknij tutaj, aby wyświetlić dane do przelewu</router-link>
+    <modal v-if="showModal" @close="showModal = false">
+      <h1 slot="header">{{ currentPet.name }}</h1>
+      <h2 slot="header">{{ currentPet.description }}</h2>
+    </modal>
+  <!--<petDetails :details="this.currentPet" v-if="showDetails" @close="showDetails = false"></petDetails>-->
 </div>
 </template>
 
 <script>
 import { Carousel, Slide } from 'vue-carousel'
+import petDetails from '@/components/petDetails'
 import Modal from './Modal.vue'
-
 export default {
   data () {
     return {
@@ -49,6 +49,7 @@ export default {
   components: {
     Carousel,
     Slide,
+    petDetails,
     Modal
   }
 }
