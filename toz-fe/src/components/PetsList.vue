@@ -1,19 +1,23 @@
 <template>
   <div class="posrel">
   <carousel :navigationEnabled="true" :paginationEnabled="false" :navigationClickTargetSize="0" :perPageCustom="[[768, 3], [1024, 5]]">
-    <slide v-for="pet of pets[0]" :key="pet.name" >
-      <div @click="openModal(pet)">
-        <img :src="pet.profilePic" alt="pet photo">
-        <h2>Imię: {{ pet.name }}</h2>
-        <h2>Typ: {{ pet.type }}</h2>
-      </div>
+    <slide v-for="pet in petsList.petsTable" :key="pet.name" >
+      <router-link :to="{
+      name: 'petDetails',
+      params: {
+        id: pet.id,
+        name: pet.name,
+        description: pet.description
+       }}">
+        <div>
+          <img :src="pet.img" alt="pet photo">
+          <h2>Name: {{ pet.name }}</h2>
+          <h2>Type: {{ pet.type }}</h2>
+          <h2>Sex: {{ pet.sex }}</h2>
+        </div>
+      </router-link>
     </slide>
   </carousel>
-    <modal v-if="showModal" @close="showModal = false">
-      <h1 slot="header">{{ currentPet.name }}</h1>
-      <h2 slot="header">{{ currentPet.description }}</h2>
-    </modal>
-  <!--<petDetails :details="this.currentPet" v-if="showDetails" @close="showDetails = false"></petDetails>-->
 </div>
 </template>
 
@@ -24,16 +28,17 @@ import Modal from './Modal.vue'
 export default {
   data () {
     return {
-      pets: [],
+      petsList: {},
       errors: [],
       showModal: false,
       currentPet: {}
     }
   },
   created () {
-    this.$http.get(`https://private-anon-1d69436fab-zwierzakiandroid.apiary-mock.com/pets`)
+    this.$http.get('/petsInfo')
     .then(response => {
-      this.pets.push(response.data)
+      this.petsList = {...response.data}
+      console.log(response.data)
     })
     .catch(error => {
       this.errors.push(error)
