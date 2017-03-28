@@ -4,7 +4,7 @@ import Transfer from '@/components/Transfer'
 import PetsList from '@/components/PetsList'
 import Home from '@/components/Home'
 import paths from './paths'
-import petDetails from '@/components/petDetails'
+import petDetails from '@/components/PetDetails'
 Vue.use(Router)
 
 export default new Router({
