@@ -12,7 +12,7 @@
         name: pet.name,
         description: pet.description
        }}">
-        <div>
+        <div class="sliderContent">
           <img :src="pet.img" alt="pet photo">
           <h2>Name: {{ pet.name }}</h2>
           <h2>Type: {{ pet.type }}</h2>
