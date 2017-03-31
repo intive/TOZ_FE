@@ -1,6 +1,6 @@
 <template>
   <div class="transfer">
-    <div class="errors" v-if="errors && errors.length">
+   <div class="errors" v-if="errors && errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div class="transfer-data" v-else>
