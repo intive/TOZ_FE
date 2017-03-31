@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Transfer from '@/components/Transfer'
+import NewsDetails from '@/components/NewsDetails'
+import Home from '@/components/Home'
 import paths from './paths'
 
 Vue.use(Router)
@@ -13,11 +15,14 @@ export default new Router({
       component: Transfer
     },
     {
+      path: paths.news,
+      name: 'news',
+      component: NewsDetails
+    },
+    {
       path: paths.home,
       name: 'home',
-      component: {
-        template: '<router-link to="/transfer">Kliknij tutaj, aby wyświetlić dane do przelewu</router-link>'
-      }
+      component: Home
     }
   ]
 })
