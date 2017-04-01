@@ -15,10 +15,12 @@
         <div class="col-md-11">
           <table class="table">
             <tr>
-              <td v-for="day in dayAndDateInWeek">
-                <h3>{{ day.dayDate }}</h3>
-                {{ day.dayName }}
-              </td>
+             
+                <td v-for="day of dayAndDateInWeek" @click="openModal(day)">
+                  <h3>{{ day.dayDate }}</h3>
+                  {{ day.dayName }}
+                </td>
+              
             </tr>         
           </table>
         </div>
@@ -39,12 +41,19 @@
           </table>
         </div>
       </div>
-      <!--END Morning Calendar--> 
+      <!--END Afternoon Calendar--> 
     </div>
+
+    <booking v-if="showModal" @close="showModal = false">
+      <h2 slot="header">Rezerwujesz termin:</h2>
+      <h3 slot="date">{{ this.dayAndDateInWeek.dayName }} {{ this.dayAndDateInWeek.dayDate}}</h3>
+      <input slot='body' type='text' placeholder='Imię i nazwisko' v-model='volunteer'>
+    </booking>
   </div>
 </template>
 
 <script>
+import Booking from './Booking.vue'
 export default {
   name: 'Calendar',
   data () {
@@ -52,7 +61,9 @@ export default {
       date: '',
       dayInWeek: ['pn', 'wt', 'śr', 'czw', 'pt', 'sb', 'nd'],
       dayAndDateInWeek: [],
-      mondayDate: ''
+      mondayDate: '',
+      showModal: false,
+      volunteer: ''
     }
   },
   created () {
@@ -93,7 +104,18 @@ export default {
     },
     howMuchDayInMonth (month, year) {
       return new Date(year, month, 0).getDate()
+    },
+    openModal (day) {
+      this.showModal = true
+      this.dayAndDateInWeek.dayName = day.dayName
+      this.dayAndDateInWeek.dayDate = day.dayDate
+    },
+    dayLong (day) {
+
     }
+  },
+  components: {
+    Booking
   }
 }
 </script>
@@ -117,18 +139,23 @@ td {
   margin-top: 1px;
   margin-bottom: 35px;
 }
-
 .morningImg {
   width: 70px;
   height: 60px;
   background-image: url("img/morning.png");
   background-repeat: no-repeat;
 }
-
 .afternoonImg {
   width: 90px;
   height: 70px;
   background-image: url("img/afternoon.png");
   background-repeat: no-repeat;
+}
+input {
+  width: 80%;
+  height: 40px;
+  font-size: 30px;
+  border: none;
+  text-align: center
 }
 </style>
