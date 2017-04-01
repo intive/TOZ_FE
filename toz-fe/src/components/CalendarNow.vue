@@ -2,8 +2,9 @@
   <div class="transfer">
     <router-link to="/">Powrót do strony głównej</router-link>
     <div> 
-      <router-link to="/calendar" class="navigateButton"><<</router-link> 
+      <router-link to="calendar/previous" class="navigateButton"><<</router-link> 
       {{ formatedStringWithDate }}
+      <router-link to="calendar/next" class="navigateButton">>></router-link> 
     </div>
     <calendar :mondayDay="mondayDate" :monthLength="dayInMonth"></calendar>
   </div>
@@ -11,8 +12,9 @@
 
 <script>
 import Calendar from './Calendar.vue'
+
 export default {
-  name: 'calendarNext',
+  name: 'Calendar',
   data () {
     return {
       mondayDate: '',
@@ -31,26 +33,18 @@ export default {
       const nowDate = new Date()
       this.dayInMonth = this.howMuchDayInPreviousMonth(nowDate.getFullYear(), nowDate.getMonth() + 1)
       this.monthNumber = nowDate.getMonth()
-      if ((nowDate.getDate() + 7) > this.dayInMonth) {
-        const remainingDays = (nowDate.getDate() + 7) - this.dayInMonth
-        const newDate = new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, remainingDays)
-        if (newDate.getDate() <= 7) {
-          this.sundayDay = newDate.getDay() === 0 ? newDate.getDate() : (newDate.getDate() + (7 - newDate.getDay()))
-          if (this.sundayDay >= 7) {
-            this.mondayDate = this.sundayDay - 6
-          } else {
-            this.mondayDate = this.dayInMonth - (6 - this.sundayDay)
-          }
-        } else {
-          this.mondayDate = newDate.getDate() - (nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1))
-          this.sundayDay = this.mondayDate + 6
-        }
-        this.monthNumber = nowDate.getMonth() + 1
+      const remainingDays = (nowDate.getDate() + (7 - nowDate.getDay()))
+      if (remainingDays >= this.dayInMonth) {
+        this.mondayDate = nowDate.getDate() - (nowDate.getDay() - 1)
+        this.sundayDay = remainingDays - this.dayInMonth
       } else {
-        this.mondayDate = (nowDate.getDate() + 7) - (nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1))
-        if ((this.mondayDate + 6) > this.dayInMonth) {
-          this.sundayDay = 7 - (this.dayInMonth - (this.mondayDate - 1))
+        if (nowDate.getDate() <= 7) {
+          this.dayInMonth = this.howMuchDayInPreviousMonth(nowDate.getFullYear(), nowDate.getMonth())
+          this.mondayDate = this.dayInMonth - ((nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1)) - nowDate.getDate())
+          this.sundayDay = nowDate.getDate() + (7 - (nowDate.getDay() === 0 ? 7 : nowDate.getDay()))
+          this.monthNumber = nowDate.getMonth() - 1
         } else {
+          this.mondayDate = nowDate.getDate() - (nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1))
           this.sundayDay = this.mondayDate + 6
         }
       }

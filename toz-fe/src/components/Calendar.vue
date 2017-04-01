@@ -1,49 +1,38 @@
 <template>
-  <div class="transfer">
-    <router-link to="/">Powrót do strony głównej</router-link>
-    <div> 
-      <router-link to="calendar/previous" class="navigateButton"><<</router-link> 
-      {{ date }} 
-      <router-link to="calendar/next" class="navigateButton">>></router-link> 
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1 morningImg"></div><div class="col-md-11 line"></div>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-1 morningImg"></div><div class="col-md-11 line"></div>
+    <!-- Morning calendar-->
+    <div class="row justify-content-end">
+      <div class="col-md-11">
+        <table class="table">
+          <tr>
+            <td v-for="day in dayAndDateInWeek" @click="openModal(day)">
+              <h3>{{ day.dayDate }}</h3>
+              {{ day.dayName }}
+            </td>
+          </tr>         
+        </table>
       </div>
-      <!-- Morning calendar-->
-      <div class="row justify-content-end">
-        <div class="col-md-11">
-          <table class="table">
-            <tr>
-             
-                <td v-for="day of dayAndDateInWeek" @click="openModal(day)">
-                  <h3>{{ day.dayDate }}</h3>
-                  {{ day.dayName }}
-                </td>
-              
-            </tr>         
-          </table>
-        </div>
-      </div>
-      <!--END Morning Calendar-->      
+    </div>
+    <!--END Morning Calendar-->      
 
-      <div class="row">
-        <div class="col-md-1 afternoonImg"></div><div class="col-md-11 line"></div>
-      </div>
-
-      <!-- Afternoon calendar-->
-      <div class="row justify-content-end">
-        <div class="col-md-11">
-          <table class="table">
-            <tr>
-              <td v-for="(day, index) in dayInWeek"></td>
-            </tr>         
-          </table>
-        </div>
-      </div>
-      <!--END Afternoon Calendar--> 
+    <div class="row">
+      <div class="col-md-1 afternoonImg"></div><div class="col-md-11 line"></div>
     </div>
 
+    <!-- Afternoon calendar-->
+    <div class="row justify-content-end">
+      <div class="col-md-11">
+        <table class="table">
+          <tr>
+            <td v-for="day in dayAndDateInWeek" @click="openModal(day)"></td>
+          </tr>         
+        </table>
+      </div>
+    </div>
+    <!--END Afternoon Calendar--> 
     <booking v-if="showModal" @close="showModal = false">
       <h2 slot="header">Rezerwujesz termin:</h2>
       <h3 slot="date">{{ this.dayAndDateInWeek.dayName }} {{ this.dayAndDateInWeek.dayDate}}</h3>
@@ -58,49 +47,51 @@ export default {
   name: 'Calendar',
   data () {
     return {
-      date: '',
       dayInWeek: ['pn', 'wt', 'śr', 'czw', 'pt', 'sb', 'nd'],
       dayAndDateInWeek: [],
-      mondayDate: '',
+      gettedMonday: this.mondayDay,
+      gettedDayInMonth: this.monthLength,
       showModal: false,
       volunteer: ''
     }
   },
+  props: ['mondayDay', 'monthLength'],
   created () {
     this.formatedMonthAndWeek()
   },
   methods: {
     formatedMonthAndWeek () {
-      const month = ['STYCZEŃ', 'LUTY', 'MARZEC', 'KWIECIEŃ', 'MAJ', 'CZERWIEC', 'LIPIEC', 'SIERPIEŃ', 'WRZESIEŃ', 'PAŹDZIERNIK', 'LISTOPAD', 'GRUDZIEŃ']
-      const nowDate = new Date(2017, 2, 25)
       const monSunDate = new Array(2)
-      this.mondayDate = nowDate.getDate() - (nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1))
-      const dayInMonth = this.howMuchDayInMonth(nowDate.getMonth() + 1, nowDate.getFullYear())
-      if ((this.mondayDate + 6) > dayInMonth) {
-        const remainingDays = 7 - (dayInMonth - this.mondayDate + 1)
-        monSunDate[0] = this.mondayDate < 10 ? `0${this.mondayDate}` : `${this.mondayDate}`
-        monSunDate[1] = remainingDays < 10 ? `0${remainingDays}` : `${remainingDays}`
-        this.date = `${month[nowDate.getMonth()]} ${monSunDate[0]}-${dayInMonth}, ${month[nowDate.getMonth() + 1]} 01-${monSunDate[1]}`
+      if ((this.gettedMonday + 6) > this.gettedDayInMonth) {
+        const remainingDays = 7 - (this.gettedDayInMonth - this.gettedMonday + 1)
+        monSunDate[0] = this.gettedMonday
+        monSunDate[1] = remainingDays
+        for (let i = monSunDate[0]; i <= this.gettedDayInMonth; i++) {
+          let day = {
+            dayName: this.dayInWeek[i - monSunDate[0]],
+            dayDate: i < 10 ? `0${i}` : `${i}`
+          }
+          this.dayAndDateInWeek.push(day)
+          var indexOfDay = i - monSunDate[0]
+        }
+        for (let i = 1; i <= remainingDays; i++) {
+          let day = {
+            dayName: this.dayInWeek[indexOfDay + i],
+            dayDate: `0${i}`
+          }
+          this.dayAndDateInWeek.push(day)
+        }
       } else {
-        monSunDate[0] = this.mondayDate < 10 ? `0${this.mondayDate}` : `${this.mondayDate}`
-        monSunDate[1] = (this.mondayDate + 6) < 10 ? `0${this.mondayDate + 6}` : `${this.mondayDate + 6}`
-        this.date = `${month[nowDate.getMonth()]} ${monSunDate[0]}-${monSunDate[1]}`
+        monSunDate[0] = this.gettedMonday
+        monSunDate[1] = this.gettedMonday + 6
         for (let i = monSunDate[0]; i <= monSunDate[1]; i++) {
           let day = {
             dayName: this.dayInWeek[i - monSunDate[0]],
-            dayDate: i
+            dayDate: i < 10 ? `0${i}` : `${i}`
           }
           this.dayAndDateInWeek.push(day)
         }
       }
-      /* this.mondayDate = nowDate.getDate() - (nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1))
-      const dayInMonth = this.howMuchDayInMonth(nowDate.getMonth() + 1, nowDate.getFullYear())
-      if ((this.mondayDate + 6) > dayInMonth) {
-        const remainingDays = 7 - (dayInMonth - this.mondayDate + 1)
-        this.date = `${month[nowDate.getMonth()]} ${this.mondayDate}-${dayInMonth}, ${month[nowDate.getMonth() + 1]} 01-0${remainingDays}`
-      } else {
-        this.date = `${month[nowDate.getMonth()]} ${this.mondayDate}-${this.mondayDate + 6}`
-      } */
     },
     howMuchDayInMonth (month, year) {
       return new Date(year, month, 0).getDate()
