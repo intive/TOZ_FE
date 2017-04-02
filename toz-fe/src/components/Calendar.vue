@@ -8,7 +8,7 @@
       <div class="col-md-11">
         <table class="table">
           <tr>
-            <td v-for="day in dayAndDateInWeek" @click="openModal(day)">
+            <td v-for="day of dayAndDateInWeek" @click="openModal(day)">
               <h3>{{ day.dayDate }}</h3>
               {{ day.dayName }}
             </td>
@@ -27,16 +27,21 @@
       <div class="col-md-11">
         <table class="table">
           <tr>
-            <td v-for="day in dayAndDateInWeek" @click="openModal(day)"></td>
+            <td v-for="day of dayAndDateInWeek" @click="openModal(day)"></td>
           </tr>         
         </table>
       </div>
     </div>
     <!--END Afternoon Calendar--> 
-    <booking v-if="showModal" @close="showModal = false">
-      <h2 slot="header">Rezerwujesz termin:</h2>
-      <h3 slot="date">{{ this.dayAndDateInWeek.dayName }} {{ this.dayAndDateInWeek.dayDate}}</h3>
-      <input slot='body' type='text' placeholder='Imię i nazwisko' v-model='volunteer'>
+
+    <!-- Booking modal -->
+    <booking v-if="showModal">
+      <h2 slot="header" class='booking'>Rezerwujesz termin:</h2>
+      <h3 slot="date" class='booking'>{{ this.dayLong }} {{ this.dayAndDateInWeek.dayDate }} {{ currentMonth }} {{ dayTime }}</h3>
+      <span slot='buttons'>
+        <button class="modal-button" @click='showModal = false'>Rezygnuję</button>
+        <button class="modal-button" @click='showModal = false'>Potwierdzam</button>
+      </span>
     </booking>
   </div>
 </template>
@@ -48,14 +53,20 @@ export default {
   data () {
     return {
       dayInWeek: ['pn', 'wt', 'śr', 'czw', 'pt', 'sb', 'nd'],
+      dayDisplay: '',
+      dayLong: '',
+      dayLongList: ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'],
+      dayTime: '',
       dayAndDateInWeek: [],
       gettedMonday: this.mondayDay,
       gettedDayInMonth: this.monthLength,
+      months: ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sieprnia', 'września', 'października', 'listopada', 'grudnia'],
       showModal: false,
-      volunteer: ''
+      volunteer: '',
+      currentMonth: ''
     }
   },
-  props: ['mondayDay', 'monthLength'],
+  props: ['mondayDay', 'monthLength', 'currMonth'],
   created () {
     this.formatedMonthAndWeek()
   },
@@ -93,16 +104,19 @@ export default {
         }
       }
     },
-    howMuchDayInMonth (month, year) {
-      return new Date(year, month, 0).getDate()
-    },
     openModal (day) {
       this.showModal = true
       this.dayAndDateInWeek.dayName = day.dayName
-      this.dayAndDateInWeek.dayDate = day.dayDate
+      this.dayAndDateInWeek.dayDate = parseInt(day.dayDate)
+      this.monthCount()
+      this.dayLong = this.dayLongList[this.dayInWeek.indexOf(this.dayAndDateInWeek.dayName)]
     },
-    dayLong (day) {
-
+    monthCount () {
+      if (this.dayAndDateInWeek.dayDate >= this.gettedMonday) {
+        this.currentMonth = this.months[this.currMonth]
+      } else {
+        this.currentMonth = this.months[this.currMonth + 1]
+      }
     }
   },
   components: {
@@ -114,6 +128,15 @@ export default {
 <style scoped>
 h1, h2 {
   font-weight: normal;
+}
+h2.booking {
+  margin-top: 30px;
+}
+h3.booking {
+  width: 60%;
+  margin: 0 auto;
+  line-height: 50px;
+  border-bottom: 3px solid #000;
 }
 td {
   border-left-style: groove;
@@ -149,4 +172,12 @@ input {
   border: none;
   text-align: center
 }
+.modal-button {
+    float: center;
+    margin: 20px;
+    font-weight: 700;
+    border: none;
+    background-color: #fff;
+
+  }
 </style>

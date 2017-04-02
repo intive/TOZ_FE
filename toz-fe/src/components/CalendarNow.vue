@@ -6,7 +6,7 @@
       {{ formatedStringWithDate }}
       <router-link to="calendar/next" class="navigateButton">>></router-link> 
     </div>
-    <calendar :mondayDay="mondayDate" :monthLength="dayInMonth"></calendar>
+    <calendar :mondayDay="mondayDate" :monthLength="dayInMonth" :currMonth="monthNumber"></calendar>
   </div>
 </template>
 

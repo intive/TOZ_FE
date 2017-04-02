@@ -7,10 +7,7 @@
           <slot name="header"></slot>
           <slot name="date"></slot>
           <slot name="body"></slot>
-          <slot name="buttons">
-            <button class="modal-default-button" @click="$emit('close')">Potwierdzam</button>
-            <button class="modal-default-button" @click="$emit('close')">Rezygnuję</button>
-          </slot>
+          <slot name="buttons"></slot>
         </div>
       </div>
     </div>
@@ -53,10 +50,6 @@
   }
   .modal-body {
     margin: 20px 0;
-  }
-  .modal-default-button {
-    float: center;
-    margin: 20px
   }
   .modal-enter {
     opacity: 0;
