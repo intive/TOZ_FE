@@ -3,7 +3,7 @@
   <div class="errors" v-if="errors.length">
     <h2 v-for="error of errors">{{ error.message }}</h2>
   </div>
-  <carousel v-else :navigationEnabled="true" :paginationEnabled="false" :navigationClickTargetSize="0" :perPageCustom="[[768, 3], [1024, 5]]">
+  <carousel v-else :navigationEnabled="true" :paginationEnabled="false" :navigationClickTargetSize="0" :perPageCustom="[[768, 3], [1024, 5]]" class="carousel">
     <slide v-for="pet in petsList" :key="pet.name" >
       <router-link :to="{
       name: 'petDetails',
@@ -29,8 +29,6 @@ import { Carousel, Slide } from 'vue-carousel'
 import petDetails from '@/components/PetDetails'
 // import MockAdapter from 'axios-mock-adapter'
 // import petsTable from '@/petsMock'
-// const mock = new MockAdapter(this.$http)
-// mock.onGet('/petsInfo').reply(200, petsTable)
 
 export default {
   data () {
@@ -42,8 +40,10 @@ export default {
     }
   },
   created () {
-    // this.$http.get('/petsInfo')
+    // const mock = new MockAdapter(this.$http)
+    // mock.onGet('/petsInfo').reply(200, petsTable)
     this.$http.get('http://dev.patronage2017.intive-projects.com/pets')
+    // this.$http.get('/petsInfo')
     .then(response => {
       this.petsList = [...response.data]
     })

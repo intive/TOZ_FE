@@ -1,9 +1,9 @@
 <template>
   <div class="transfer">
-    <div class="errors" v-if="errors && errors.length">
+    <div v-if="errors.length" class="errors">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
-    <div class="transfer-data" v-else>
+    <div v-else class="transfer-data">
       <h1>Dane do przelewu</h1>
       <h2>{{transferData.name}}</h2>
       <h2>{{transferData.address.apartmentNumber}}</h2>
