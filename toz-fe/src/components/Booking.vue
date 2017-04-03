@@ -5,9 +5,9 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <slot name="header"></slot>
-          <slot name="date"></slot>
-          <slot name="body"></slot>
-          <slot name="buttons"></slot>
+          <slot name="slot1"></slot>
+          <slot name="slot2"></slot>
+          <slot name="slot3"></slot>
         </div>
       </div>
     </div>
@@ -31,6 +31,7 @@
     height: 100%;
     display: table;
     transition: opacity .3s ease;
+    /*background-color: rgba(0, 0, 0, .5);*/
   }
  .modal-wrapper {
    display: table-cell;

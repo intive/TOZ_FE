@@ -7,7 +7,7 @@
     <div class="row justify-content-end">
       <div class="col-md-11">
         <table class="table">
-          <tr>
+          <tr @click="dayTime='rano'">
             <td v-for="day of dayAndDateInWeek" @click="openModal(day)">
               <h3>{{ day.dayDate }}</h3>
               {{ day.dayName }}
@@ -26,7 +26,7 @@
     <div class="row justify-content-end">
       <div class="col-md-11">
         <table class="table">
-          <tr>
+          <tr @click="dayTime='popołudnie'">
             <td v-for="day of dayAndDateInWeek" @click="openModal(day)"></td>
           </tr>         
         </table>
@@ -37,11 +37,22 @@
     <!-- Booking modal -->
     <booking v-if="showModal">
       <h2 slot="header" class='booking'>Rezerwujesz termin:</h2>
-      <h3 slot="date" class='booking'>{{ this.dayLong }} {{ this.dayAndDateInWeek.dayDate }} {{ currentMonth }} {{ dayTime }}</h3>
-      <span slot='buttons'>
+      <h3 slot="slot1" class='booking'>{{ this.dayLong }} {{ this.dayAndDateInWeek.dayDate }} {{ currentMonth }}, {{ dayTime }}</h3>
+      <span slot='slot2'>
         <button class="modal-button" @click='showModal = false'>Rezygnuję</button>
-        <button class="modal-button" @click='showModal = false'>Potwierdzam</button>
+        <button class="modal-button" @click='openModalAccept()'>Potwierdzam</button>
       </span>
+    </booking>
+
+    <booking v-if="showModalBooked">
+      <h2 slot="header" class='booking'>Termin zajęty przez:</h2>
+      <h3 slot="slot1" class='booking'>{{ volunteer }}</h3>
+    </booking>
+
+    <booking v-if="showModalAccept">
+      <h2 slot="header">Świetnie!</h2>
+      <h6 slot="slot1">Właśnie dokonałeś rezerwacji terminu.</h6>
+      <button slot='slot2' class='modal-button accept-button' @click='showModalAccept = false'>WRÓC DO GRAFIKU</button>
     </booking>
   </div>
 </template>
@@ -62,7 +73,9 @@ export default {
       gettedDayInMonth: this.monthLength,
       months: ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sieprnia', 'września', 'października', 'listopada', 'grudnia'],
       showModal: false,
-      volunteer: '',
+      showModalBooked: false,
+      showModalAccept: false,
+      volunteer: 'Przykładowy Wolontariusz',
       currentMonth: ''
     }
   },
@@ -111,6 +124,11 @@ export default {
       this.monthCount()
       this.dayLong = this.dayLongList[this.dayInWeek.indexOf(this.dayAndDateInWeek.dayName)]
     },
+    openModalAccept () {
+      this.showModal = false
+      this.showModalAccept = true
+      this.showModal = false
+    },
     monthCount () {
       if (this.dayAndDateInWeek.dayDate >= this.gettedMonday) {
         this.currentMonth = this.months[this.currMonth]
@@ -133,7 +151,7 @@ h2.booking {
   margin-top: 30px;
 }
 h3.booking {
-  width: 60%;
+  width: 90%;
   margin: 0 auto;
   line-height: 50px;
   border-bottom: 3px solid #000;
@@ -165,19 +183,21 @@ td {
   background-image: url("img/afternoon.png");
   background-repeat: no-repeat;
 }
-input {
-  width: 80%;
-  height: 40px;
-  font-size: 30px;
-  border: none;
-  text-align: center
-}
 .modal-button {
     float: center;
     margin: 20px;
     font-weight: 700;
     border: none;
     background-color: #fff;
-
+    cursor: pointer;
+  }
+  .modal-button:nth-child(2) {
+    background-color: #ff6961;
+    color: #fff;
+  }
+  .accept-button {
+    margin-top: 30px;
+    border: 1px solid #404040;
+    color: #404040;
   }
 </style>
