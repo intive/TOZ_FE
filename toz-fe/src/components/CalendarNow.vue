@@ -39,10 +39,15 @@ export default {
         this.sundayDay = remainingDays - this.dayInMonth
       } else {
         if (nowDate.getDate() <= 7) {
-          this.dayInMonth = this.howMuchDayInPreviousMonth(nowDate.getFullYear(), nowDate.getMonth())
-          this.mondayDate = this.dayInMonth - ((nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1)) - nowDate.getDate())
-          this.sundayDay = nowDate.getDate() + (7 - (nowDate.getDay() === 0 ? 7 : nowDate.getDay()))
-          this.monthNumber = nowDate.getMonth() - 1
+          const newDate = ((nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1)) - nowDate.getDate())
+          if (newDate <= 0) {
+            this.mondayNowDate = nowDate.getDate() - (nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1))
+          } else {
+            this.dayInMonth = this.howMuchDayInPreviousMonth(nowDate.getFullYear(), nowDate.getMonth())
+            this.mondayNowDate = this.dayInMonth - newDate
+            this.monthNumber = nowDate.getMonth() - 1
+          }
+          this.sundayNowDay = nowDate.getDate() + (7 - (nowDate.getDay() === 0 ? 7 : nowDate.getDay()))
         } else {
           this.mondayDate = nowDate.getDate() - (nowDate.getDay() === 0 ? 6 : (nowDate.getDay() - 1))
           this.sundayDay = this.mondayDate + 6
