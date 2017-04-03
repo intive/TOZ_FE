@@ -20,7 +20,7 @@ export default {
 <style>
   html,body{
     width: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     margin: 0;
     padding: 0;
   }

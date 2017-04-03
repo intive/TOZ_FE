@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Transfer from '@/components/Transfer'
-import PetsList from '@/components/PetsList'
+import PetsGallery from '@/components/PetsGallery'
 import Home from '@/components/Home'
 import paths from './paths'
 import petDetails from '@/components/PetDetails'
@@ -23,7 +23,7 @@ export default new Router({
     {
       path: paths.pets,
       name: 'pets',
-      component: PetsList
+      component: PetsGallery
     },
     {
       path: paths.petDetails,
