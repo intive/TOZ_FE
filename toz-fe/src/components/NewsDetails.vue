@@ -10,8 +10,8 @@
       <h1>{{ newsDetails.contents }}</h1>
       <img :src="newsDetails.photoUrl"
            class="img-fluid"
-           alt="dog_image">
-      <router-link to="/">Powrót do strony głównej</router-link>
+           :alt="$t('img.alt.dog')">
+      <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
     </div>
   </div>
 </template>

@@ -4,7 +4,7 @@
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div class="transfer-data" v-else>
-      <h1>Dane do przelewu</h1>
+      <h1>{{ $t("title.transfer") }}</h1>
       <h2>{{ transferData.name }}</h2>
       <h2>ul. {{ transferData.address.street }} {{ transferData.address.houseNumber }}/{{ transferData.address.apartmentNumber }}</h2>
       <h2>{{ transferData.address.postCode }} {{ transferData.address.city }}</h2>
@@ -15,7 +15,7 @@
       <h2>{{ transferData.contact.fax }}</h2>
       <h2>{{ transferData.contact.phone }}</h2>
       <h2>{{ transferData.contact.website }}</h2>
-      <router-link to="/">Powrót do strony głównej</router-link>
+      <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
     </div>
   </div>
 </template>
