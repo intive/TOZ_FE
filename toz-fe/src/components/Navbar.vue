@@ -1,0 +1,35 @@
+<template>
+  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <router-link to="/" class="nav-link">{{ $t("navbar.home") }}</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/transfer" class="nav-link">{{ $t("navbar.transferDetails") }}</router-link>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Login" disabled>
+        <input class="form-control mr-sm-2" type="password" placeholder="Hasło" disabled>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>OK</button>
+      </form>
+    </div>
+  </nav>
+</template>
+
+<script>
+  export default {
+    name: 'Navbar',
+    data () {
+      return {
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  .navbar {
+    margin-bottom: 50px;
+  }
+</style>

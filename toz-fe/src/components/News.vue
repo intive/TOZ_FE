@@ -1,65 +1,91 @@
 <template>
   <div>
-    <div class="news-container" v-for="item in news">
-      <router-link :to="{ name: 'news', params: {
-        id: item.id,
-        title: item.title,
-        longContent: item.longContent,
-        dateDay: item.date.day,
-        dateMonth: item.date.month,
-        dateYear: item.date.year }
-      }">
-        <h1>{{ item.title }}</h1>
-      </router-link>
-      <h1>{{ item.date.day }}-{{ item.date.month }}-{{ item.date.year }}</h1>
-      <h1>{{ item.shortContent }}</h1>
+    <div class="errors" v-if="errors.length">
+      <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
+    <carousel class="carousel"
+              v-else
+              :navigationEnabled="settings.navigationEnabled"
+              :paginationEnabled="settings.paginationEnabled"
+              :navigationClickTargetSize="settings.navigationClickTargetSize"
+              :perPageCustom="settings.perPageCustom">
+      <slide v-for="item in news" :key="item.id">
+        <div class="container">
+          <div class="row">
+            <div class="column news-container">
+              <img :src="item.photoUrl"
+                   class="img-fluid"
+                   alt="dog_image">
+            </div>
+            <div class="column news-container">
+              <router-link :to="{ name: 'news', params: { id: item.id } }">
+                <h2>{{ item.title }}</h2>
+              </router-link>
+              <hr>
+              <h3>{{ item.created }}</h3>
+              <h3>{{ item.published }}</h3>
+              <h4>{{ item.contents }}</h4>
+            </div>
+          </div>
+        </div>
+      </slide>
+    </carousel>
   </div>
 </template>
 
 <script>
-  import NewsDetails from './NewsDetails'
+  import { Carousel, Slide } from 'vue-carousel'
   export default {
     name: 'News',
     data () {
       return {
-        isNewsOn: false,
-        news: [
-          {
-            id: 1,
-            title: 'Komunikat 1',
-            shortContent: 'Skrócona treść komunikatu 1.',
-            longContent: 'Długa treść komunikatu 1.',
-            date: {
-              day: '01',
-              month: '01',
-              year: '2017'
-            }
-          },
-          {
-            id: 2,
-            title: 'Komunikat 2',
-            shortContent: 'Skrócona treść komunikatu 2.',
-            longContent: 'Długa treść komunikatu 2.',
-            date: {
-              day: '02',
-              month: '01',
-              year: '2017'
-            }
-          }
-        ]
+        settings: {
+          navigationEnabled: true,
+          paginationEnabled: false,
+          navigationClickTargetSize: 0,
+          perPageCustom: [[768, 1], [1024, 1], [1920, 1]]
+        },
+        news: [],
+        errors: []
+      }
+    },
+    created () {
+      this.fetchData()
+    },
+    methods: {
+      fetchData () {
+        this.$http.get('http://dev.patronage2017.intive-projects.com/news?shortened=false')
+            .then(response => {
+              this.news = [...response.data]
+            })
+            .catch(error => {
+              this.errors.push(error)
+            })
       }
     },
     components: {
-      NewsDetails
+      Carousel,
+      Slide
     }
   }
 </script>
 
 <style scoped>
   .news-container {
-    border: 1px solid black;
-    width: 500px;
-    height: 200px;
+    height: 350px;
+    width: 600px;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,.1);
+  }
+
+  .carousel,
+  .container,
+  .row {
+    width: 1200px;
+  }
+
+  .carousel {
+    margin: 0 auto;
   }
 </style>
