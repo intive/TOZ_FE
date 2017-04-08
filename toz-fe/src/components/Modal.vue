@@ -101,7 +101,7 @@ export default {
   font: 18px arial, sans-serif;
 }
 /* MEDIA QUERIES */
-@media only screen and (min-width: 320px) {
+@media only screen and (max-width: 414px) {
   .modal-wrapper {
       margin: 45% 0 auto;
   }
