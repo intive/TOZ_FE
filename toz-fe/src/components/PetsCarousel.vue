@@ -10,6 +10,9 @@
         params: {
           id: pet.id,
           name: pet.name,
+          sex: pet.sex,
+          created:pet.created,
+          type:pet.type,
           description: pet.description
          }}">
           <div class="sliderContent">
