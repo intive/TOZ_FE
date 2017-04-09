@@ -1,6 +1,5 @@
 <template>
   <div>
-    <router-link to="/transfer">Kliknij tutaj, aby wyświetlić dane do przelewu</router-link>
     <News></News>
   </div>
 </template>
