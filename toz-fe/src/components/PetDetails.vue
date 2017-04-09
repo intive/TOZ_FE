@@ -5,7 +5,7 @@
     </div>
     <div id="swiper-wrapper">
     <swiper :options="swiperOption">
-      <swiper-slide style="background-image:url(http://lorempixel.com/500/250/)" v-for="n in 10" :key="n">
+      <swiper-slide style="background-image:url(http://lorempixel.com/1000/500/)" v-for="n in 10" :key="n">
        <div class="slide-content" @click="openModal"></div>
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
@@ -13,17 +13,19 @@
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
     </div>
-    <Modal v-if="showModal" @close="showModal = false"></Modal>
+    <Modal v-if="showModal" @close="showModal = false" class="modal"></Modal>
     <div class="petInfo">
       <ul class="list-group pet-ul">
         <li class="pet-li"><img class="float-left-span" src="../assets/circle-outline.png">
           <span class="float-left-span li-span-name center-span">{{$route.params.name}}</span>
         </li>
         <li class=" pet-li">
+          <div class="name-wrapper">
           <img class="float-left-span" src="../assets/jack-russell-terrier.png">
           <span class="float-left-span center-span li-span-dog">{{$route.params.type}}</span>
+          </div>
           <div class="sex-wrapper">
-           <img class="float-left-span" src="../assets/gender.png">
+           <img class="float-left-span float-right-span" src="../assets/gender.png">
            <span class=" li-span-sex center-span">{{$route.params.sex}}</span>
           </div>
         </li>
@@ -139,6 +141,42 @@
   #swiper-wrapper{
     width: 60%;
     margin: 0 0 0 20%;
+  }
+/* MEDIA QUERIES */
+  @media only screen and (max-width: 450px){
+    #swiper-wrapper{
+      width: 90%;
+      margin: 0 auto;
+    }
+    .slide-content{
+      width: 700px;
+      height: 250px;
+      margin: 0 auto;
+    }
+    .petInfo{
+      margin: 0 auto;
+      width: 90%;
+      display: block;
+    }
+    .pet-li{
+      width: 100%;
+      padding: 10px;
+      border: 0;
+      border-bottom: 1px solid lightgray;
+      font:14px arial,sans-serif;
+      font-weight: bold;
+    }
+    .pet-ul{
+      margin: 1.0em 0 1.0em 0 ;
+      list-style-type: none;
+    }
+    .float-right-span{
+      margin-left:30% ;
+    }
+    .sex-wrapper{
+      width: 50%;
+      float:right;
+    }
   }
 
 </style>

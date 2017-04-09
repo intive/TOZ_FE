@@ -45,7 +45,7 @@ export default {
 .modal-mask {
   position: fixed;
   z-index: 9998;
-  top: 0;
+  top:0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -89,7 +89,7 @@ export default {
 .modal-content {
   margin: 0;
   padding: 0;
-  width: 1000px;
+  width: 100%;
   height: 700px;
 }
 .swiper-slide {
@@ -101,17 +101,23 @@ export default {
   font: 18px arial, sans-serif;
 }
 /* MEDIA QUERIES */
-@media only screen and (max-width: 414px) {
+@media screen and (max-width: 420px) {
   .modal-wrapper {
-      margin: 45% 0 auto;
+      margin: 14vh 0 0 0;
   }
   .modal-default-button {
       padding: 0;
       margin:0 0 0 90%;
   }
   .modal-body{
-      width: 980px;
+      width: 100vw;
+      height: 20vh;
+  }
+  .modal-content {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 19em;
   }
 }
-
 </style>
