@@ -4,7 +4,7 @@
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <carousel v-else :navigationEnabled="true" :paginationEnabled="false" :navigationClickTargetSize="0" :perPageCustom="responsiveBreakpoints" class="carousel">
-      <slide v-for="pet in petsList" :key="pet.name" >
+      <slide v-for="pet in petsList" :key="pet.id" >
         <router-link :to="{
         name: 'petDetails',
         params: {
@@ -17,9 +17,9 @@
          }}">
           <div class="sliderContent">
             <img src="http://lorempixel.com/200/200/" alt="pet photo">
-            <h2>Name: {{ pet.name }}</h2>
-            <h2>Type: {{ pet.type }}</h2>
-            <h2>Sex: {{ pet.sex }}</h2>
+            <h2>{{ $t("pets.name") }}: {{ pet.name }}</h2>
+            <h2>{{ $t("pets.type") }}: {{ pet.type }}</h2>
+            <h2>{{ $t("pets.sex") }}: {{ pet.sex }}</h2>
           </div>
         </router-link>
       </slide>
