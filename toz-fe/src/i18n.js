@@ -35,7 +35,8 @@ const locales = {
     pets: {
       type: 'Typ',
       sex: 'Płeć',
-      name: 'Imię'
+      name: 'Imię',
+      creationDate: 'Data dodania'
     }
   },
   en: {
@@ -71,7 +72,8 @@ const locales = {
     pets: {
       type: 'Type',
       sex: 'Sex',
-      name: 'Name'
+      name: 'Name',
+      creationDate: 'Creation Date'
     }
   }
 }

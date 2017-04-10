@@ -16,21 +16,31 @@
     <Modal v-if="showModal" @close="showModal = false" class="modal"></Modal>
     <div class="petInfo">
       <ul class="list-group pet-ul">
-        <li class="pet-li"><img class="float-left-span" src="../assets/circle-outline.png">
-          <span class="float-left-span li-span-name center-span">{{$route.params.name}}</span>
+        <li class="pet-li">
+            <img class="float-left-span" src="../assets/circle-outline.png">
+            <div class="center-span float-left-span">
+              <span>{{$route.params.name}}</span>
+              <span class="li-span-name">{{$t('pets.name')}}</span>
+            </div>
         </li>
-        <li class=" pet-li">
-          <div class="name-wrapper">
+        <li class="pet-li">
           <img class="float-left-span" src="../assets/jack-russell-terrier.png">
-          <span class="float-left-span center-span li-span-dog">{{$route.params.type}}</span>
+          <div class="name-wrapper float-left-span">
+            <span>{{$route.params.type}}</span>
+            <span class="center-span li-span-dog">{{$t('pets.type')}}</span>
           </div>
           <div class="sex-wrapper">
-           <img class="float-left-span float-right-span" src="../assets/gender.png">
-           <span class=" li-span-sex center-span">{{$route.params.sex}}</span>
+            <img class="float-left-span float-right-span" src="../assets/gender.png">
+            <span class="center-span">{{$route.params.sex}}</span>
+            <span class="center-span li-span-sex">{{$t('pets.sex')}}</span>
           </div>
         </li>
-        <li class=" pet-li"><img class="float-left-span" src="../assets/calendar.png">
-          <span class="li-span-calendar float-left-span center-span">{{$route.params.created}}</span>
+        <li class=" pet-li">
+          <img class="float-left-span" src="../assets/calendar.png">
+          <div class="float-left-span center-span">
+            <span>{{$route.params.created}}</span>
+            <span class="li-span-calendar center-span">{{$t('pets.creationDate')}}</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -86,40 +96,40 @@
     border-bottom: 1px solid lightgray;
     font:22px arial,sans-serif;
     font-weight: bold;
+    display: flex;
+    flex-direction: row;
   }
   .sex-wrapper{
     width: 50%;
     float:right;
+    margin-left: 13vw;
   }
   .center-span{
     flex-direction: column;
     display: flex;
     text-align: left;
   }
-  .li-span-dog:after{
-    content: 'Typ';
+  .li-span-dog{
     font-size: 14px;
     color: gray;
-    margin-top: 1.0em;
+    margin-top: 1.5em;
   }
-  .li-span-sex:after{
-    content: 'Pleć';
+  .li-span-sex{
     font-size: 14px;
     color: gray;
-    margin-top: 1.0em;
+    margin-top: 1.5em;
     margin-right: 2.0em;
   }
-  .li-span-name:after{
-    content: 'Imie';
+  .li-span-name{
     font-size: 14px;
     color: gray;
-    margin-top: 1.0em;
+    margin-top: 1.5em;
+    float: left;
   }
-  .li-span-calendar:after{
-    content: 'Data dodania';
+  .li-span-calendar{
     font-size: 14px;
     color: gray;
-    margin-top: 1.0em;
+    margin-top: 1.5em;
   }
   .float-left-span{
     float:left;
@@ -174,8 +184,7 @@
       margin-left:30% ;
     }
     .sex-wrapper{
-      width: 50%;
-      float:right;
+      width: 40vw;
     }
   }
 
