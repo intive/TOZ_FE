@@ -1,10 +1,10 @@
 <template>
   <div class="transfer">
     <router-link to="/">Powrót do strony głównej</router-link>
-    <div> 
+    <div>
       {{ formatedStringWithDate }} 
-      <router-link to="/calendar" class="navigateButton">>></router-link> 
-    </div>
+      <router-link to="/calendar" class="navigateButton">>></router-link>
+    </div>-
     <calendar :mondayDay="mondayDate" :monthLength="dayInMonth" :currMonth="monthNumber"></calendar>
   </div>
 </template>
@@ -39,6 +39,7 @@ export default {
           // If sunday day is bigger or equal 7 then monday is 6 days before otherwise is dayInMonth subtract remainingDays
           if (this.sundayDay >= 7) {
             this.mondayDate = this.sundayDay - 6
+            this.monthNumber = nowDate.getMonth()
           } else {
             const remainingDays = (7 - this.sundayDay) - 1
             this.mondayDate = this.dayInMonth - remainingDays

@@ -1,24 +1,21 @@
 <template>
   <div class="transfer">
-   <div class="errors" v-if="errors && errors.length">
+    <div class="errors" v-if="errors && errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div class="transfer-data" v-else>
-      <h1>Dane do przelewu</h1>
-      <h2>{{transferData.name}}</h2>
-      <h2>{{transferData.address.apartmentNumber}}</h2>
-      <h2>{{transferData.address.city}}</h2>
-      <h2>{{transferData.address.country}}</h2>
-      <h2>{{transferData.address.houseNumber}}</h2>
-      <h2>{{transferData.address.postCode}}</h2>
-      <h2>{{transferData.address.street}}</h2>
-      <h2>{{transferData.bankAccount.bankName}}</h2>
+      <h1>{{ $t("title.transfer") }}</h1>
+      <h2>{{ transferData.name }}</h2>
+      <h2>ul. {{ transferData.address.street }} {{ transferData.address.houseNumber }}/{{ transferData.address.apartmentNumber }}</h2>
+      <h2>{{ transferData.address.postCode }} {{ transferData.address.city }}</h2>
+      <h2>{{ transferData.address.country }}</h2>
+      <h2>{{ transferData.bankAccount.bankName }}</h2>
       <h2>{{ formattedAccountNumber }}</h2>
-      <h2>{{transferData.contact.email}}</h2>
-      <h2>{{transferData.contact.fax}}</h2>
-      <h2>{{transferData.contact.phone}}</h2>
-      <h2>{{transferData.contact.website}}</h2>
-      <router-link to="/">Powrót do strony głównej</router-link>
+      <h2>{{ transferData.contact.email }}</h2>
+      <h2>{{ transferData.contact.fax }}</h2>
+      <h2>{{ transferData.contact.phone }}</h2>
+      <h2>{{ transferData.contact.website }}</h2>
+      <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
     </div>
   </div>
 </template>
@@ -55,7 +52,10 @@ export default {
   computed: {
     formattedAccountNumber () {
       const accountNumber = this.transferData.bankAccount.number
-      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
+      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)}
+        ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)}
+        ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)}
+        ${accountNumber.substr(22, 4)}`
     }
   },
   created () {

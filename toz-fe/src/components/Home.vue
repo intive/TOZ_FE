@@ -1,17 +1,28 @@
 <template>
-  <div class="transfer">
-    <router-link to="/transfer">Dane do przelewu</router-link> | 
-    <router-link to="/calendar">Grafik</router-link>
+  <div>
+    <News></News>
+    <div class="carousel">
+      <h1>{{ $t("title.gallery") }}</h1>
+      <PetsCarousel></PetsCarousel>
+    </div>
   </div>
 </template>
 
 <script>
+import PetsCarousel from '@/components/PetsCarousel'
+import News from '@/components/News'
+
 export default {
+  name: 'Home',
+  data () {
+    return {}
+  },
+  components: {
+    PetsCarousel,
+    News
+  }
 }
 </script>
 
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
 </style>

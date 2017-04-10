@@ -1,11 +1,11 @@
 <template>
   <div class="transfer">
     <router-link to="/">Powrót do strony głównej</router-link>
-    <div> 
+    <div>
       <router-link to="calendar/previous" class="navigateButton"><<</router-link> 
       {{ formatedStringWithDate }}
       <router-link to="calendar/next" class="navigateButton">>></router-link> 
-    </div>
+    </div>-
     <calendar :mondayDay="mondayDate" :monthLength="dayInMonth" :currMonth="monthNumber"></calendar>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-md-1 morningImg"></div><div class="col-md-11 line"></div>
+    <div class="row justify-content-end">
+      <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
     </div>
     <!-- Morning calendar-->
     <div class="row justify-content-end">
@@ -16,10 +16,10 @@
         </table>
       </div>
     </div>
-    <!--END Morning Calendar-->      
+    <!-- END Morning Calendar -->      
 
-    <div class="row">
-      <div class="col-md-1 afternoonImg"></div><div class="col-md-11 line"></div>
+    <div class="row justify-content-end">
+      <div class="col-12 col-md-12 col-xl-12 line afternoonImg"></div>
     </div>
 
     <!-- Afternoon calendar-->
@@ -54,6 +54,7 @@
       <h6 slot="slot1">Właśnie dokonałeś rezerwacji terminu.</h6>
       <button slot='slot2' class='modal-button accept-button' @click='showModalAccept = false'>WRÓC DO GRAFIKU</button>
     </booking>
+    <!-- END Booking Modal -->
   </div>
 </template>
 
@@ -69,6 +70,9 @@ export default {
       dayLongList: ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'],
       dayTime: '',
       dayAndDateInWeek: [],
+      mondayToSundayDate: [],
+      gotMonday: this.mondayDay,
+      gotDayInMonth: this.monthLength,
       gettedMonday: this.mondayDay,
       gettedDayInMonth: this.monthLength,
       months: ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sieprnia', 'września', 'października', 'listopada', 'grudnia'],
@@ -81,40 +85,49 @@ export default {
   },
   props: ['mondayDay', 'monthLength', 'currMonth'],
   created () {
-    this.formatedMonthAndWeek()
+    this.formatMonthAndWeek()
   },
   methods: {
-    formatedMonthAndWeek () {
-      const monSunDate = new Array(2)
-      if ((this.gettedMonday + 6) > this.gettedDayInMonth) {
-        const remainingDays = 7 - (this.gettedDayInMonth - this.gettedMonday + 1)
-        monSunDate[0] = this.gettedMonday
-        monSunDate[1] = remainingDays
-        for (let i = monSunDate[0]; i <= this.gettedDayInMonth; i++) {
-          let day = {
-            dayName: this.dayInWeek[i - monSunDate[0]],
-            dayDate: i < 10 ? `0${i}` : `${i}`
-          }
-          this.dayAndDateInWeek.push(day)
-          var indexOfDay = i - monSunDate[0]
-        }
-        for (let i = 1; i <= remainingDays; i++) {
-          let day = {
-            dayName: this.dayInWeek[indexOfDay + i],
-            dayDate: `0${i}`
-          }
-          this.dayAndDateInWeek.push(day)
-        }
+    formatMonthAndWeek () {
+      // Contains number of day which left in week after month is ended
+      const remainingDays = 7 - (this.gotDayInMonth - this.gotMonday + 1)
+      if ((this.gotMonday + 6) > this.gotDayInMonth) {
+        // Set date and name of day in week which contains two months for example: March 27-April 02
+        this.setDayAndDateInWeekWithTwoMonths(remainingDays)
       } else {
-        monSunDate[0] = this.gettedMonday
-        monSunDate[1] = this.gettedMonday + 6
-        for (let i = monSunDate[0]; i <= monSunDate[1]; i++) {
-          let day = {
-            dayName: this.dayInWeek[i - monSunDate[0]],
-            dayDate: i < 10 ? `0${i}` : `${i}`
-          }
-          this.dayAndDateInWeek.push(day)
+        // Set date and name of day in week which contains one month
+        this.setDayAndDateInWeekWithOneMonth()
+      }
+    },
+    setDayAndDateInWeekWithOneMonth () {
+      this.mondayToSundayDate[0] = this.gotMonday
+      this.mondayToSundayDate[1] = this.gotMonday + 6
+      for (let i = this.mondayToSundayDate[0]; i <= this.mondayToSundayDate[1]; i++) {
+        let day = {
+          dayName: this.dayInWeek[i - this.mondayToSundayDate[0]],
+          dayDate: i < 10 ? `0${i}` : `${i}`
         }
+        this.dayAndDateInWeek.push(day)
+      }
+      return 'Ala'
+    },
+    setDayAndDateInWeekWithTwoMonths (remainingDays) {
+      this.mondayToSundayDate[0] = this.gotMonday
+      this.mondayToSundayDate[1] = remainingDays
+      for (let i = this.mondayToSundayDate[0]; i <= this.gotDayInMonth; i++) {
+        let day = {
+          dayName: this.dayInWeek[i - this.mondayToSundayDate[0]],
+          dayDate: i < 10 ? `0${i}` : `${i}`
+        }
+        this.dayAndDateInWeek.push(day)
+        var indexOfDay = i - this.mondayToSundayDate[0]
+      }
+      for (let i = 1; i <= remainingDays; i++) {
+        let day = {
+          dayName: this.dayInWeek[indexOfDay + i],
+          dayDate: `0${i}`
+        }
+        this.dayAndDateInWeek.push(day)
       }
     },
     openModal (day) {
@@ -166,38 +179,42 @@ td {
 .container {
   width: 1366px;
 }
-.line {
-  border-bottom-style: dashed;
-  margin-top: 1px;
-  margin-bottom: 35px;
-}
 .morningImg {
+  background: url("img/morning.png") no-repeat;
   width: 70px;
   height: 60px;
-  background-image: url("img/morning.png");
-  background-repeat: no-repeat;
 }
 .afternoonImg {
-  width: 90px;
+  background: url("img/afternoon.png") no-repeat;
+  width: 70px;
   height: 70px;
-  background-image: url("img/afternoon.png");
-  background-repeat: no-repeat;
+}
+.line {
+  display: inline-block;
+}
+.line:before {
+  content: "";
+  display: block;
+  border-bottom-style: dashed;
+  margin-left: 80px;
+  height: 60px;
+  transform: translateY(-50%);
 }
 .modal-button {
-    float: center;
-    margin: 20px;
-    font-weight: 700;
-    border: none;
-    background-color: #fff;
-    cursor: pointer;
-  }
-  .modal-button:nth-child(2) {
-    background-color: #ff6961;
-    color: #fff;
-  }
-  .accept-button {
-    margin-top: 30px;
-    border: 1px solid #404040;
-    color: #404040;
-  }
+  float: center;
+  margin: 20px;
+  font-weight: 700;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+.modal-button:nth-child(2) {
+  background-color: #ff6961;
+  color: #fff;
+}
+.accept-button {
+  margin-top: 30px;
+  border: 1px solid #404040;
+  color: #404040;
+}
 </style>
