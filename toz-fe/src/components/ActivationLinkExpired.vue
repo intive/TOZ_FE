@@ -1,0 +1,33 @@
+<template>
+  <div class="container">
+    <img src="../assets/sadDog.jpg" alt="sad dog">
+    <h1>{{ $t("message.linkExpired") }}</h1>
+    <h1>{{ $t("message.contactAdministrator") }}</h1>
+    <button type="button" name="button" class="btn btn-secondary">
+      <router-link to="/" class="nav-link">{{ $t("navigation.back.home") }}</router-link>
+    </button>
+  </div>
+</template>
+
+<script>
+export default {
+}
+</script>
+
+<style lang="css" scoped>
+  h1{
+    text-align: center;
+  }
+  img {
+    max-height: 300px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .container {
+    width: 100%;
+    margin-bottom: 2em;
+  }
+  .btn {
+    border-radius: 0;
+  }
+</style>

@@ -25,4 +25,7 @@ export default {
 </script>
 
 <style scoped>
+.carousel{
+  margin: 2em auto;
+}
 </style>
