@@ -7,7 +7,8 @@ const locales = {
       hello: 'Witaj!'
     },
     title: {
-      transfer: 'Dane do przelewu'
+      transfer: 'Dane do przelewu',
+      gallery: 'Galeria'
     },
     button: {
       ok: 'OK'
@@ -18,7 +19,8 @@ const locales = {
     },
     navbar: {
       home: 'Strona główna',
-      transferDetails: 'Dane do przelewu'
+      transferDetails: 'Dane do przelewu',
+      petsGallery: 'Galeria'
     },
     navigation: {
       back: {
@@ -29,6 +31,12 @@ const locales = {
       alt: {
         dog: 'zdjęcie_psa'
       }
+    },
+    pets: {
+      type: 'Typ',
+      sex: 'Płeć',
+      name: 'Imię',
+      creationDate: 'Data dodania'
     }
   },
   en: {
@@ -36,7 +44,8 @@ const locales = {
       hello: 'Hello world!'
     },
     title: {
-      transfer: 'Transfer data'
+      transfer: 'Transfer data',
+      gallery: 'Gallery'
     },
     button: {
       ok: 'OK'
@@ -47,7 +56,8 @@ const locales = {
     },
     navbar: {
       home: 'Home',
-      transferDetails: 'Transfer details'
+      transferDetails: 'Transfer details',
+      petsGallery: 'Gallery'
     },
     navigation: {
       back: {
@@ -58,6 +68,12 @@ const locales = {
       alt: {
         dog: 'dog_image'
       }
+    },
+    pets: {
+      type: 'Type',
+      sex: 'Sex',
+      name: 'Name',
+      creationDate: 'Creation Date'
     }
   }
 }
