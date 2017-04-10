@@ -59,7 +59,7 @@ export default {
     }
   },
   created () {
-    this.$http.get(`http://dev.patronage2017.intive-projects.com/organization/info`)
+    this.$http.get(this.apiUrl + '/organization/info')
     .then(response => {
       this.transferData.address = {...response.data.address}
       this.transferData.bankAccount = {...response.data.bankAccount}

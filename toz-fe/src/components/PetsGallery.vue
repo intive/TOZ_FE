@@ -74,7 +74,7 @@ export default {
   created () {
     // const mock = new MockAdapter(this.$http)
     // mock.onGet('/petsInfo').reply(200, petsTable)
-    this.$http.get('http://dev.patronage2017.intive-projects.com/pets')
+    this.$http.get(this.apiUrl + '/pets')
     // this.$http.get('/petsInfo')
     .then(response => {
       this.petsList = [...response.data]

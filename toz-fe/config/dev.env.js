@@ -3,5 +3,5 @@ var prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  API_URL: '"http://localhost:10010"'
+  API_URL: '"http://dev.patronage2017.intive-projects.com"'
 })
