@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import PetsCarousel from '@/components/PetsCarousel'
+import PetsCarousel from './PetsCarousel'
 import News from '@/components/News'
 
 export default {

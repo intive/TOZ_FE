@@ -5,7 +5,7 @@
     </div>
     <div id="swiper-wrapper">
     <swiper :options="swiperOption">
-      <swiper-slide style="background-image:url(http://lorempixel.com/1000/500/)" v-for="n in 10" :key="n">
+      <swiper-slide style="background-image:url(http://lorempixel.com/1000/500/)" v-for="n in range" :key="n">
        <div class="slide-content" @click="openModal"></div>
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
@@ -17,34 +17,34 @@
     <div class="petInfo">
       <ul class="list-group pet-ul">
         <li class="pet-li">
-            <img class="float-left-span" src="../assets/circle-outline.png">
+          <div class="float-left-span backgroundImg circle"></div>
             <div class="center-span float-left-span">
-              <span>{{$route.params.name}}</span>
+              <span>{{petDetails.name}}</span>
               <span class="li-span-name">{{$t('pets.name')}}</span>
             </div>
         </li>
         <li class="pet-li">
-          <img class="float-left-span" src="../assets/jack-russell-terrier.png">
+          <div class="float-left-span backgroundImg dog"></div>
           <div class="name-wrapper float-left-span">
-            <span>{{$route.params.type}}</span>
+            <span>{{petDetails.type}}</span>
             <span class="center-span li-span-dog">{{$t('pets.type')}}</span>
           </div>
           <div class="sex-wrapper">
-            <img class="float-left-span float-right-span" src="../assets/gender.png">
-            <span class="center-span">{{$route.params.sex}}</span>
+            <div class="float-left-span backgroundImg sex"></div>
+            <span class="center-span">{{petDetails.sex}}</span>
             <span class="center-span li-span-sex">{{$t('pets.sex')}}</span>
           </div>
         </li>
-        <li class=" pet-li">
-          <img class="float-left-span" src="../assets/calendar.png">
+        <li class="pet-li">
+          <div class="float-left-span backgroundImg calendar"></div>
           <div class="float-left-span center-span">
-            <span>{{$route.params.created}}</span>
+            <span>{{petDetails.created}}</span>
             <span class="li-span-calendar center-span">{{$t('pets.creationDate')}}</span>
           </div>
         </li>
       </ul>
     </div>
-    <h2>{{$route.params.description}}</h2>
+     <h2>{{petDetails.description}}</h2>
   </div>
 </template>
 <script>
@@ -52,23 +52,38 @@
   export default {
     data () {
       return {
+        showModal: false,
+        id: this.$route.params.id,
+        petDetails: {},
         errors: [],
+        range: 10,
         swiperOption: {
           nextButton: '.swiper-button-next',
           prevButton: '.swiper-button-prev',
           pagination: '.swiper-pagination',
           paginationType: 'fraction'
-        },
-        showModal: false
+        }
       }
     },
     components: {
       swiper,
       swiperSlide
     },
+    created () {
+      this.fetchData()
+    },
     methods: {
       openModal () {
         this.showModal = true
+      },
+      fetchData () {
+        this.$http.get('http://dev.patronage2017.intive-projects.com/pets/' + this.id)
+          .then(response => {
+            this.petDetails = {...response.data}
+          })
+          .catch(error => {
+            this.errors.push(error)
+          })
       }
     }
   }
@@ -151,6 +166,25 @@
   #swiper-wrapper{
     width: 60%;
     margin: 0 0 0 20%;
+  }
+  .circle{
+    background: url("../assets/circle-outline.png") center;
+  }
+  .dog{
+    background: url("../assets/jack-russell-terrier.png") center;
+  }
+  .sex{
+    background: url("../assets/gender.png") center;
+  }
+  .calendar{
+     background: url("../assets/calendar.png") center;
+  }
+  .backgroundImg{
+    border: 0;
+    width: 65px;
+    height: 65px;
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 /* MEDIA QUERIES */
   @media only screen and (max-width: 450px){

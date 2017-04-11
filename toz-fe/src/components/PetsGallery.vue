@@ -7,16 +7,7 @@
       <div v-for="row in currentPage.length" class="row">
         <div v-for="pet in currentPage.slice((row - 1) * 3, row * 3)" :key="pet.name" class="col-lg-4">
           <div class="card">
-            <router-link :to="{
-            name: 'petDetails',
-            params: {
-            id: pet.id,
-            name: pet.name,
-            sex: pet.sex,
-            created:pet.created,
-            type:pet.type,
-            description: pet.description
-            }}">
+            <router-link :to="{name: 'petDetails', params:{ id: pet.id }}">
             <div class="card-block">
               <img src="http://lorempixel.com/200/200/" alt="">
               <h2 class="card-title">{{pet.name}}</h2>
@@ -43,7 +34,6 @@
 
 <script>
 import Paginate from 'vuejs-paginate'
-import petDetails from '@/components/PetDetails'
 // import MockAdapter from 'axios-mock-adapter'
 // import petsTable from '@/petsMock'
 
@@ -86,7 +76,6 @@ export default {
     })
   },
   components: {
-    petDetails,
     Paginate
   }
 }
