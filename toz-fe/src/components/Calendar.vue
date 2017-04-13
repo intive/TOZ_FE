@@ -33,28 +33,6 @@
       </div>
     </div>
     <!--END Afternoon Calendar--> 
-
-    <!-- Booking modal -->
-    <booking v-if="showModal">
-      <h2 slot="header" class='booking'>Rezerwujesz termin:</h2>
-      <h3 slot="slot1" class='booking'>{{ this.dayLong }} {{ this.dayAndDateInWeek.dayDate }} {{ currentMonth }}, {{ dayTime }}</h3>
-      <span slot='slot2'>
-        <button class="modal-button" @click='showModal = false'>Rezygnuję</button>
-        <button class="modal-button" @click='openModalAccept()'>Potwierdzam</button>
-      </span>
-    </booking>
-
-    <booking v-if="showModalBooked">
-      <h2 slot="header" class='booking'>Termin zajęty przez:</h2>
-      <h3 slot="slot1" class='booking'>{{ volunteer }}</h3>
-    </booking>
-
-    <booking v-if="showModalAccept">
-      <h2 slot="header">Świetnie!</h2>
-      <h6 slot="slot1">Właśnie dokonałeś rezerwacji terminu.</h6>
-      <button slot='slot2' class='modal-button accept-button' @click='showModalAccept = false'>WRÓC DO GRAFIKU</button>
-    </booking>
-    <!-- END Booking Modal -->
   </div>
 </template>
 
@@ -109,7 +87,6 @@ export default {
         }
         this.dayAndDateInWeek.push(day)
       }
-      return 'Ala'
     },
     setDayAndDateInWeekWithTwoMonths (remainingDays) {
       this.mondayToSundayDate[0] = this.gotMonday
@@ -129,6 +106,7 @@ export default {
         }
         this.dayAndDateInWeek.push(day)
       }
+      console.log('druga')
     },
     openModal (day) {
       this.showModal = true

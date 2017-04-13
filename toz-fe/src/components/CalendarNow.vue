@@ -30,7 +30,8 @@ export default {
   },
   methods: {
     setMondayDate () {
-      const nowDate = new Date()
+      const nowDate = new Date(2017, 3, 1)
+      console.log(nowDate)
       this.dayInMonth = this.howMuchDayInPreviousMonth(nowDate.getFullYear(), nowDate.getMonth() + 1)
       this.monthNumber = nowDate.getMonth()
       const remainingDays = (nowDate.getDate() + (7 - nowDate.getDay()))

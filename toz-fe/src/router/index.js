@@ -6,6 +6,7 @@ import petDetails from '@/components/PetDetails'
 import NewsDetails from '@/components/NewsDetails'
 import Home from '@/components/Home'
 import Calendar from '@/components/CalendarNow'
+import Calendar2 from '@/components/Calendar2'
 import CalendarPrevious from '@/components/CalendarPrevious'
 import CalendarNext from '@/components/CalendarNext'
 import paths from './paths'
@@ -42,6 +43,11 @@ export default new Router({
       path: paths.calendar,
       name: 'calendar',
       component: Calendar
+    },
+    {
+      path: paths.calendar2,
+      name: 'calendar2',
+      component: Calendar2
     },
     {
       path: paths.calendarPrevious,
