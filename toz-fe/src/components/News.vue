@@ -54,7 +54,7 @@
     },
     methods: {
       fetchData () {
-        this.$http.get('http://dev.patronage2017.intive-projects.com/news?shortened=false')
+        this.$http.get(this.apiUrl + '/news?shortened=false')
             .then(response => {
               this.news = [...response.data]
             })
