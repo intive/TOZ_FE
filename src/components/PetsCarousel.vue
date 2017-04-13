@@ -5,16 +5,7 @@
     </div>
     <carousel v-else :navigationEnabled="true" :paginationEnabled="false" :navigationClickTargetSize="0" :perPageCustom="responsiveBreakpoints" class="carousel">
       <slide v-for="pet in petsList" :key="pet.id" >
-        <router-link :to="{
-        name: 'petDetails',
-        params: {
-          id: pet.id,
-          name: pet.name,
-          sex: pet.sex,
-          created:pet.created,
-          type:pet.type,
-          description: pet.description
-         }}">
+        <router-link :to="{name: 'petDetails', params:{ id: pet.id }}">
           <div class="sliderContent">
             <img src="http://lorempixel.com/200/200/" alt="pet photo">
             <h2>{{ $t("pets.name") }}: {{ pet.name }}</h2>
@@ -29,7 +20,6 @@
 
 <script>
 import { Carousel, Slide } from 'vue-carousel'
-import petDetails from '@/components/PetDetails'
 // import MockAdapter from 'axios-mock-adapter'
 // import petsTable from '@/petsMock'
 
@@ -55,8 +45,7 @@ export default {
   },
   components: {
     Carousel,
-    Slide,
-    petDetails
+    Slide
   }
 }
 </script>

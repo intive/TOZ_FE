@@ -6,7 +6,7 @@
           <h3 class="modal-default-button" @click="$emit('close')" >X</h3>
           <div class="modal-body">
               <swiper :options="swiperOption">
-                <swiper-slide  v-for="n in 10" :key="n">
+                <swiper-slide  v-for="n in range" :key="n">
                   <div style="background-image:url(http://lorempixel.com/1000/700/)" class="modal-content"></div>
                 </swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
@@ -26,6 +26,7 @@ export default {
     name: 'Modal',
     data () {
       return {
+        range: 10,
         swiperOption: {
           nextButton: '.swiper-button-next',
           prevButton: '.swiper-button-prev',
@@ -58,8 +59,8 @@ export default {
   display: block;
 }
 .modal-body {
-  width: 1000px;
-  height: 200px;
+  width: 78vw;
+  height: 20vh;
   margin:0;
   padding:0;
 }
@@ -90,7 +91,7 @@ export default {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 700px;
+  height: 70vh;
 }
 .swiper-slide {
   background-position: center;
@@ -114,10 +115,10 @@ export default {
       height: 20vh;
   }
   .modal-content {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 19em;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 19em;
   }
 }
 </style>
