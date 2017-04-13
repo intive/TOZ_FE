@@ -1,9 +1,7 @@
 <template>
   <div class="container">
-    <button @click="previousWeekDate"><<</button> KWIECIEŃ 10-16 <button @click="nextWeekDate">>></button>
-    <div class="row justify-content-end">
-      <button><<</button> KWIECIEŃ 10-16 <button>>></button>
-    </div>
+    <button @click="previousWeekDate">Previous</button>
+    <p>KWIECIEŃ 10-16</p>
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
     </div>
@@ -12,7 +10,7 @@
       <div class="col-11 col-md-11 col-xl-11">
         <table class="table">
           <tr>
-            <td v-for="days in dateInWeekMorning">
+            <td v-for="days in dateInWeekMorning" :key="days.day">
               <dayItem
                 :currentDay="days.day"
                 :currentMonth="days.month"
@@ -25,7 +23,7 @@
         </table>
       </div>
     </div>
-    <!-- END Morning Calendar -->      
+    <!-- END Morning Calendar -->
 
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line afternoonImg"></div>
@@ -49,12 +47,13 @@
         </table>
       </div>
     </div>
-    <!--END Afternoon Calendar--> 
+    <!--END Afternoon Calendar-->
   </div>
 </template>
 
 <script>
-import DayItem from './DayItem.vue'
+import DayItem from './DayItem'
+
 export default {
   name: 'Calendar2',
   data () {
@@ -77,6 +76,8 @@ export default {
       return new Date(year, month, 0).getDate()
     },
     previousWeekDate () {
+      this.dateInWeekMorning.splice(0, this.dateInWeekMorning.length)
+      this.dateInWeekAfternoon.splice(0, this.dateInWeekAfternoon.length)
       const previousDate = this.currentDate.getDate()
       const previousMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth())
       if (previousDate <= 7) {
@@ -86,6 +87,7 @@ export default {
         this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), (previousDate - 7))
       }
       this.setMondayDate()
+      console.log(this.dateInWeekMorning)
     },
     nextWeekDate () {
       console.log('prev')
@@ -121,8 +123,6 @@ export default {
     // *****************************************************
     formatMonthAndWeek () {
       // Contains number of day which left in week after month is ended
-      this.dateInWeekMorning = []
-      this.dateInWeekAfternoon = []
       const remainingDays = 7 - (this.dayInMonth - this.mondayDate + 1)
       if ((this.mondayDate + 6) > this.dayInMonth) {
         // Set date and name of day in week which contains two months for example: March 27-April 02
