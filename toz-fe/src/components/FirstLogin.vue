@@ -23,8 +23,8 @@
     </div>
     <div class="form-group row">
       <div class="offset-sm-2 col-sm-10">
-        <a href="#">Anuluj</a>
-        <button type="submit" class="btn btn-secondary">OK</button>
+        <a href="#">{{ $t("button.cancel") }}</a>
+        <button type="submit" class="btn btn-secondary">{{ $t("button.ok") }}</button>
       </div>
     </div>
   </form>
@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style>
 .btn {
   border-radius: 0;
 }

@@ -1,4 +1,4 @@
-import PetsList from '@/components/PetsList'
+import PetsList from '@/components/PetsCarousel'
 import Vue from 'vue'
 
 describe('PetsList.vue', () => {

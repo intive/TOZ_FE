@@ -15,7 +15,8 @@ const locales = {
       gallery: 'Galeria'
     },
     button: {
-      ok: 'OK'
+      ok: 'OK',
+      cancel: 'Anuluj'
     },
     labels: {
       login: 'Login',
@@ -28,8 +29,10 @@ const locales = {
     },
     navbar: {
       home: 'Strona główna',
-      transferDetails: 'Dane do przelewu',
-      petsGallery: 'Galeria'
+      transferDetails: 'Pomoc',
+      petsGallery: 'Galeria',
+      aboutUs: 'O nas',
+      schedule: 'Grafik'
     },
     navigation: {
       back: {
@@ -60,7 +63,8 @@ const locales = {
       gallery: 'Gallery'
     },
     button: {
-      ok: 'OK'
+      ok: 'OK',
+      cancel: 'Cancel'
     },
     labels: {
       login: 'Login',
@@ -73,8 +77,10 @@ const locales = {
     },
     navbar: {
       home: 'Home',
-      transferDetails: 'Transfer details',
-      petsGallery: 'Gallery'
+      transferDetails: 'Help',
+      petsGallery: 'Gallery',
+      aboutUs: 'About us',
+      schedule: 'Schedule'
     },
     navigation: {
       back: {
@@ -97,7 +103,7 @@ const locales = {
 Vue.use(VueI18n)
 
 // Vue.config.lang = 'pl'
-Vue.config.lang = 'pl'
+Vue.config.lang = 'en'
 
 Object.keys(locales).forEach((lang) => {
   Vue.locale(lang, locales[lang])

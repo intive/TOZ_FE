@@ -13,8 +13,12 @@
       <router-link to="/transfer" class="nav-link">{{ $t("navbar.transferDetails") }}</router-link>
     </li>
     <li class="nav-item">
+      <img src="../assets/schedule-icon.png" alt="">
+      <a class="nav-link" href="#">{{ $t("navbar.schedule") }}</a>
+    </li>
+    <li class="nav-item">
       <img src="../assets/about-icon.png" alt="">
-      <a class="nav-link" href="#">O nas</a>
+      <a class="nav-link" href="#">{{ $t("navbar.aboutUs") }}</a>
     </li>
   </ul>
 </template>
@@ -24,7 +28,7 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style scoped>
 .nav{
   margin: 1em auto;
 }

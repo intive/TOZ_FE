@@ -6,7 +6,7 @@
     <div class="transfer-data" v-else>
       <h1>{{ $t("title.transfer") }}</h1>
       <h2>{{ transferData.name }}</h2>
-      <h2>ul. {{ transferData.address.street }} {{ transferData.address.houseNumber }}/{{ transferData.address.apartmentNumber }}</h2>
+      <h2>{{ transferData.address.street }} {{ transferData.address.houseNumber }}/{{ transferData.address.apartmentNumber }}</h2>
       <h2>{{ transferData.address.postCode }} {{ transferData.address.city }}</h2>
       <h2>{{ transferData.address.country }}</h2>
       <h2>{{ transferData.bankAccount.bankName }}</h2>
@@ -52,10 +52,7 @@ export default {
   computed: {
     formattedAccountNumber () {
       const accountNumber = this.transferData.bankAccount.number
-      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)}
-        ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)}
-        ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)}
-        ${accountNumber.substr(22, 4)}`
+      return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
     }
   },
   created () {

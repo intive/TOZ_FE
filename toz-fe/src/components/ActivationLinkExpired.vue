@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img src="../assets/sadDog.jpg" alt="sad dog">
+    <img src="../assets/sadDog.jpg">
     <h1>{{ $t("message.linkExpired") }}</h1>
     <h1>{{ $t("message.contactAdministrator") }}</h1>
     <button type="button" name="button" class="btn btn-secondary">
@@ -14,8 +14,8 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
-  h1{
+<style scoped>
+  h1 {
     text-align: center;
   }
   img {

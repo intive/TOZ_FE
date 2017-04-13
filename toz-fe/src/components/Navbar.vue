@@ -1,8 +1,7 @@
 <template>
   <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+      <ul class="nav mr-auto">
+        <li class="nav-item">
           <a href="#" class="nav-link"><i class="fa fa-facebook-official fa-2x"></i></a>
         </li>
         <li class="nav-item">
@@ -22,7 +21,6 @@
         <button class="btn btn-outline-success my-2 my-sm-0"
                 type="submit">{{ $t("button.ok") }}</button>
       </form>
-    </div>
   </nav>
 </template>
 

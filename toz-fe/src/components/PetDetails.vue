@@ -19,7 +19,7 @@
         <li class="pet-li"><img class="float-left-span" src="../assets/circle-outline.png">
           <span class="float-left-span li-span-name center-span">{{$route.params.name}}</span>
         </li>
-        <li class=" pet-li">
+        <li class="pet-li">
           <img class="float-left-span" src="../assets/jack-russell-terrier.png">
           <span class="float-left-span center-span li-span-dog">{{$route.params.type}}</span>
           <div class="sex-wrapper">
@@ -27,7 +27,7 @@
            <span class=" li-span-sex center-span">{{$route.params.sex}}</span>
           </div>
         </li>
-        <li class=" pet-li"><img class="float-left-span" src="../assets/calendar.png">
+        <li class="pet-li"><img class="float-left-span" src="../assets/calendar.png">
           <span class="li-span-calendar float-left-span center-span">{{$route.params.created}}</span>
         </li>
       </ul>
