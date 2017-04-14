@@ -5,6 +5,7 @@ import PetsGallery from '@/components/PetsGallery'
 import petDetails from '@/components/PetDetails'
 import NewsDetails from '@/components/NewsDetails'
 import Home from '@/components/Home'
+import Calendar from '@/components/Calendar'
 import paths from './paths'
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: paths.petDetails,
       name: 'petDetails',
       component: petDetails
+    },
+    {
+      path: paths.calendar,
+      name: 'calendar',
+      component: Calendar
     }
   ]
 })

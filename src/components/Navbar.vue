@@ -11,6 +11,9 @@
         <li class="nav-item">
           <router-link to="/pets" class="nav-link">{{ $t("navbar.petsGallery") }}</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/calendar" class="nav-link">{{ $t("navbar.grafic") }}</router-link>
+        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2"
