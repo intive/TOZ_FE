@@ -1,5 +1,105 @@
 const petsTable = [
   {
+    id: 1,
+    name: 'Koteł',
+    type: 'Cat',
+    sex: 'female',
+    description: 'Kot Nefretete',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:3',
+    created: 1590694936013
+  },
+  {
+    id: 2,
+    name: 'Puszek',
+    type: 'Cat',
+    sex: 'male',
+    description: 'Puszek okruszek',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:4',
+    created: 1490694996013
+  },
+  {
+    id: 3,
+    name: 'Gryzak',
+    type: 'Dog',
+    sex: 'male',
+    description: 'Mały ale wariat',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:5',
+    created: 1420694936013
+  },
+  {
+    id: 4,
+    name: 'Rex',
+    type: 'Dog',
+    sex: 'male',
+    description: 'Pies policjant na emeryturze',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:6',
+    created: 1490694936813
+  },
+  {
+    id: 5,
+    name: 'burek',
+    type: 'dog',
+    sex: 'male',
+    description: 'Jamnik niskopodłogowy',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:1',
+    created: 1490694936013
+  },
+  {
+    id: 6,
+    name: 'reksio',
+    type: 'dog',
+    sex: 'female',
+    description: 'Owczarek szuwaro-bagienny',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:2',
+    created: 1490694936213
+  },
+  {
+    id: 7,
+    name: 'Koteł',
+    type: 'Cat',
+    sex: 'female',
+    description: 'Kot Nefretete',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:3',
+    created: 1590694936013
+  },
+  {
+    id: 8,
+    name: 'Puszek',
+    type: 'Cat',
+    sex: 'male',
+    description: 'Puszek okruszek',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:4',
+    created: 1490694996013
+  },
+  {
+    id: 9,
+    name: 'Gryzak',
+    type: 'Dog',
+    sex: 'male',
+    description: 'Mały ale wariat',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:5',
+    created: 1420694936013
+  },
+  {
+    id: 10,
+    name: 'Rex',
+    type: 'Dog',
+    sex: 'male',
+    description: 'Pies policjant na emeryturze',
+    img: 'http://lorempixel.com/100/100/',
+    address: 'address:6',
+    created: 1490694936813
+  },
+  {
     id: 11,
     name: 'burek',
     type: 'dog',

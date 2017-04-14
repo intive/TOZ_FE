@@ -53,7 +53,6 @@ describe('Transfer.vue', () => {
         .to.equal('+48123123123')
       expect(vm.$el.querySelectorAll('.transfer-data h2')[12].textContent)
         .to.equal('http://example.com/')
-      // done()
     })
   })
   it('should set formattedAcountNumber return value in proper format', () => {

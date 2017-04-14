@@ -34,7 +34,7 @@ describe('PetsList.vue', () => {
       description: 'description:0'
     }
   ]
-  it('should render correct content', done => {
+  it('should render correct content', () => {
     Vue.nextTick(() => {
       expect(vm.$el.querySelectorAll('.sliderContent img')).to.exist
       expect(vm.$el.querySelectorAll('.sliderContent h2')[0].textContent).to.equal('Name: Name:2')
@@ -49,7 +49,6 @@ describe('PetsList.vue', () => {
       expect(vm.$el.querySelectorAll('.sliderContent h2')[9].textContent).to.equal('Name: Name:0')
       expect(vm.$el.querySelectorAll('.sliderContent h2')[10].textContent).to.equal('Type: DOG')
       expect(vm.$el.querySelectorAll('.sliderContent h2')[11].textContent).to.equal('Sex: MALE')
-      done()
     })
   })
 })

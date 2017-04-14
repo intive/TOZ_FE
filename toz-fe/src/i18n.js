@@ -35,6 +35,7 @@ const locales = {
       schedule: 'Grafik'
     },
     navigation: {
+      gallery: 'Pełna galeria',
       back: {
         home: 'Powrót do strony głównej'
       }
@@ -83,6 +84,7 @@ const locales = {
       schedule: 'Schedule'
     },
     navigation: {
+      gallery: 'Full gallery',
       back: {
         home: 'Back to Home page'
       }
