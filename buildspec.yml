@@ -20,4 +20,5 @@ phases:
       - cp package.json dist && cp app.js dist
 artifacts:
   files:
-    - dist/**/*
+    - **/*
+  base-directory: dist
