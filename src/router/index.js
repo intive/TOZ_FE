@@ -5,6 +5,8 @@ import PetsGallery from '@/components/PetsGallery'
 import petDetails from '@/components/PetDetails'
 import NewsDetails from '@/components/NewsDetails'
 import Home from '@/components/Home'
+import Account from '@/components/Account'
+import AccountPassword from '@/components/AccountPassword'
 import paths from './paths'
 Vue.use(Router)
 
@@ -34,6 +36,16 @@ export default new Router({
       path: paths.petDetails,
       name: 'petDetails',
       component: petDetails
+    },
+    {
+      path: paths.account,
+      name: 'account',
+      component: Account
+    },
+    {
+      path: paths.accountPassword,
+      name: 'accountPassword',
+      component: AccountPassword
     }
   ]
 })

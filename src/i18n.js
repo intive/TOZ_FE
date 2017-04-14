@@ -37,6 +37,12 @@ const locales = {
       sex: 'Płeć',
       name: 'Imię',
       creationDate: 'Data dodania'
+    },
+    account: {
+      accountLink: 'Moje konto',
+      oldPassword: 'Stare hasło',
+      newPassword: 'Nowe hasło',
+      confirmNewPassword: 'Potwierdź nowe hasło'
     }
   },
   en: {
@@ -74,6 +80,12 @@ const locales = {
       sex: 'Sex',
       name: 'Name',
       creationDate: 'Creation Date'
+    },
+    account: {
+      accountLink: 'My account',
+      oldPassword: 'Old passsword',
+      newPassword: 'New password',
+      confirmNewPassword: 'Confirm new password'
     }
   }
 }
