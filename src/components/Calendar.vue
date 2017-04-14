@@ -4,9 +4,9 @@
     {{ formatedStringWithDate }}
     <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('schedule.button.next') }}</button>
     <div class="row justify-content-end">
-      <button @click="previousWeekDate" v-if="previousWeek" class="navigateButton">Previous</button>
+      <button @click="previousWeekDate" class="navigateButton">Previous</button>
       KWIECIEŃ 10-16
-      <button @click="previousWeekDate" v-if="previousWeek" class="navigateButton">Previous</button>
+      <button @click="previousWeekDate" class="navigateButton">Previous</button>
     </div>-
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
