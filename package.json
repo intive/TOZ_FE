@@ -18,7 +18,9 @@
     "vue-carousel": "^0.6.4",
     "vue-router": "^2.2.0",
     "vuejs-paginate": "^0.9.0",
-    "vue-i18n": "^5.0.3"
+    "vue-i18n": "^5.0.3",
+    "express": "^4.14.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@kazupon/vue-i18n-loader": "^0.1.0",
@@ -85,8 +87,7 @@
     "webpack-bundle-analyzer": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1",
-    "webpack-merge": "^2.6.1",
-    "path": "^0.12.7"
+    "webpack-merge": "^2.6.1"
   },
   "engines": {
     "node": ">= 4.0.0",
