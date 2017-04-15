@@ -21,7 +21,7 @@ const locales = {
       home: 'Strona główna',
       transferDetails: 'Dane do przelewu',
       petsGallery: 'Galeria',
-      grafic: 'Grafik'
+      schedule: 'Kalendarz'
     },
     navigation: {
       back: {
@@ -80,7 +80,7 @@ const locales = {
       home: 'Home',
       transferDetails: 'Transfer details',
       petsGallery: 'Gallery',
-      grafic: 'Grafic'
+      schedule: 'Schedule'
     },
     navigation: {
       back: {
