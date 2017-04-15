@@ -1,13 +1,11 @@
 <template>
   <div class="container">
-    <button @click="previousWeekDate" v-if="previousWeek" class="navigateButton"> {{ $t('schedule.button.previous') }}</button>
-    {{ formatedStringWithDate }}
-    <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('schedule.button.next') }}</button>
-    <div class="row justify-content-end">
-      <button @click="previousWeekDate" class="navigateButton">Previous</button>
-      KWIECIEŃ 10-16
-      <button @click="previousWeekDate" class="navigateButton">Previous</button>
-    </div>-
+    <div class="row justify-content-center">
+      <button @click="previousWeekDate" v-if="previousWeek" class="navigateButton"> {{ $t('schedule.button.previous') }}</button>
+      {{ formatedStringWithDate }}
+      <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('schedule.button.next') }}</button>
+    </div>
+    
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
     </div>
@@ -267,9 +265,9 @@ td {
 .line:before {
   content: "";
   display: block;
-  border-bottom-style: dashed;
+  border-top-style: dashed;
   margin-left: 80px; /* CHANGE TO EM */
   height: 60px; /* CHANGE TO EM */
-  transform: translateY(-50%);
+  transform: translateY(50%);
 }
 </style>
