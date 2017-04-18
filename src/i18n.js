@@ -11,7 +11,8 @@ const locales = {
       gallery: 'Galeria'
     },
     button: {
-      ok: 'OK'
+      ok: 'OK',
+      cancel: 'Anuluj'
     },
     placeholder: {
       login: 'Login',
@@ -42,7 +43,8 @@ const locales = {
       accountLink: 'Moje konto',
       oldPassword: 'Stare hasło',
       newPassword: 'Nowe hasło',
-      confirmNewPassword: 'Potwierdź nowe hasło'
+      confirmNewPassword: 'Potwierdź nowe hasło',
+      changePassword: 'Zmień hasło'
     }
   },
   en: {
@@ -54,7 +56,8 @@ const locales = {
       gallery: 'Gallery'
     },
     button: {
-      ok: 'OK'
+      ok: 'OK',
+      cancel: 'Cancel'
     },
     placeholder: {
       login: 'Login',
@@ -85,15 +88,15 @@ const locales = {
       accountLink: 'My account',
       oldPassword: 'Old passsword',
       newPassword: 'New password',
-      confirmNewPassword: 'Confirm new password'
+      confirmNewPassword: 'Confirm new password',
+      changePassword: 'Change password'
     }
   }
 }
 
 Vue.use(VueI18n)
 
-// Vue.config.lang = 'pl'
-Vue.config.lang = 'en'
+Vue.config.lang = 'pl'
 
 Object.keys(locales).forEach((lang) => {
   Vue.locale(lang, locales[lang])

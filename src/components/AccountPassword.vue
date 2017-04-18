@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
       <input type="submit" class="btn btn-outline-success my-2" :value="$t('button.ok')">
-      <router-link to="/account" class="btn btn-outline-success my-2">Cancel</router-link>
+      <router-link to="/account" class="btn btn-outline-success my-2">{{ $t("button.cancel") }}</router-link>
     </div>
   </form>
   </div>
