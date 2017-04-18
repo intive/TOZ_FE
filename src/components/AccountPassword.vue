@@ -25,17 +25,9 @@
 
 export default {
   name: 'AccountPassword',
-  data () {
-    return {}
-  },
   methods: {
     handleSubmit () {
     }
-  },
-  components: {
   }
 }
 </script>
-
-<style scoped>
-</style>

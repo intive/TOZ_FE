@@ -16,18 +16,9 @@
 
 export default {
   name: 'Account',
-  data () {
-    return {
-    }
-  },
   methods: {
     handleSubmit () {
     }
-  },
-  components: {
   }
 }
 </script>
-
-<style scoped>
-</style>
