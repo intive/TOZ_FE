@@ -19,10 +19,13 @@ const locales = {
     },
     navbar: {
       home: 'Strona główna',
-      transferDetails: 'Dane do przelewu',
-      petsGallery: 'Galeria'
+      transferDetails: 'Pomoc',
+      petsGallery: 'Galeria',
+      aboutUs: 'O nas',
+      schedule: 'Grafik'
     },
     navigation: {
+      gallery: 'Pełna galeria',
       back: {
         home: 'Powrót do strony głównej'
       }
@@ -56,10 +59,13 @@ const locales = {
     },
     navbar: {
       home: 'Home',
-      transferDetails: 'Transfer details',
-      petsGallery: 'Gallery'
+      transferDetails: 'Help',
+      petsGallery: 'Gallery',
+      aboutUs: 'About us',
+      schedule: 'Schedule'
     },
     navigation: {
+      gallery: 'Full gallery',
       back: {
         home: 'Back to Home page'
       }

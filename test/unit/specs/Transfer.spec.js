@@ -4,7 +4,7 @@ import Transfer from '@/components/Transfer'
 describe('Transfer.vue', () => {
   const Constructor = Vue.extend(Transfer)
   const vm = new Constructor().$mount()
-  it('should render correct contents', done => {
+  it('should render correct contents', () => {
     vm.transferData = {
       address: {
         apartmentNumber: 0,
@@ -53,13 +53,11 @@ describe('Transfer.vue', () => {
           .to.equal('+48123123123')
       expect(vm.$el.querySelectorAll('.transfer-data h2')[12].textContent)
           .to.equal('http://example.com/')
-      done()
     })
   })
-  it('should set formattedAcountNumber return value in proper format', done => {
+  it('should set formattedAcountNumber return value in proper format', () => {
     Vue.nextTick(() => {
       expect(vm.formattedAccountNumber).to.equal('61 1090 1014 0000 0712 1981 2874')
-      done()
     })
   })
 })
