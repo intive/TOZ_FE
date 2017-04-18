@@ -40,16 +40,16 @@ const locales = {
       creationDate: 'Data dodania'
     },
     schedule: {
-      backHome: 'Powrót do strony głównej',
-      dayInWeek: ['pn', 'wt', 'śr', 'czw', 'pt', 'sb', 'nd'],
+      months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+      dayInWeek: ['nd', 'pn', 'wt', 'śr', 'czw', 'pt', 'sb'],
       dayNameLongList: ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'],
-      months: ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sieprnia', 'września', 'października', 'listopada', 'grudnia'],
       morningText: 'rano',
       afternoonText: 'popołudnie',
       book: {
-        header: 'Rezerwujesz termin:',
+        months: ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sieprnia', 'września', 'października', 'listopada', 'grudnia'],
+        header: 'Czy na pewno chcesz się zapisać na ten termin:',
         headerAccepted: 'Świetnie!',
-        textAccepted: 'Właśnie dokonałeś rezerwacji terminu.',
+        textAccepted: 'Właśnie dokonałeś rezerwacji terminu',
         goBack: 'WRÓĆ DO GRAFIKU'
       },
       button: {
@@ -100,16 +100,16 @@ const locales = {
     },
 
     schedule: {
-      backHome: 'Back to Home page',
-      dayInWeek: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      dayInWeek: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
       dayNameLongList: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-      months: ['of January', 'of February', 'of March', 'of April', 'of May', 'of June', 'of July', 'of August', 'of September', 'of October', 'of November', 'of December'],
       morningText: 'morning',
       afternoonText: 'afternoon',
       book: {
+        months: ['of January', 'of February', 'of March', 'of April', 'of May', 'of June', 'of July', 'of August', 'of September', 'of October', 'of November', 'of December'],
         header: "You're about to book:",
         headerAccepted: 'Great!',
-        textAccepted: "You've just booked a period.",
+        textAccepted: "You've just made a reservation",
         goBack: 'BACK TO SCHEDULE'
       },
       button: {

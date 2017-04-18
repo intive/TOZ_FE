@@ -1,17 +1,15 @@
 <!-- template for the modal component -->
 <template>
-  <transition name="booking">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <slot name="header"></slot>
-          <slot name="slot1"></slot>
-          <slot name="slot2"></slot>
-          <slot name="slot3"></slot>
-        </div>
+  <div class="modal-mask">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <slot name="header"></slot>
+        <slot name="slot1"></slot>
+        <slot name="slot2"></slot>
+        <slot name="slot3"></slot>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -22,7 +20,7 @@
  
 <style scoped>
   .modal-mask {
-    position: absolute;
+    position: fixed;
     z-index: 9999;
     left: 50%;
     top: 50%;
@@ -30,8 +28,6 @@
     width: 100%;
     height: 100%;
     display: table;
-    transition: opacity .3s ease;
-    /*background-color: rgba(0, 0, 0, .5);*/
   }
  .modal-wrapper {
    display: table-cell;
@@ -40,7 +36,7 @@
   .modal-container {
     min-width: 300px;
     max-width: 550px;
-    min-height: 200px;
+    height: 280px;
     margin: 0px auto;
     padding: 20px 30px;
     background-color: #fff;

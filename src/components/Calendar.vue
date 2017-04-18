@@ -218,7 +218,7 @@ export default {
   },
   computed: {
     formatedStringWithDate () {
-      const month = ['STYCZEŃ', 'LUTY', 'MARZEC', 'KWIECIEŃ', 'MAJ', 'CZERWIEC', 'LIPIEC', 'SIERPIEŃ', 'WRZESIEŃ', 'PAŹDZIERNIK', 'LISTOPAD', 'GRUDZIEŃ']
+      const month = this.$t('schedule.months')
       const sunDate = this.sundayDate < 10 ? `0${this.sundayDate}` : this.sundayDate
       const monDate = this.mondayDate < 10 ? `0${this.mondayDate}` : this.mondayDate
       if (this.sundayDay < this.mondayDate) {
