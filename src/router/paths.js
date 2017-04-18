@@ -7,3 +7,7 @@ const account = '/account'
 const accountPassword = '/accountPassword'
 
 export default { transfer, home, news, pets, petDetails, account, accountPassword }
+const petDetails = '/petDetails/:id'
+const news = '/news/:id'
+
+export default { transfer, home, news, pets, petDetails }
