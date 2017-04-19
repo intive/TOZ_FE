@@ -15,27 +15,24 @@ describe('News.vue', () => {
       year: '2017'
     }
   }]
-  it('should render proper content', done => {
+  it('should render proper content', () => {
     Vue.nextTick(() => {
       expect(vm.$el.querySelectorAll('h1')[0].textContent)
         .to.equal('Komunikat 1')
       expect(vm.$el.querySelectorAll('h1')[2].textContent)
         .to.equal('Skrócona treść komunikatu 1.')
-      done()
     })
   })
-  it('should link title', done => {
+  it('should link title', () => {
     Vue.nextTick(() => {
       expect(vm.$el.querySelectorAll('h1')[0].parentNode.tagName)
         .to.equal('ROUTER-LINK')
-      done()
     })
   })
-  it('should check if date is in proper format', done => {
+  it('should check if date is in proper format', () => {
     Vue.nextTick(() => {
       expect(vm.$el.querySelectorAll('h1')[1].textContent)
         .to.equal('01-01-2017')
-      done()
     })
   })
 })

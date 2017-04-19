@@ -1,13 +1,14 @@
 <template>
   <div>
+    <div v-if="loading" class="loader"></div>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div class="container">
       <div v-for="row in currentPage.length" class="row">
-        <div v-for="pet in currentPage.slice((row - 1) * 3, row * 3)" :key="pet.name" class="col-lg-4">
+        <div v-for="pet in currentPage.slice((row - 1) * 3, row * 3)" :key="pet.id" class="col-lg-4">
           <div class="card">
-            <router-link :to="{name: 'petDetails', params:{ id: pet.id }}">
+            <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
             <div class="card-block">
               <img src="http://lorempixel.com/200/200/" alt="">
               <h2 class="card-title">{{pet.name}}</h2>
@@ -29,13 +30,13 @@
       :next-class="paginationConfig.nextClass"
       :click-handler="paginationConfig.clickCallback">
     </paginate>
+    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
   </div>
 </template>
 
 <script>
 import Paginate from 'vuejs-paginate'
-// import MockAdapter from 'axios-mock-adapter'
-// import petsTable from '@/petsMock'
+import petDetails from '@/components/PetDetails'
 
 export default {
   data () {
@@ -52,36 +53,42 @@ export default {
         nextText: '>>',
         prevClass: 'page-link',
         nextClass: 'page-link',
-        clickCallback: this.clickCallback
-      }
+        clickCallback: this.changePage
+      },
+      itemsPerPage: 9,
+      loading: true
     }
   },
   methods: {
-    clickCallback (pageNum) {
-      this.currentPage = this.petsList.slice((pageNum - 1) * 9, (pageNum - 1) * 9 + 9)
+    changePage (pageNum) {
+      this.currentPage = this.petsList.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
     }
   },
   created () {
-    // const mock = new MockAdapter(this.$http)
-    // mock.onGet('/petsInfo').reply(200, petsTable)
-    this.$http.get(this.apiUrl + '/pets')
-    // this.$http.get('/petsInfo')
+    this.$http.get('/pets')
+    // this.$http.get('http://dev.patronage2017.intive-projects.com/pets')
     .then(response => {
-      this.petsList = [...response.data]
-      this.paginationConfig.numberOfPages = this.petsList.length / 9
-      this.clickCallback(1)
+      this.petsList = [...response.data.petsTable]
+      this.paginationConfig.numberOfPages = this.petsList.length / this.itemsPerPage
+      this.changePage(1)
+      this.loading = false
     })
     .catch(error => {
       this.errors.push(error)
+      this.loading = false
     })
   },
   components: {
+    petDetails,
     Paginate
   }
 }
 </script>
 <style>
+@import "../assets/styles/loader.css";
+
 .card {
   border: none;
 }
+
 </style>

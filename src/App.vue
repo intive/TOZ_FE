@@ -1,22 +1,25 @@
 <template>
   <div id="app">
     <navbar></navbar>
+    <navigation></navigation>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
   import Navbar from './components/Navbar'
+  import Navigation from './components/Nav'
+
   export default {
     name: 'app',
     components: {
-      Navbar
+      Navbar,
+      Navigation
     }
   }
 </script>
 
 <style>
-
   html,body{
     width: 100%;
     margin: 0;

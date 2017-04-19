@@ -11,7 +11,8 @@ const locales = {
       gallery: 'Galeria'
     },
     button: {
-      ok: 'OK'
+      ok: 'OK',
+      cancel: 'Anuluj'
     },
     placeholder: {
       login: 'Login',
@@ -19,11 +20,13 @@ const locales = {
     },
     navbar: {
       home: 'Strona główna',
-      transferDetails: 'Dane do przelewu',
+      transferDetails: 'Pomoc',
       petsGallery: 'Galeria',
-      schedule: 'Kalendarz'
+      aboutUs: 'O nas',
+      schedule: 'Grafik'
     },
     navigation: {
+      gallery: 'Pełna galeria',
       back: {
         home: 'Powrót do strony głównej'
       }
@@ -59,6 +62,13 @@ const locales = {
         previous: '<<'
       },
       bookedPeriod: 'Termin zajęty przez:'
+    },
+    account: {
+      accountLink: 'Moje konto',
+      oldPassword: 'Stare hasło',
+      newPassword: 'Nowe hasło',
+      confirmNewPassword: 'Potwierdź nowe hasło',
+      changePassword: 'Zmień hasło'
     }
   },
   en: {
@@ -70,7 +80,8 @@ const locales = {
       gallery: 'Gallery'
     },
     button: {
-      ok: 'OK'
+      ok: 'OK',
+      cancel: 'Cancel'
     },
     placeholder: {
       login: 'Login',
@@ -78,11 +89,13 @@ const locales = {
     },
     navbar: {
       home: 'Home',
-      transferDetails: 'Transfer details',
+      transferDetails: 'Help',
       petsGallery: 'Gallery',
+      aboutUs: 'About us',
       schedule: 'Schedule'
     },
     navigation: {
+      gallery: 'Full gallery',
       back: {
         home: 'Back to Home page'
       }
@@ -98,7 +111,6 @@ const locales = {
       name: 'Name',
       creationDate: 'Creation Date'
     },
-
     schedule: {
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       dayInWeek: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
@@ -119,14 +131,20 @@ const locales = {
         previous: '<<'
       },
       bookedPeriod: 'Period is already booked by:'
+    },
+    account: {
+      accountLink: 'My account',
+      oldPassword: 'Old passsword',
+      newPassword: 'New password',
+      confirmNewPassword: 'Confirm new password',
+      changePassword: 'Change password'
     }
   }
 }
 
 Vue.use(VueI18n)
 
-// Vue.config.lang = 'pl'
-Vue.config.lang = 'en'
+Vue.config.lang = 'pl'
 
 Object.keys(locales).forEach((lang) => {
   Vue.locale(lang, locales[lang])
