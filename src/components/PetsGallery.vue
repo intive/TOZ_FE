@@ -68,7 +68,7 @@ export default {
     // this.$http.get('http://dev.patronage2017.intive-projects.com/pets')
     .then(response => {
       this.petsList = response.data
-      this.paginationConfig.numberOfPages = this.petsList.length / this.itemsPerPage
+      this.paginationConfig.numberOfPages = Math.ceil(this.petsList.length / this.itemsPerPage)
       this.changePage(1)
       this.loading = false
     })
