@@ -40,7 +40,6 @@
 
 <script>
 import { Carousel, Slide } from 'vue-carousel'
-import petDetails from '@/components/PetDetails'
 
 export default {
   data () {
@@ -55,7 +54,7 @@ export default {
     // this.$http.get('http://dev.patronage2017.intive-projects.com/pets')
     this.$http.get('/pets')
     .then(response => {
-      this.petsList = [...response.data.petsTable]
+      this.petsList = response.data
       this.loading = false
     })
     .catch(error => {
@@ -65,8 +64,7 @@ export default {
   },
   components: {
     Carousel,
-    Slide,
-    petDetails
+    Slide
   }
 }
 </script>

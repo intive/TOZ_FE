@@ -72,7 +72,7 @@
         // this.$http.get(this.apiUrl + '/news?shortened=false')
         this.$http.get('/news')
             .then(response => {
-              this.news = [...response.data.news]
+              this.news = response.data
               this.loading = false
             })
             .catch(error => {

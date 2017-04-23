@@ -22,7 +22,17 @@ export default {
   data () {
     return {
       errors: [],
-      newsDetails: null,
+      newsDetails: {
+        title: '',
+        shortContent: '',
+        longContent: '',
+        date: {
+          day: '',
+          month: '',
+          year: ''
+        },
+        photoUrl: ''
+      },
       id: this.$route.params.id,
       loading: true
     }
@@ -38,7 +48,7 @@ export default {
       this.$http.get('/news/' + this.id)
       // this.$http.get(this.apiUrl + '/news?shortened=false')
           .then(response => {
-            this.newsDetails = {...response.data.news[this.id - 1]}
+            this.newsDetails = {...response.data[this.id - 1]}
             this.loading = false
           })
           .catch(error => {

@@ -161,4 +161,4 @@ const petsTable = [
   }
 ]
 
-export default {petsTable}
+export default petsTable

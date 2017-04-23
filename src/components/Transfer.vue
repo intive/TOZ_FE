@@ -61,7 +61,6 @@ export default {
     this.$http.get('/transfer')
     // this.$http.get(`http://dev.patronage2017.intive-projects.com/organization/info`)
     .then(response => {
-      console.log(response)
       this.transferData.address = {...response.data.transferData.address}
       this.transferData.bankAccount = {...response.data.transferData.bankAccount}
       this.transferData.contact = {...response.data.transferData.contact}
