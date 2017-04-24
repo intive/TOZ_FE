@@ -10,7 +10,9 @@
             {{ $t('help.form.name') }}
           </div>
           <div class="col-6 col-md-6 col-xl-6 text-left">
-            <input type="text" class="inputField" v-bind:placeholder="$t('help.form.name')" @change="nameAndSurnameValidate(2, 'name')" maxlength="35"> 
+            <input type="text" class="inputField" 
+              v-bind:class="{ inputFieldErrors: emptyName || errorsName }" 
+              v-bind:placeholder="$t('help.form.name')" @blur="nameAndSurnameValidate(2, 'name')" maxlength="35"> 
             <p class="errors" v-if="emptyName">Pole wymagane</p>
             <p class="errors" v-if="errorsName">Niepoprawne dane</p>
           </div>
@@ -20,7 +22,9 @@
             {{ $t('help.form.surname') }}
           </div>
           <div class="col-6 col-md-6 col-xl-6 text-left">
-            <input type="text" class="inputField" v-bind:placeholder="$t('help.form.surname')" maxlength="35" @change="nameAndSurnameValidate(3, 'surname')">
+            <input type="text" class="inputField" 
+              v-bind:class="{ inputFieldErrors: emptySurname || errorsSurname }" 
+              v-bind:placeholder="$t('help.form.surname')" maxlength="35" @blur="nameAndSurnameValidate(3, 'surname')">
             <p class="errors" v-if="emptySurname">Pole wymagane</p>
             <p class="errors" v-if="errorsSurname">Niepoprawne dane</p>
           </div>
@@ -30,7 +34,9 @@
             {{ $t('help.form.phoneNumber') }}
           </div>
           <div class="col-6 col-md-6 col-xl-6 text-left">
-            <input type="number" class="inputField" v-bind:placeholder="$t('help.form.phoneNumber')" maxlength="11" @change="phoneValidate">
+            <input type="number" class="inputField" 
+              v-bind:class="{ inputFieldErrors: emptyPhoneNumber || errorsPhoneNumber }" 
+              v-bind:placeholder="$t('help.form.phoneNumber')" maxlength="11" @blur="phoneValidate">
             <p class="errors" v-if="emptyPhoneNumber">Pole wymagane</p>
             <p class="errors" v-if="errorsPhoneNumber">Niepoprawne dane</p>
           </div>
@@ -40,7 +46,9 @@
             {{ $t('help.form.email') }}
           </div>
           <div class="col-6 col-md-6 col-xl-6 text-left">
-            <input type="email" class="inputField" v-bind:placeholder="$t('help.form.email')" maxlength="35" @change="emailValidate">
+            <input type="email" class="inputField" 
+              v-bind:class="{ inputFieldErrors: emptyEmail || errorsEmail }"
+              v-bind:placeholder="$t('help.form.email')" maxlength="35" @blur="emailValidate">
             <p class="errors" v-if="emptyEmail">Pole wymagane</p>
             <p class="errors" v-if="errorsEmail">Niepoprawne dane</p>
           </div>
@@ -107,7 +115,6 @@ export default {
           this.errorsSurname = true
           this.emptySurname = false
         }
-        inputValue.classList.add('inputFieldErrors')
       }
       if (inputValue.value.length === 0) {
         if (whichField === 'name') {
@@ -117,7 +124,6 @@ export default {
           this.errorsSurname = false
           this.emptySurname = true
         }
-        inputValue.classList.add('inputFieldErrors')
       }
       if (reg.test(inputValue.value) && inputValue.value.length > 0) {
         if (whichField === 'name') {
@@ -127,7 +133,6 @@ export default {
           this.errorsSurname = false
           this.emptySurname = false
         }
-        inputValue.classList.remove('inputFieldErrors')
       }
     },
     phoneValidate (e) {
@@ -135,15 +140,13 @@ export default {
       if ((phoneNumber.value.length === 9) || (phoneNumber.value.length === 11)) {
         this.errorsPhoneNumber = false
         this.emptyPhoneNumber = false
-        phoneNumber.classList.remove('inputFieldErrors')
       } else {
         this.errorsPhoneNumber = true
-        phoneNumber.classList.add('inputFieldErrors')
+        this.emptyPhoneNumber = false
       }
       if (phoneNumber.value.length === 0) {
         this.emptyPhoneNumber = true
         this.errorsPhoneNumber = false
-        phoneNumber.classList.add('inputFieldErrors')
       }
     },
     emailValidate (e) {
@@ -153,17 +156,14 @@ export default {
       if (!reg.test(emailVal)) {
         this.errorsEmail = true
         this.emptyEmail = false
-        email.classList.add('inputFieldErrors')
       }
       if (emailVal.length === 0) {
         this.emptyEmail = true
         this.errorsEmail = false
-        email.classList.add('inputFieldErrors')
       }
       if ((emailVal.length !== 0) && (reg.test(emailVal))) {
         this.emptyEmail = false
         this.errorsEmail = false
-        email.classList.remove('inputFieldErrors')
       }
     },
     radioFieldsValidate (e) {
