@@ -48,6 +48,23 @@ const locales = {
       newPassword: 'Nowe hasło',
       confirmNewPassword: 'Potwierdź nowe hasło',
       changePassword: 'Zmień hasło'
+    },
+    help: {
+      transfer: 'Wesprzyj TOZ finansowo',
+      volunteer: 'Zostań wolontariuszem TOZ!',
+      back: 'Powrót',
+      goToForm: 'Formularz zgłoszeniowy',
+      form: {
+        name: 'Imię',
+        surname: 'Nazwisko',
+        phoneNumber: 'Numer telefonu',
+        email: 'Email',
+        becomeVolunteer: 'Chcę zostać wolontariuszem',
+        becomeTemporaryHouse: 'Chcę zostać domem tymczasowym',
+        send: 'Wyślij',
+        cancel: 'Anuluj',
+        sendMessage: 'Zgłoszenie zostało wysłane'
+      }
     }
   },
   en: {
@@ -96,6 +113,23 @@ const locales = {
       newPassword: 'New password',
       confirmNewPassword: 'Confirm new password',
       changePassword: 'Change password'
+    },
+    help: {
+      transfer: 'Support ACC financally',
+      volunteer: 'Become ACC volunteer',
+      back: 'Back',
+      goToForm: 'Application form',
+      form: {
+        name: 'Name',
+        surname: 'Surname',
+        phoneNumber: 'Phone number',
+        email: 'Email',
+        becomeVolunteer: 'I want to become a volunteer',
+        becomeTemporaryHouse: 'I want become a temporary house',
+        send: 'Send',
+        cancel: 'Cancel',
+        sendMessage: 'The application has been send'
+      }
     }
   }
 }

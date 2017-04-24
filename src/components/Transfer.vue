@@ -17,7 +17,7 @@
       <h2>{{ transferData.contact.phone }}</h2>
       <h2>{{ transferData.contact.website }}</h2>
     </div>
-    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
+    <router-link to="/help">{{ $t("help.back") }}</router-link>
   </div>
 </template>
 
