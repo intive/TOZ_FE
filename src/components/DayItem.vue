@@ -3,10 +3,10 @@
     <div class="dayView" v-if="dayTime === 'morning'" @click='openModal'>
       <h1>{{ day }}</h1>
       {{ $t('schedule.dayInWeek[' + this.weekDay + ']') }}
-      <div class="booked" v-if="confirmed">{{ userInitials }}</div>
+      <div class="booked" v-if="confirmed">{{ inits }}</div>
     </div>
     <div class="dayView" v-else @click='openModal'>
-      <div class="booked" v-if="confirmed">{{ userInitials }}</div>
+      <div class="booked" v-if="confirmed">{{ inits }}</div>
     </div>
 
     <booking v-if="showModal">
@@ -26,7 +26,7 @@
 
     <booking v-if="showModalBooked">
       <h2 slot="header" class="modalHeader">{{ $t('schedule.bookedPeriod') }}</h2>
-      <h3 slot="slot1" class="underline"> {{ currentUser.forename }} {{ currentUser.surname }} </h3>
+      <h3 slot="slot1" class="underline"> {{ fullName }} </h3>
       <button slot="slot2" class="modal-button accept-button" @click='closeBooked'>{{ $t('schedule.book.goBack') }}</button>
     </booking>
 
@@ -37,7 +37,7 @@
 import Booking from './Booking.vue'
 export default {
   name: 'DayItem',
-  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'inits' ],
+  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'firstName', 'lastName' ],
   data () {
     return {
       day: this.currentDay,
@@ -50,10 +50,13 @@ export default {
       showModal: false,
       showModalAccepted: false,
       showModalBooked: false,
+      getUser: {
+        forename: this.firstName,
+        surname: this.lastName
+      },
       currentUser: {
         forename: 'Michał',
-        surname: 'Markowski',
-        id: 'c5296892-347f-4b2e-b1c6-6faff971f767'
+        surname: 'Markowski'
       }
     }
   },
@@ -95,14 +98,12 @@ export default {
     },
     closeBooked () {
       this.showModalBooked = false
+    },
+    initials (first, last) {
+      return first.slice(0, 1) + '. ' + last.slice(0, 1) + '.'
     }
   },
   computed: {
-    userInitials () {
-      let first = this.currentUser.forename.slice(0, 1)
-      let last = this.currentUser.surname.slice(0, 1)
-      return first + '. ' + last + '.'
-    },
     fullDate () {
       let monthFull = this.month + 1
       return this.year + '-' + monthFull + '-' + this.day
@@ -112,6 +113,20 @@ export default {
         return '08:00'
       } else {
         return '12:00'
+      }
+    },
+    inits () {
+      if (this.getConfirmation) {
+        return this.initials(this.getUser.forename, this.getUser.surname)
+      } else {
+        return this.initials(this.currentUser.forename, this.currentUser.surname)
+      }
+    },
+    fullName () {
+      if (this.getConfirmation) {
+        return this.getUser.forename + ' ' + this.getUser.surname
+      } else {
+        return this.currentUser.forename + ' ' + this.currentUser.surname
       }
     }
   },

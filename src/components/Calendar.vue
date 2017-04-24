@@ -10,7 +10,8 @@
       <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
     </div>
     <!-- Morning calendar-->
-    <div class="row justify-content-end">
+    <div v-if="loading" class="loader"></div>
+    <div v-else class="row justify-content-end">
       <div class="col-11 col-md-11 col-xl-11">
         <table class="table">
           <tr>
@@ -22,7 +23,8 @@
                 :currentWeekDay="days.weekDay"
                 :currentDayTime="days.dayTime"
                 :getConfirmation="days.booked"
-                :inits="days.initials"
+                :firstName="days.forename"
+                :lastName="days.surname"
                 v-on:accepted="booking">
               </dayItem>
             </td>
@@ -31,13 +33,13 @@
       </div>
     </div>
     <!-- END Morning Calendar -->
-
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line afternoonImg"></div>
     </div>
 
     <!-- Afternoon calendar-->
-    <div class="row justify-content-end">
+    <div v-if="loading" class="loader"></div>
+    <div v-else class="row justify-content-end">
       <div class="col-11 col-md-11 col-xl-11">
         <table class="table">
           <tr>
@@ -49,6 +51,8 @@
                 :currentWeekDay="days.weekDay"
                 :currentDayTime="days.dayTime"
                 :getConfirmation="days.booked"
+                :firstName="days.forename"
+                :lastName="days.surname"
                 v-on:accepted="booking">
               </dayItem>
             </td>
@@ -226,12 +230,13 @@ export default {
       console.log(date, time)
     },
     fetchData () {
+      this.loading = true
       this.$http.get('/schedule')
       // this.$http.get(this.apiUrl + '/schedule')
       .then(response => {
         this.reservations = {...response.data}
-        this.loading = false
         this.displayBooked()
+        this.loading = false
       })
       .catch(error => {
         this.errors.push(error)
@@ -239,6 +244,7 @@ export default {
       })
     },
     displayBooked () {
+      console.log(this.dateInWeekMorning)
       let res = this.reservations.reservationsTable
       for (let days of this.dateInWeekMorning) {
         let fullMonth = (days.month + 1).toString()
@@ -249,10 +255,12 @@ export default {
         for (let reservation of res) {
           if (reservation.date === fullDate) {
             days.booked = true
-            days.initials = this.volunteerInitials(reservation.ownerForename, reservation.ownerSurname)
+            days.forename = reservation.ownerForename
+            days.surname = reservation.ownerSurname
           } else {
             days.booked = false
-            days.initials = false
+            days.forename = false
+            days.surname = false
           }
         }
       }
@@ -269,9 +277,6 @@ export default {
         this.stringDate = `${month[this.monthNumber]} ${monDate}-${sunDate}`
       }
       return this.stringDate
-    },
-    volunteerInitials (first, last) {
-      return first.slice(0, 1) + '. ' + last.slice(0, 1) + '.'
     }
   },
   created () {
