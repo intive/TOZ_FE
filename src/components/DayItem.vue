@@ -104,9 +104,7 @@ export default {
   },
   computed: {
     userInitials () {
-      let first = this.currentUser.forename.charAt(0)
-      let last = this.currentUser.surname.charAt(0)
-      return `${first}. ${last}.`
+      return `${this.currentUser.forename.charAt(0)}. ${this.currentUser.surname.charAt(0)}.`
     }
   },
   created () {
