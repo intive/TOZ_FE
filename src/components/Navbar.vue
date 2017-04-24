@@ -1,31 +1,34 @@
 <template>
   <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-      <ul class="nav mr-auto">
-        <li class="nav-item">
-          <a href="#" class="nav-link"><i class="fa fa-facebook-official fa-2x"></i></a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <router-link to="/" class="nav-link">{{ $t("navbar.home") }}</router-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link"><i class="fa fa-instagram fa-2x"></i></a>
+          <router-link to="/pets" class="nav-link">{{ $t("navbar.petsGallery") }}</router-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link"><i class="fa fa-twitter fa-2x"></i></a>
+          <router-link to="/calendar" class="nav-link">{{ $t("navbar.schedule") }}</router-link>
         </li>
-      </ul>
-      <ul class="navbar-nav mr-1">
         <li class="nav-item">
-          <router-link to="/account" class="nav-link">{{ $t("account.accountLink") }}</router-link>
+          <router-link to="/help" class="nav-link">{{ $t("navbar.help") }}</router-link>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2"
-               type="email"
-               :placeholder="$t('placeholder.login')">
+               type="text"
+               :placeholder="$t('placeholder.login')"
+               disabled>
         <input class="form-control mr-sm-2"
                type="password"
-               :placeholder="$t('placeholder.password')">
+               :placeholder="$t('placeholder.password')"
+               disabled>
         <button class="btn btn-outline-success my-2 my-sm-0"
-                type="submit">{{ $t("button.ok") }}</button>
+                type="submit"
+                disabled>{{ $t("button.ok") }}</button>
       </form>
+    </div>
   </nav>
 </template>
 
@@ -40,5 +43,7 @@
 </script>
 
 <style scoped>
-
+  .navbar {
+    margin-bottom: 50px;
+  }
 </style>
