@@ -7,6 +7,7 @@ import NewsDetails from '@/components/NewsDetails'
 import Home from '@/components/Home'
 import Account from '@/components/Account'
 import AccountPassword from '@/components/AccountPassword'
+import Calendar from '@/components/Calendar'
 import paths from './paths'
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: paths.accountPassword,
       name: 'accountPassword',
       component: AccountPassword
+    },
+    {
+      path: paths.schedule,
+      name: 'schedule',
+      component: Calendar
     }
   ]
 })

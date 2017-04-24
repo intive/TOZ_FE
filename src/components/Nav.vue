@@ -14,7 +14,7 @@
     </li>
     <li class="nav-item">
       <img src="../assets/schedule-icon.png" alt="">
-      <a class="nav-link" href="#">{{ $t("navbar.schedule") }}</a>
+      <router-link to="/schedule" class="nav-link">{{ $t("navbar.schedule") }}</router-link>
     </li>
     <li class="nav-item">
       <img src="../assets/about-icon.png" alt="">
