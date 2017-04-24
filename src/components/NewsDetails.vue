@@ -1,65 +1,65 @@
 <template>
   <div>
-    <div class="loader" v-if="loading"></div>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
-    <div v-else>
+    <div v-if="newsDetails" :key="newsDetails.id">
       <h1>{{ newsDetails.title }}</h1>
-      <h2>{{ newsDetails.date.day }} / {{ newsDetails.date.month }} / {{ newsDetails.date.year }}</h2>
-      <h3>{{ newsDetails.longContent }}</h3>
+      <h1>{{ newsDetails.created }}</h1>
+      <h1>{{ newsDetails.published }}</h1>
+      <h1>{{ newsDetails.contents }}</h1>
       <img :src="newsDetails.photoUrl"
            class="img-fluid"
            :alt="$t('img.alt.dog')">
+      <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
     </div>
-    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'NewsDetails',
-  data () {
-    return {
-      errors: [],
-      newsDetails: {
-        title: '',
-        shortContent: '',
-        longContent: '',
-        date: {
-          day: '',
-          month: '',
-          year: ''
-        },
-        photoUrl: ''
+  export default {
+    name: 'NewsDetails',
+    data () {
+      return {
+        news: [],
+        errors: [],
+        newsDetails: null
+      }
+    },
+    created () {
+      this.fetchData()
+    },
+    watch: {
+      '$route': 'fetchData'
+    },
+    methods: {
+      getData (id) {
+        setTimeout(() => {
+          for (let i = 0; i < this.news.length; i++) {
+            if (this.news[i].id === id) {
+              this.newsDetails = this.news[i]
+            }
+          }
+
+          if (!this.newsDetails) {
+            this.errors.push(new Error('News not found.'))
+          }
+        }, 100)
       },
-      id: this.$route.params.id,
-      loading: true
-    }
-  },
-  created () {
-    this.fetchData()
-  },
-  watch: {
-    '$route': 'fetchData'
-  },
-  methods: {
-    fetchData () {
-      this.$http.get('/news/' + this.id)
-      // this.$http.get(this.apiUrl + '/news?shortened=false')
-          .then(response => {
-            this.newsDetails = {...response.data[this.id - 1]}
-            this.loading = false
-          })
-          .catch(error => {
-            this.errors.push(error)
-            this.loading = false
-          })
+      fetchData () {
+        this.$http.get(this.apiUrl + '/news?shortened=false')
+            .then(response => {
+              this.news = [...response.data]
+            })
+            .catch(error => {
+              this.errors.push(error)
+            })
+
+        this.getData(this.$route.params.id)
+      }
     }
   }
-}
 </script>
 
 <style scoped>
-@import "../assets/styles/loader.css";
 </style>

@@ -11,8 +11,7 @@ const locales = {
       gallery: 'Galeria'
     },
     button: {
-      ok: 'OK',
-      cancel: 'Anuluj'
+      ok: 'OK'
     },
     placeholder: {
       login: 'Login',
@@ -20,13 +19,12 @@ const locales = {
     },
     navbar: {
       home: 'Strona główna',
-      transferDetails: 'Pomoc',
+      transferDetails: 'Dane do przelewu',
       petsGallery: 'Galeria',
-      aboutUs: 'O nas',
-      schedule: 'Grafik'
+      schedule: 'Kalendarz',
+      help: 'Chcę pomóc TOZ'
     },
     navigation: {
-      gallery: 'Pełna galeria',
       back: {
         home: 'Powrót do strony głównej'
       }
@@ -42,12 +40,43 @@ const locales = {
       name: 'Imię',
       creationDate: 'Data dodania'
     },
-    account: {
-      accountLink: 'Moje konto',
-      oldPassword: 'Stare hasło',
-      newPassword: 'Nowe hasło',
-      confirmNewPassword: 'Potwierdź nowe hasło',
-      changePassword: 'Zmień hasło'
+    help: {
+      transfer: 'Wesprzyj TOZ finansowo',
+      volunteer: 'Zostań wolontariuszem TOZ!',
+      back: 'Powrót',
+      goToForm: 'Formularz zgłoszeniowy',
+      form: {
+        name: 'Imię',
+        surname: 'Nazwisko',
+        phoneNumber: 'Numer telefonu',
+        email: 'Email',
+        becomeVolunteer: 'Chcę zostać wolontariuszem',
+        becomeTemporaryHouse: 'Chcę zostać domem tymczasowym',
+        send: 'Wyślij',
+        cancel: 'Anuluj',
+        sendMessage: 'Zgłoszenie zostało wysłane'
+      }
+    },
+    schedule: {
+      backHome: 'Powrót do strony głównej',
+      dayInWeek: ['pn', 'wt', 'śr', 'czw', 'pt', 'sb', 'nd'],
+      dayNameLongList: ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'],
+      months: ['stycznia', 'lutego', 'marca', 'kwietnia', 'maja', 'czerwca', 'lipca', 'sieprnia', 'września', 'października', 'listopada', 'grudnia'],
+      morningText: 'rano',
+      afternoonText: 'popołudnie',
+      book: {
+        header: 'Rezerwujesz termin:',
+        headerAccepted: 'Świetnie!',
+        textAccepted: 'Właśnie dokonałeś rezerwacji terminu.',
+        goBack: 'WRÓĆ DO GRAFIKU'
+      },
+      button: {
+        accept: 'Potwierdzam',
+        decline: 'Rezygnuję',
+        next: '>>',
+        previous: '<<'
+      },
+      bookedPeriod: 'Termin zajęty przez:'
     }
   },
   en: {
@@ -59,8 +88,7 @@ const locales = {
       gallery: 'Gallery'
     },
     button: {
-      ok: 'OK',
-      cancel: 'Cancel'
+      ok: 'OK'
     },
     placeholder: {
       login: 'Login',
@@ -68,13 +96,12 @@ const locales = {
     },
     navbar: {
       home: 'Home',
-      transferDetails: 'Help',
+      transferDetails: 'Transfer details',
       petsGallery: 'Gallery',
-      aboutUs: 'About us',
-      schedule: 'Schedule'
+      schedule: 'Schedule',
+      help: 'I want to help ACC'
     },
     navigation: {
-      gallery: 'Full gallery',
       back: {
         home: 'Back to Home page'
       }
@@ -90,12 +117,43 @@ const locales = {
       name: 'Name',
       creationDate: 'Creation Date'
     },
-    account: {
-      accountLink: 'My account',
-      oldPassword: 'Old passsword',
-      newPassword: 'New password',
-      confirmNewPassword: 'Confirm new password',
-      changePassword: 'Change password'
+    help: {
+      transfer: 'Support ACC financally',
+      volunteer: 'Become ACC volunteer',
+      back: 'Back',
+      goToForm: 'Application form',
+      form: {
+        name: 'Name',
+        surname: 'Surname',
+        phoneNumber: 'Phone number',
+        email: 'Email',
+        becomeVolunteer: 'I want to become a volunteer',
+        becomeTemporaryHouse: 'I want become a temporary house',
+        send: 'Send',
+        cancel: 'Cancel',
+        sendMessage: 'The application has been send'
+      }
+    },
+    schedule: {
+      backHome: 'Back to Home page',
+      dayInWeek: ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'],
+      dayNameLongList: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      months: ['of January', 'of February', 'of March', 'of April', 'of May', 'of June', 'of July', 'of August', 'of September', 'of October', 'of November', 'of December'],
+      morningText: 'morning',
+      afternoonText: 'afternoon',
+      book: {
+        header: "You're about to book:",
+        headerAccepted: 'Great!',
+        textAccepted: "You've just booked a period.",
+        goBack: 'BACK TO SCHEDULE'
+      },
+      button: {
+        accept: 'Accept',
+        decline: 'Cancel',
+        next: '>>',
+        previous: '<<'
+      },
+      bookedPeriod: 'Period is already booked by:'
     }
   }
 }
@@ -103,6 +161,7 @@ const locales = {
 Vue.use(VueI18n)
 
 Vue.config.lang = 'pl'
+// Vue.config.lang = 'en'
 
 Object.keys(locales).forEach((lang) => {
   Vue.locale(lang, locales[lang])
