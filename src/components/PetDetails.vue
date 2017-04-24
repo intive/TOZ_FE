@@ -40,7 +40,7 @@
           <li class="pet-li">
             <div class="float-left-span backgroundImg calendar"></div>
             <div class="float-left-span center-span">
-              <span>{{petDetails.created}}</span>
+              <span>{{convertTimeStamp}}</span>
               <span class="li-span-calendar center-span">{{$t('pets.creationDate')}}</span>
             </div>
           </li>
@@ -94,6 +94,16 @@
             this.loading = false
           })
       }
+    },
+    computed: {
+      convertTimeStamp () {
+        const date = new Date(this.petDetails.created).toLocaleDateString()
+        if (date.charAt(0) + date.charAt(1) < 10) {
+          return `0${date}`
+        } else {
+          return date
+        }
+      }
     }
   }
 </script>
@@ -128,7 +138,7 @@
 .sex-wrapper{
   width: 50%;
   float:right;
-  margin-left: 13vw;
+  margin-left: 15vw;
 }
 .center-span{
   flex-direction: column;
