@@ -21,6 +21,8 @@
                 :currentYear="days.year"
                 :currentWeekDay="days.weekDay"
                 :currentDayTime="days.dayTime"
+                :getConfirmation="days.booked"
+                :inits="days.initials"
                 v-on:accepted="booking">
               </dayItem>
             </td>
@@ -46,6 +48,7 @@
                 :currentYear="days.year"
                 :currentWeekDay="days.weekDay"
                 :currentDayTime="days.dayTime"
+                :getConfirmation="days.booked"
                 v-on:accepted="booking">
               </dayItem>
             </td>
@@ -243,11 +246,13 @@ export default {
           fullMonth = '0' + fullMonth
         }
         let fullDate = days.year + '-' + fullMonth + '-' + days.day
-        // console.log(fullDate)
         for (let reservation of res) {
-          // console.log(reservation.date)
           if (reservation.date === fullDate) {
-            // console.log('ok')
+            days.booked = true
+            days.initials = this.volunteerInitials(reservation.ownerForename, reservation.ownerSurname)
+          } else {
+            days.booked = false
+            days.initials = false
           }
         }
       }
@@ -264,6 +269,9 @@ export default {
         this.stringDate = `${month[this.monthNumber]} ${monDate}-${sunDate}`
       }
       return this.stringDate
+    },
+    volunteerInitials (first, last) {
+      return first.slice(0, 1) + '. ' + last.slice(0, 1) + '.'
     }
   },
   created () {

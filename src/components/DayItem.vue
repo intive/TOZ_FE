@@ -37,7 +37,7 @@
 import Booking from './Booking.vue'
 export default {
   name: 'DayItem',
-  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime' ],
+  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'inits' ],
   data () {
     return {
       day: this.currentDay,
@@ -45,11 +45,11 @@ export default {
       year: this.currentYear,
       weekDay: this.currentWeekDay,
       dayTime: this.currentDayTime,
+      confirmed: this.getConfirmation,
       dayShortcut: '',
       showModal: false,
       showModalAccepted: false,
       showModalBooked: false,
-      confirmed: false,
       currentUser: {
         forename: 'Michał',
         surname: 'Markowski',
@@ -117,6 +117,8 @@ export default {
   },
   created () {
     this.setDayShortcut()
+    // console.log(this.inits)
+    // console.log(this.confirmed)
   }
 }
 </script>
