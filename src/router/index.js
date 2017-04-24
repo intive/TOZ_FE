@@ -5,6 +5,9 @@ import PetsGallery from '@/components/PetsGallery'
 import petDetails from '@/components/PetDetails'
 import NewsDetails from '@/components/NewsDetails'
 import Home from '@/components/Home'
+import Help from '@/components/Help'
+import HelpInfo from '@/components/HelpInfo'
+import Volunteer from '@/components/Volunteer'
 import Account from '@/components/Account'
 import AccountPassword from '@/components/AccountPassword'
 import paths from './paths'
@@ -46,6 +49,21 @@ export default new Router({
       path: paths.accountPassword,
       name: 'accountPassword',
       component: AccountPassword
+    },
+    {
+      path: paths.help,
+      name: 'help',
+      component: Help
+    },
+    {
+      path: paths.helpInfo,
+      name: 'helpInfo',
+      component: HelpInfo
+    },
+    {
+      path: paths.volunteer,
+      name: 'volunteer',
+      component: Volunteer
     }
   ]
 })
