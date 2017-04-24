@@ -13,8 +13,8 @@
             <input type="text" class="inputField" 
               v-bind:class="{ inputFieldErrors: emptyName || errorsName }" 
               v-bind:placeholder="$t('help.form.name')" @blur="nameAndSurnameValidate(2, 'name')" maxlength="35"> 
-            <p class="errors" v-if="emptyName">Pole wymagane</p>
-            <p class="errors" v-if="errorsName">Niepoprawne dane</p>
+            <p class="errors" v-if="emptyName">{{ $t('help.form.fieldRequired') }}</p>
+            <p class="errors" v-if="errorsName">{{ $t('help.form.incorrectData') }}</p>
           </div>
         </div>
         <div class="row justify-content-center">
@@ -25,8 +25,8 @@
             <input type="text" class="inputField" 
               v-bind:class="{ inputFieldErrors: emptySurname || errorsSurname }" 
               v-bind:placeholder="$t('help.form.surname')" maxlength="35" @blur="nameAndSurnameValidate(3, 'surname')">
-            <p class="errors" v-if="emptySurname">Pole wymagane</p>
-            <p class="errors" v-if="errorsSurname">Niepoprawne dane</p>
+            <p class="errors" v-if="emptySurname">{{ $t('help.form.fieldRequired') }}</p>
+            <p class="errors" v-if="errorsSurname">{{ $t('help.form.incorrectData') }}</p>
           </div>
         </div>
         <div class="row justify-content-center">
@@ -37,8 +37,8 @@
             <input type="number" class="inputField" 
               v-bind:class="{ inputFieldErrors: emptyPhoneNumber || errorsPhoneNumber }" 
               v-bind:placeholder="$t('help.form.phoneNumber')" maxlength="11" @blur="phoneValidate">
-            <p class="errors" v-if="emptyPhoneNumber">Pole wymagane</p>
-            <p class="errors" v-if="errorsPhoneNumber">Niepoprawne dane</p>
+            <p class="errors" v-if="emptyPhoneNumber">{{ $t('help.form.fieldRequired') }}</p>
+            <p class="errors" v-if="errorsPhoneNumber">{{ $t('help.form.incorrectData') }}</p>
           </div>
         </div>
         <div class="row justify-content-center">
@@ -49,8 +49,8 @@
             <input type="email" class="inputField" 
               v-bind:class="{ inputFieldErrors: emptyEmail || errorsEmail }"
               v-bind:placeholder="$t('help.form.email')" maxlength="35" @blur="emailValidate">
-            <p class="errors" v-if="emptyEmail">Pole wymagane</p>
-            <p class="errors" v-if="errorsEmail">Niepoprawne dane</p>
+            <p class="errors" v-if="emptyEmail">{{ $t('help.form.fieldRequired') }}</p>
+            <p class="errors" v-if="errorsEmail">{{ $t('help.form.incorrectData') }}</p>
           </div>
         </div>
         <div class="row justify-content-center">
@@ -67,7 +67,7 @@
           </div>
           <div class="col-6 col-md-6 col-xl-6 text-left">
             {{ $t('help.form.becomeTemporaryHouse') }}
-            <p class="errors" v-if="radioFields">Pole wymagane</p>
+            <p class="errors" v-if="radioFields">{{ $t('help.form.fieldRequired') }}</p>
           </div>
         </div>
         <div class="row justify-content-center buttons">
@@ -86,7 +86,7 @@
 
 <script>
 export default {
-  name: 'transferData',
+  name: 'volunteer',
   data () {
     return {
       emptyName: false,
@@ -106,7 +106,7 @@ export default {
   methods: {
     nameAndSurnameValidate (index, whichField, e) {
       const inputValue = document.getElementsByTagName('input')[index]
-      const reg = new RegExp('^[a-zA-Z]*$')
+      const reg = /^[a-zA-Z]*$/
       if (!reg.test(inputValue.value)) {
         if (whichField === 'name') {
           this.errorsName = true

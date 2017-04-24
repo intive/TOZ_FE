@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="loader" v-if="loading"></div>
       <div class="col-12 col-md-12 col-xl-12" v-else-if="!loading">
-        {{ howBeVolunteer.content }}
+        <p>{{ howBeVolunteer.content }}</p>
       </div>
       <div class="col-12 col-md-12 col-xl-12" v-if="errors">
         <h3 v-for="error in errors">{{ error.message }}</h3>

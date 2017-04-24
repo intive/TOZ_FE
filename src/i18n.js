@@ -63,7 +63,9 @@ const locales = {
         becomeTemporaryHouse: 'Chcę zostać domem tymczasowym',
         send: 'Wyślij',
         cancel: 'Anuluj',
-        sendMessage: 'Zgłoszenie zostało wysłane'
+        sendMessage: 'Zgłoszenie zostało wysłane',
+        fieldRequired: 'Pole wymagane',
+        incorrectData: 'Niepoprawne dane'
       }
     }
   },
@@ -126,9 +128,11 @@ const locales = {
         email: 'Email',
         becomeVolunteer: 'I want to become a volunteer',
         becomeTemporaryHouse: 'I want become a temporary house',
-        send: 'Send',
+        send: 'Sent',
         cancel: 'Cancel',
-        sendMessage: 'The application has been send'
+        sendMessage: 'The application has been send',
+        fieldRequired: 'Field required',
+        incorrectData: 'Incorrect data'
       }
     }
   }
