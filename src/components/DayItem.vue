@@ -1,33 +1,33 @@
 <template>
   <div>
-    <div class="dayView" v-if="dayTime === 'morning'" @click='openModal()'>
+    <div class="dayView" v-if="dayTime === 'morning'" @click='openModal'>
       <h1>{{ day }}</h1>
       {{ $t('schedule.dayInWeek[' + this.weekDay + ']') }}
       <div class="booked" v-if="confirmed">{{ userInitials }}</div>
     </div>
-    <div class="dayView" v-else @click='openModal()'>
+    <div class="dayView" v-else @click='openModal'>
       <div class="booked" v-if="confirmed">{{ userInitials }}</div>
     </div>
 
     <booking v-if="showModal">
       <h2 slot="header" class="modalHeader">{{ $t('schedule.book.header') }}</h2>
-      <h3 slot="slot1" class="underline">{{ day }} {{ $t('schedule.book.months[' + this.month + ']') }} {{ year }}, {{ dayTime }}</h3>
+      <h3 slot="slot1" class="underline">{{ day }} {{ $t('schedule.book.months[' + this.month + ']') }} {{ year }}, {{ dayTime === 'morning' ? $t('schedule.morningText') : $t('schedule.afternoonText') }}</h3>
       <span slot='slot2'>
-        <button class="modal-button" @click='closeModal()'>{{ $t('schedule.button.decline') }}</button>
-        <button class="modal-button" @click='openModalAccepted()'>{{ $t('schedule.button.accept') }}</button>
+        <button class="modal-button" @click='closeModal'>{{ $t('schedule.button.decline') }}</button>
+        <button class="modal-button" @click='openModalAccepted'>{{ $t('schedule.button.accept') }}</button>
       </span>
     </booking>
 
     <booking v-if="showModalAccepted">
       <h2 slot="header" class="modalAccepted">{{ $t('schedule.book.headerAccepted') }}</h2>
       <h4 slot="slot1">{{ $t('schedule.book.textAccepted') }}</h4>
-      <button slot="slot2" class="modal-button accept-button" @click='closeAccepted()'>{{ $t('schedule.book.goBack') }}</button>
+      <button slot="slot2" class="modal-button accept-button" @click='closeAccepted'>{{ $t('schedule.book.goBack') }}</button>
     </booking>
 
     <booking v-if="showModalBooked">
       <h2 slot="header" class="modalHeader">{{ $t('schedule.bookedPeriod') }}</h2>
       <h3 slot="slot1" class="underline"> {{ currentUser.forename }} {{ currentUser.surname }} </h3>
-      <button slot="slot2" class="modal-button accept-button" @click='closeBooked()'>{{ $t('schedule.book.goBack') }}</button>
+      <button slot="slot2" class="modal-button accept-button" @click='closeBooked'>{{ $t('schedule.book.goBack') }}</button>
     </booking>
 
   </div>
@@ -35,6 +35,8 @@
 
 <script>
 import Booking from './Booking.vue'
+import currentUser from '@/mocks/user'
+
 export default {
   name: 'DayItem',
   props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime' ],
@@ -59,12 +61,7 @@ export default {
         }
       },
       reservations: [],
-      currentUser: {
-        forename: 'Michał',
-        id: '55555',
-        surname: 'Markowski',
-        username: 'Loku'
-      }
+      currentUser
     }
   },
   components: {
@@ -76,6 +73,11 @@ export default {
       this.dayShortcut = `schedule.dayInWeek[${index}]`
     },
     openModal () {
+      const today = new Date().getDate()
+      const thisMonth = new Date().getMonth()
+      if ((this.month === thisMonth && this.day < today) || this.month < thisMonth) {
+        return
+      }
       if (this.confirmed) {
         this.showModalBooked = true
       } else {
@@ -102,9 +104,9 @@ export default {
   },
   computed: {
     userInitials () {
-      let first = this.currentUser.forename.slice(0, 1)
-      let last = this.currentUser.surname.slice(0, 1)
-      return first + '. ' + last + '.'
+      let first = this.currentUser.forename.charAt(0)
+      let last = this.currentUser.surname.charAt(0)
+      return `${first}. ${last}.`
     }
   },
   created () {

@@ -5,7 +5,7 @@
       {{ formatedStringWithDate }}
       <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('schedule.button.next') }}</button>
     </div>
-    
+
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
     </div>
@@ -59,7 +59,7 @@
 import DayItem from './DayItem'
 
 export default {
-  name: 'Calendar2',
+  name: 'Calendar',
   data () {
     return {
       currentDate: '',
@@ -166,7 +166,7 @@ export default {
       this.mondayToSundayDate[0] = this.mondayDate
       this.mondayToSundayDate[1] = this.mondayDate + 6
       for (let i = this.mondayToSundayDate[0]; i <= this.mondayToSundayDate[1]; i++) {
-        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
+        let nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
         let day = {
           day: i < 10 ? `0${i}` : `${i}`,
           month: this.currentDate.getMonth(),
@@ -185,7 +185,7 @@ export default {
       this.mondayToSundayDate[0] = this.mondayDate
       this.mondayToSundayDate[1] = remainingDays
       for (let i = this.mondayToSundayDate[0]; i <= this.dayInMonth; i++) {
-        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
+        let nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
         let day = {
           day: i < 10 ? `0${i}` : `${i}`,
           month: this.currentDate.getMonth(),
@@ -200,7 +200,7 @@ export default {
         }
       }
       for (let i = 1; i <= remainingDays; i++) {
-        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, i)
+        let nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, i)
         let day = {
           day: `0${i}`,
           month: this.currentDate.getMonth() + 1,
@@ -250,12 +250,12 @@ td {
   font-weight: bold;
 }
 .morningImg {
-  background: url("img/morning.png") no-repeat;
+  background: url("../assets/morning.png") no-repeat;
   width: 70px; /* CHANGE TO EM */
   height: 60px; /* CHANGE TO EM */
 }
 .afternoonImg {
-  background: url("img/afternoon.png") no-repeat;
+  background: url("../assets/afternoon.png") no-repeat;
   width: 70px; /* CHANGE TO EM */
   height: 70px; /* CHANGE TO EM */
 }

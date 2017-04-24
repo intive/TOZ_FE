@@ -15,9 +15,6 @@
         <li class="nav-item">
           <router-link to="/account" class="nav-link">{{ $t("account.accountLink") }}</router-link>
         </li>
-        <li class="nav-item">
-          <router-link to="/calendar" class="nav-link">{{ $t("navbar.schedule") }}</router-link>
-        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2"

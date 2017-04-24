@@ -53,7 +53,7 @@ const locales = {
         header: 'Czy na pewno chcesz się zapisać na ten termin:',
         headerAccepted: 'Świetnie!',
         textAccepted: 'Właśnie dokonałeś rezerwacji terminu',
-        goBack: 'WRÓĆ DO GRAFIKU'
+        goBack: 'Wróć do grafiku'
       },
       button: {
         accept: 'Potwierdzam',
@@ -122,7 +122,7 @@ const locales = {
         header: "You're about to book:",
         headerAccepted: 'Great!',
         textAccepted: "You've just made a reservation",
-        goBack: 'BACK TO SCHEDULE'
+        goBack: 'Back to schedule'
       },
       button: {
         accept: 'Accept',
