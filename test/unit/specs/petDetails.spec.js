@@ -15,14 +15,8 @@ describe('PetDetails.vue', () => {
       expect(vm.$el.querySelectorAll('.li-span-calendar').textContent).to.equal($t('pets.creationDate'))
     })
   })
-  describe('Timestamp converter', () => {
-    it('should append zero to first nine days', () => {
-      vm.petDetails.created = 1491332517000
-      expect(vm.convertTimeStamp).to.equal('04.04.2017')
-    })
-    it('should convert rest of the days in unchanged form', () => {
-      vm.petDetails.created = 1493061386000
-      expect(vm.convertTimeStamp).to.equal('24.04.2017')
-    })
+  it('should convert the date properly', () => {
+    vm.petDetails.created = 1590694936013
+    expect(vm.convertTimeStamp).to.equal('28.05.2020')
   })
 })

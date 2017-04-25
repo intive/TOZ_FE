@@ -3,6 +3,9 @@ import VueI18n from 'vue-i18n'
 
 const locales = {
   pl: {
+    code: {
+      pl: 'pl-PL'
+    },
     message: {
       hello: 'Witaj!'
     },
@@ -72,6 +75,9 @@ const locales = {
     }
   },
   en: {
+    code: {
+      en: 'en-EN'
+    },
     message: {
       hello: 'Hello world!'
     },

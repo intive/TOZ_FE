@@ -97,12 +97,7 @@
     },
     computed: {
       convertTimeStamp () {
-        const date = new Date(this.petDetails.created).toLocaleDateString()
-        if (date.charAt(0) + date.charAt(1) < 10) {
-          return `0${date}`
-        } else {
-          return date
-        }
+        return new Date(this.petDetails.created).toLocaleDateString(this.$t('code.pl'), { day: '2-digit', month: '2-digit', year: 'numeric' })
       }
     }
   }
