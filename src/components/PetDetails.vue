@@ -48,7 +48,7 @@
       </div>
       <h2>{{petDetails.description}}</h2>
     </div>
-    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
+    <router-link to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 <script>
@@ -97,7 +97,7 @@
     },
     computed: {
       convertTimeStamp () {
-        return new Date(this.petDetails.created).toLocaleDateString(this.$t('code.pl'), { day: '2-digit', month: '2-digit', year: 'numeric' })
+        return new Date(this.petDetails.created).toLocaleDateString(this.$t('pets.code'), { day: '2-digit', month: '2-digit', year: 'numeric' })
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="transfer">
-    <h1>{{ $t("title.transfer") }}</h1>
+    <h1>{{ $t("header.transfer") }}</h1>
     <div class="loader" v-if="loading"></div>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
@@ -17,7 +17,7 @@
       <h2>{{ transferData.contact.phone }}</h2>
       <h2>{{ transferData.contact.website }}</h2>
     </div>
-    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
+    <router-link to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 

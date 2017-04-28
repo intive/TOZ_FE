@@ -3,19 +3,17 @@ import VueI18n from 'vue-i18n'
 
 const locales = {
   pl: {
-    code: {
-      pl: 'pl-PL'
+    common: {
+      button: {
+        ok: 'OK',
+        cancel: 'Anuluj',
+        signIn: 'Zaloguj się'
+      },
+      backHome: 'Powrót do strony głównej'
     },
-    message: {
-      hello: 'Witaj!'
-    },
-    title: {
+    header: {
       transfer: 'Dane do przelewu',
       gallery: 'Galeria'
-    },
-    button: {
-      ok: 'OK',
-      cancel: 'Anuluj'
     },
     placeholder: {
       login: 'Login',
@@ -29,10 +27,7 @@ const locales = {
       schedule: 'Grafik'
     },
     navigation: {
-      gallery: 'Pełna galeria',
-      back: {
-        home: 'Powrót do strony głównej'
-      }
+      gallery: 'Pełna galeria'
     },
     img: {
       alt: {
@@ -43,7 +38,8 @@ const locales = {
       type: 'Typ',
       sex: 'Płeć',
       name: 'Imię',
-      creationDate: 'Data dodania'
+      creationDate: 'Data dodania',
+      code: 'pl-PL'
     },
     schedule: {
       months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
@@ -75,19 +71,17 @@ const locales = {
     }
   },
   en: {
-    code: {
-      en: 'en-EN'
+    common: {
+      button: {
+        ok: 'OK',
+        cancel: 'Cancel',
+        signIn: 'Sign in'
+      },
+      backHome: 'Back to Home page'
     },
-    message: {
-      hello: 'Hello world!'
-    },
-    title: {
+    header: {
       transfer: 'Transfer data',
       gallery: 'Gallery'
-    },
-    button: {
-      ok: 'OK',
-      cancel: 'Cancel'
     },
     placeholder: {
       login: 'Login',
@@ -101,10 +95,7 @@ const locales = {
       schedule: 'Schedule'
     },
     navigation: {
-      gallery: 'Full gallery',
-      back: {
-        home: 'Back to Home page'
-      }
+      gallery: 'Full gallery'
     },
     img: {
       alt: {
@@ -115,7 +106,8 @@ const locales = {
       type: 'Type',
       sex: 'Sex',
       name: 'Name',
-      creationDate: 'Creation Date'
+      creationDate: 'Creation Date',
+      code: 'en-EN'
     },
     schedule: {
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],

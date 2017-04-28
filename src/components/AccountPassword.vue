@@ -14,8 +14,8 @@
         <input type="password" class="form-control" id="confirmNewPassword" :placeholder="$t('account.confirmNewPassword')" maxlength="24" required>
       </div>
       <div class="form-group">
-        <input type="submit" class="btn btn-outline-success my-2" :value="$t('button.ok')">
-        <router-link to="/account" class="btn btn-outline-success my-2">{{ $t("button.cancel") }}</router-link>
+        <input type="submit" class="btn btn-outline-success my-2" :value="$t('common.button.ok')">
+        <router-link to="/account" class="btn btn-outline-success my-2">{{ $t("common.button.cancel") }}</router-link>
       </div>
     </form>
   </div>

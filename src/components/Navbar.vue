@@ -24,7 +24,7 @@
                type="password"
                :placeholder="$t('placeholder.password')">
         <button class="btn btn-outline-success my-2 my-sm-0"
-                type="submit">{{ $t("button.ok") }}</button>
+                type="submit">{{ $t("common.button.signIn") }}</button>
       </form>
   </nav>
 </template>

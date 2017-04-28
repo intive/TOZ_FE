@@ -30,7 +30,7 @@
       :next-class="paginationConfig.nextClass"
       :click-handler="paginationConfig.clickCallback">
     </paginate>
-    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
+    <router-link to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 

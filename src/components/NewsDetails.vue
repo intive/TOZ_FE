@@ -12,7 +12,7 @@
            class="img-fluid"
            :alt="$t('img.alt.dog')">
     </div>
-    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
+    <router-link to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 

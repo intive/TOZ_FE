@@ -2,7 +2,7 @@
   <div>
     <News></News>
     <div class="carousel">
-      <h1>{{ $t("title.gallery") }}</h1>
+      <h1>{{ $t("header.gallery") }}</h1>
       <PetsCarousel></PetsCarousel>
     </div>
   </div>
