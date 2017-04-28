@@ -1,6 +1,6 @@
 <template>
   <div class="transfer">
-    <h1>{{ $t("header.transfer") }}</h1>
+    <h1>{{ $t("transfer.header") }}</h1>
     <div class="loader" v-if="loading"></div>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>

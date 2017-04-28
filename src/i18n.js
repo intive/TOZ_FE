@@ -11,37 +11,35 @@ const locales = {
       },
       backHome: 'Powrót do strony głównej'
     },
-    header: {
-      transfer: 'Dane do przelewu',
-      gallery: 'Galeria'
-    },
-    placeholder: {
-      login: 'Login',
-      password: 'Hasło'
+    home: {
+      header: {
+        gallery: 'Galeria'
+      }
     },
     navbar: {
+      placeholder: {
+        login: 'Login',
+        password: 'Hasło'
+      }
+    },
+    nav: {
       home: 'Strona główna',
       transferDetails: 'Pomoc',
       petsGallery: 'Galeria',
       aboutUs: 'O nas',
       schedule: 'Grafik'
     },
-    navigation: {
-      gallery: 'Pełna galeria'
+    petsCarousel: {
+      fullGallery: 'Pełna galeria'
     },
-    img: {
-      alt: {
-        dog: 'zdjęcie_psa'
-      }
-    },
-    pets: {
+    petDetails: {
       type: 'Typ',
       sex: 'Płeć',
       name: 'Imię',
       creationDate: 'Data dodania',
       code: 'pl-PL'
     },
-    schedule: {
+    calendar: {
       months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
       dayInWeek: ['nd', 'pn', 'wt', 'śr', 'czw', 'pt', 'sb'],
       dayNameLongList: ['poniedziałek', 'wtorek', 'środa', 'czwartek', 'piątek', 'sobota', 'niedziela'],
@@ -62,6 +60,9 @@ const locales = {
       },
       bookedPeriod: 'Termin zajęty przez:'
     },
+    transfer: {
+      header: 'Dane do przelewu'
+    },
     account: {
       accountLink: 'Moje konto',
       oldPassword: 'Stare hasło',
@@ -79,37 +80,35 @@ const locales = {
       },
       backHome: 'Back to Home page'
     },
-    header: {
-      transfer: 'Transfer data',
-      gallery: 'Gallery'
-    },
-    placeholder: {
-      login: 'Login',
-      password: 'Password'
+    home: {
+      header: {
+        gallery: 'Gallery'
+      }
     },
     navbar: {
+      placeholder: {
+        login: 'Login',
+        password: 'Password'
+      }
+    },
+    nav: {
       home: 'Home',
       transferDetails: 'Help',
       petsGallery: 'Gallery',
       aboutUs: 'About us',
       schedule: 'Schedule'
     },
-    navigation: {
-      gallery: 'Full gallery'
+    petsCarousel: {
+      fullGallery: 'Full gallery'
     },
-    img: {
-      alt: {
-        dog: 'dog_image'
-      }
-    },
-    pets: {
+    petDetails: {
       type: 'Type',
       sex: 'Sex',
       name: 'Name',
       creationDate: 'Creation Date',
       code: 'en-EN'
     },
-    schedule: {
+    calendar: {
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       dayInWeek: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
       dayNameLongList: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -129,6 +128,9 @@ const locales = {
         previous: '<<'
       },
       bookedPeriod: 'Period is already booked by:'
+    },
+    transfer: {
+      header: 'Transfer data'
     },
     account: {
       accountLink: 'My account',
