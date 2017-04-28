@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="dayView" v-if="dayTime === 'morning'" @click='openModal'>
+    <div class="dayView" v-if="dayTime === morning" @click='openModal'>
       <h1>{{ day }}</h1>
       {{ $t('schedule.dayInWeek[' + this.weekDay + ']') }}
-      <div class="booked" v-if="confirmed">{{ inits }}</div>
+      <div class="booked" v-if="confirmed || this.getConfirmation">{{ inits }}</div>
     </div>
     <div class="dayView" v-else @click='openModal'>
-      <div class="booked" v-if="confirmed">{{ inits }}</div>
+      <div class="booked" v-if="confirmed || this.getConfirmation">{{ inits }}</div>
     </div>
 
     <booking v-if="showModal">
@@ -35,6 +35,7 @@
 
 <script>
 import Booking from './Booking.vue'
+import currentUser from '@/mocks/user'
 export default {
   name: 'DayItem',
   props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'firstName', 'lastName' ],
@@ -45,19 +46,18 @@ export default {
       year: this.currentYear,
       weekDay: this.currentWeekDay,
       dayTime: this.currentDayTime,
-      confirmed: this.getConfirmation,
+      confirmed: false,
       dayShortcut: '',
       showModal: false,
       showModalAccepted: false,
       showModalBooked: false,
+      morning: 'morning',
+      afternoon: 'afternoon',
       getUser: {
         forename: this.firstName,
         surname: this.lastName
       },
-      currentUser: {
-        forename: 'Michał',
-        surname: 'Markowski'
-      }
+      currentUser
     }
   },
   components: {
@@ -71,14 +71,12 @@ export default {
     openModal () {
       let now = new Date()
       let checkDate = new Date(this.fullDate)
-      if (checkDate < now) {
+      if (this.confirmed || this.getConfirmation) {
+        this.showModalBooked = true
+      } else if (checkDate < now) {
         return false
       } else {
-        if (this.confirmed) {
-          this.showModalBooked = true
-        } else {
-          this.showModal = true
-        }
+        this.showModal = true
       }
     },
     openModalAccepted () {
@@ -105,11 +103,12 @@ export default {
   },
   computed: {
     fullDate () {
-      let monthFull = this.month + 1
-      return this.year + '-' + monthFull + '-' + this.day
+      // let monthFull = this.month + 1
+      // return this.year + '-' + monthFull + '-' + this.day
+      return new Date(this.year, this.month, this.day)
     },
     startTime () {
-      if (this.dayTime === 'morning') {
+      if (this.dayTime === this.morning) {
         return '08:00'
       } else {
         return '12:00'
@@ -132,8 +131,7 @@ export default {
   },
   created () {
     this.setDayShortcut()
-    // console.log(this.inits)
-    // console.log(this.confirmed)
+    // console.log(this.fullDate)
   }
 }
 </script>

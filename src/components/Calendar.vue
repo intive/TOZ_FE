@@ -82,7 +82,7 @@ export default {
       previousWeek: true,
       nextWeek: true,
       loading: true,
-      reservations: [],
+      reservations: {},
       errors: []
     }
   },
@@ -111,6 +111,7 @@ export default {
       } else {
         this.previousWeek = false
       }
+      this.fetchData()
     },
     nextWeekDate () {
       this.dateInWeekMorning.splice(0, this.dateInWeekMorning.length)
@@ -130,6 +131,7 @@ export default {
       } else {
         this.nextWeek = false
       }
+      this.fetchData()
     },
     setMondayDate () {
       const currentDay = (this.currentDate.getDay() === 0) ? 6 : (this.currentDate.getDay() - 1)
@@ -183,7 +185,10 @@ export default {
           month: this.currentDate.getMonth(),
           year: this.currentDate.getFullYear(),
           weekDay: nowDate.getDay(),
-          dayTime: periodName
+          dayTime: periodName,
+          booked: false,
+          forename: '',
+          surname: ''
         }
         if (periodName === 'morning') {
           this.dateInWeekMorning.push(day)
@@ -229,13 +234,16 @@ export default {
     booking (date, time) {
       console.log(date, time)
     },
+    // formatMonth (month) {
+
+    // }
     fetchData () {
       this.loading = true
       this.$http.get('/schedule')
       // this.$http.get(this.apiUrl + '/schedule')
       .then(response => {
         this.reservations = {...response.data}
-        this.displayBooked()
+        this.displayBookedLaunch()
         this.loading = false
       })
       .catch(error => {
@@ -243,24 +251,24 @@ export default {
         this.loading = false
       })
     },
-    displayBooked () {
-      console.log(this.dateInWeekMorning)
-      let res = this.reservations.reservationsTable
-      for (let days of this.dateInWeekMorning) {
+    displayBookedLaunch () {
+      this.displayBooked(this.dateInWeekMorning, '08:00')
+      this.displayBooked(this.dateInWeekAfternoon, '12:00')
+    },
+    displayBooked (dayTime, start) {
+      const res = this.reservations.reservationsTable
+      for (let days of dayTime) {
         let fullMonth = (days.month + 1).toString()
         if (fullMonth.length < 2) {
           fullMonth = '0' + fullMonth
         }
         let fullDate = days.year + '-' + fullMonth + '-' + days.day
         for (let reservation of res) {
-          if (reservation.date === fullDate) {
+          // console.log(fullDate, reservation.date)
+          if (reservation.date === fullDate && reservation.startTime === start) {
             days.booked = true
             days.forename = reservation.ownerForename
             days.surname = reservation.ownerSurname
-          } else {
-            days.booked = false
-            days.forename = false
-            days.surname = false
           }
         }
       }
