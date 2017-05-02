@@ -8,26 +8,26 @@
     <div class="dayView" v-else @click='openModal'>
       <div class="booked" v-if="confirmed || this.getConfirmation">{{ inits }}</div>
     </div>
-
+    
     <booking v-if="showModal">
       <h2 slot="header" class="modalHeader">{{ $t('schedule.book.header') }}</h2>
       <h3 slot="slot1" class="underline">{{ day }} {{ $t('schedule.book.months[' + this.month + ']') }} {{ year }}, {{ $t('schedule.' + this.dayTime + 'Text') }}</h3>
       <span slot='slot2'>
-        <button class="modal-button" @click='closeModal'>{{ $t('schedule.button.decline') }}</button>
-        <button class="modal-button" @click='openModalAccepted'>{{ $t('schedule.button.accept') }}</button>
+        <button class="modalButton" @click='closeModal'>{{ $t('schedule.button.decline') }}</button>
+        <button class="modalButton" @click='openModalAccepted'>{{ $t('schedule.button.accept') }}</button>
       </span>
     </booking>
 
     <booking v-if="showModalAccepted">
       <h2 slot="header" class="modalAccepted">{{ $t('schedule.book.headerAccepted') }}</h2>
       <h4 slot="slot1">{{ $t('schedule.book.textAccepted') }}</h4>
-      <button slot="slot2" class="modal-button accept-button" @click='closeAccepted'>{{ $t('schedule.book.goBack') }}</button>
+      <button slot="slot2" class="modalButton buttonBack" @click='closeAccepted'>{{ $t('schedule.book.goBack') }}</button>
     </booking>
 
     <booking v-if="showModalBooked">
       <h2 slot="header" class="modalHeader">{{ $t('schedule.bookedPeriod') }}</h2>
       <h3 slot="slot1" class="underline"> {{ fullName }} </h3>
-      <button slot="slot2" class="modal-button accept-button" @click='closeBooked'>{{ $t('schedule.book.goBack') }}</button>
+      <button slot="slot2" class="modalButton buttonBack" @click='closeBooked'>{{ $t('schedule.book.goBack') }}</button>
     </booking>
 
   </div>
@@ -53,11 +53,21 @@ export default {
       showModalBooked: false,
       morning: 'morning',
       afternoon: 'afternoon',
+      message: '',
       getUser: {
         forename: this.firstName,
         surname: this.lastName
       },
-      currentUser
+      currentUser,
+      errors: [],
+      postBody: {
+        date: this.fullDate,
+        startTime: '',
+        endTime: '',
+        // ownerId: this.currentUser.id,
+        ownerId: 'c5296892-347f-4b2e-b1c6-6faff971f767',
+        modificationMessage: this.message
+      }
     }
   },
   components: {
@@ -83,7 +93,7 @@ export default {
       this.showModalAccepted = true
       this.showModal = false
       this.confirmed = true
-      this.$emit('accepted', this.fullDate, this.startTime)
+      this.postReservation()
     },
     openModalBooked () {
       this.showModalBooked = true
@@ -99,19 +109,29 @@ export default {
     },
     initials (first, last) {
       return first.slice(0, 1) + '. ' + last.slice(0, 1) + '.'
+    },
+    postReservation () {
+      this.$http.post('https://intense-badlands-80645.herokuapp.com/schedule', {
+        body: this.postBody
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
     }
   },
   computed: {
     fullDate () {
-      // let monthFull = this.month + 1
-      // return this.year + '-' + monthFull + '-' + this.day
-      return new Date(this.year, this.month, this.day)
+      let monthFull = this.month + 1
+      return this.year + '-' + monthFull + '-' + this.day
+      // return new Date(this.year, this.month, this.day)
     },
-    startTime () {
+    setTime () {
       if (this.dayTime === this.morning) {
-        return '08:00'
+        this.startTime = '08:00'
+        this.endTime = '12:00'
       } else {
-        return '12:00'
+        this.startTime = '12:00'
+        this.endTime = '16:00'
       }
     },
     inits () {
@@ -131,7 +151,6 @@ export default {
   },
   created () {
     this.setDayShortcut()
-    // console.log(this.fullDate)
   }
 }
 </script>
@@ -139,63 +158,65 @@ export default {
 <style scoped>
 .dayView {
   width: 100%;
-  height: 250px;
+  height: 15em;
   border-left-style: groove;
   border-bottom-style: groove;
   text-align: right;
   display: inline-block;
-  padding: 10px; /* CHANGE TO EM */
-  position: relative;
+  padding: 1em;
+  position: relative
 }
 .booked {
-  height: 100%;
   width: 100%;
   background-color: #ddd;
   text-align: center;
-  line-height: 250px;
-  font-size: 25px;
+  line-height: 7.5em;
+  font-size: 2em;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: -1
 }
 h1, h2 {
-  font-weight: normal;
+  font-weight: normal
 }
 .modalHeader {
-  margin-top: 30px;
+  margin-top: .5em
 }
 .underline {
   width: 90%;
   margin: 0 auto;
-  line-height: 50px;
-  border-bottom: 3px solid #000;
+  line-height: 2.5em;
+  border-bottom: .1em solid #000
 }
 h2.modalAccepted {
-  margin-top: 50px;
+  margin-top: 1.5em
 }
 .hidden {
   display: none
 }
 .initials {
-  text-align: center;
+  text-align: center
 }
-.modal-button {
+.modalButton {
+  width: 9em;
   float: center;
-  margin: 20px;
+  margin: 1.8em;
+  line-height: 2em;
   font-weight: 700;
   border: none;
   background-color: #fff;
-  cursor: pointer;
+  cursor: pointer
 }
-.modal-button:nth-child(2) {
+.modalButton:nth-child(2) {
   background-color: #ff6961;
-  color: #fff;
+  color: #fff
 }
-.accept-button {
-  margin-top: 30px;
-  border: 1px solid #404040;
-  color: #404040;
+.buttonBack {
+  width: 15em;
+  margin-top: 2.5em;
+  border: .1em solid #404040;
+  color: #404040
 }
 
 </style>

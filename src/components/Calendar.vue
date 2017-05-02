@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <button @click="previousWeekDate" v-if="previousWeek" class="navigateButton"> {{ $t('schedule.button.previous') }}</button>
+      <button @click="setPreviousAndNextWeekDate(false)" v-if="previousWeek" class="navigateButton"> {{ $t('schedule.button.previous') }}</button>
       {{ formatedStringWithDate }}
-      <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('schedule.button.next') }}</button>
+      <button @click="setPreviousAndNextWeekDate(true)" v-if="nextWeek" class="navigateButton">{{ $t('schedule.button.next') }}</button>
     </div>
-    
+
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
     </div>
@@ -24,8 +24,7 @@
                 :currentDayTime="days.dayTime"
                 :getConfirmation="days.booked"
                 :firstName="days.forename"
-                :lastName="days.surname"
-                v-on:accepted="booking">
+                :lastName="days.surname">
               </dayItem>
             </td>
           </tr>
@@ -52,8 +51,7 @@
                 :currentDayTime="days.dayTime"
                 :getConfirmation="days.booked"
                 :firstName="days.forename"
-                :lastName="days.surname"
-                v-on:accepted="booking">
+                :lastName="days.surname">
               </dayItem>
             </td>
           </tr>
@@ -93,150 +91,154 @@ export default {
     howMuchDayInPreviousMonth (year, month) {
       return new Date(year, month, 0).getDate()
     },
-    previousWeekDate () {
+    // Function set date that will be in 7 days or what was 7 day ago
+    // nextWeekTrue is true when we click '>>'. False when we click '<<'
+    setPreviousAndNextWeekDate (nextWeekTrue) {
+      // Contains number of days in current month
+      const nowMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1)
+      // Contains number of days in previous month
+      const previousMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth())
+      let newDate = this.currentDate.getDate()
+      // If we displayed next week we add to newDate 7
+      nextWeekTrue ? newDate += 7 : newDate
       this.dateInWeekMorning.splice(0, this.dateInWeekMorning.length)
       this.dateInWeekAfternoon.splice(0, this.dateInWeekAfternoon.length)
-      const previousDate = this.currentDate.getDate()
-      const previousMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth())
-      if (previousDate <= 7) {
-        let previousDay = previousMonth - (7 - previousDate)
-        this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - 1, previousDay)
-      } else {
-        this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), (previousDate - 7))
-      }
+      this.setDate(nextWeekTrue, newDate, nowMonth, previousMonth)
       this.setMondayDate()
-      if (this.nextWeek === false) {
-        this.previousWeek = true
-        this.nextWeek = true
-      } else {
-        this.previousWeek = false
-      }
+      this.displayWeekChangeButton(nextWeekTrue)
       this.fetchData()
     },
-    nextWeekDate () {
-      this.dateInWeekMorning.splice(0, this.dateInWeekMorning.length)
-      this.dateInWeekAfternoon.splice(0, this.dateInWeekAfternoon.length)
-      const nextDate = this.currentDate.getDate() + 7
-      const nowMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1)
-      if (nextDate > nowMonth) {
-        const dayInNextMonth = nextDate - nowMonth
-        this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, dayInNextMonth)
+    setDate (isNextWeekTrue, indexOfDayInMonth, currentMonthLength, previousMonthLength) {
+      const dayInNextMonth = indexOfDayInMonth - currentMonthLength
+      if (isNextWeekTrue) {
+        // If week contains in two months
+        if (indexOfDayInMonth > currentMonthLength) {
+          this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, dayInNextMonth)
+        } else {
+          this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), indexOfDayInMonth)
+        }
       } else {
-        this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), nextDate)
+        // If week contains in single month
+        if (indexOfDayInMonth <= 7) {
+          let previousDay = previousMonthLength - (7 - indexOfDayInMonth)
+          this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - 1, previousDay)
+        } else {
+          this.currentDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), (indexOfDayInMonth - 7))
+        }
       }
-      this.setMondayDate()
-      if (this.previousWeek === false) {
-        this.nextWeek = true
+    },
+    displayWeekChangeButton (isNextWeekTrue) {
+      let condition = true
+      // condition value depend of isNextWeekTrue
+      isNextWeekTrue ? condition = !this.previousWeek : condition = !this.nextWeek
+      if (condition) {
         this.previousWeek = true
+        this.nextWeek = true
       } else {
-        this.nextWeek = false
+        if (isNextWeekTrue) {
+          this.nextWeek = false
+        } else {
+          this.previousWeek = false
+        }
       }
-      this.fetchData()
+    },
+    numbersOfDaysToAdd () {
+      // This function return value, which we add to remainingDays variable in function setMondayDate()
+      this.dayInMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth())
+      let daysToAdd = 0
+      // If today is last sunday in month, function return 0
+      if ((this.currentDate.getDay() === 0) && ((this.currentDate.getDate() + 7) > this.dayInMonth)) {
+        daysToAdd = 0
+      } else {
+        daysToAdd = 7 - this.currentDate.getDay()
+      }
+      return daysToAdd
     },
     setMondayDate () {
+      // currentDay is equal number of day in week
       const currentDay = (this.currentDate.getDay() === 0) ? 6 : (this.currentDate.getDay() - 1)
-      const remainingDays = (this.currentDate.getDate() + (7 - this.currentDate.getDay()))
+      // Defines how much days should be add to remainingDays variable
+      const daysToAdd = this.numbersOfDaysToAdd()
+      // Value of this variable select whether the week is in one month, or in two months
+      const remainingDays = this.currentDate.getDate() + daysToAdd
       this.dayInMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1)
       this.monthNumber = this.currentDate.getMonth()
       if (remainingDays > this.dayInMonth) {
         this.mondayDate = this.currentDate.getDate() - (this.currentDate.getDay() - 1)
         this.sundayDate = remainingDays - this.dayInMonth
       } else {
-        if (this.currentDate.getDate() <= 7) {
-          const newDate = ((this.currentDate.getDay() === 0 ? 6 : (this.currentDate.getDay() - 1)) - this.currentDate.getDate())
-          if (newDate <= 0) {
-            this.mondayDate = this.currentDate.getDate() - currentDay
-          } else {
-            this.dayInMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth())
-            this.mondayDate = this.dayInMonth - newDate
-            this.monthNumber = this.currentDate.getMonth() - 1
-          }
-          this.sundayDate = this.currentDate.getDate() + (7 - (currentDay + 1))
-        } else {
-          this.mondayDate = this.currentDate.getDate() - currentDay
-          this.sundayDate = this.mondayDate + 6
-        }
+        this.setMondayDateWhenWeekIsInOneMonth(currentDay)
       }
       this.formatMonthAndWeek()
     },
-    // *****************************************************
+    setMondayDateWhenWeekIsInOneMonth (nrOfDayInWeek) {
+      const newDate = ((this.currentDate.getDay() === 0 ? 6 : (this.currentDate.getDay() - 1)) - this.currentDate.getDate())
+      if (this.currentDate.getDate() <= 7) {
+        if (newDate <= 0) {
+          this.mondayDate = this.currentDate.getDate() - nrOfDayInWeek
+        } else {
+          this.dayInMonth = this.howMuchDayInPreviousMonth(this.currentDate.getFullYear(), this.currentDate.getMonth())
+          this.mondayDate = this.dayInMonth - newDate
+          this.monthNumber = this.currentDate.getMonth() - 1
+        }
+        this.sundayDate = this.currentDate.getDate() + (7 - (nrOfDayInWeek + 1))
+      } else {
+        this.mondayDate = this.currentDate.getDate() - nrOfDayInWeek
+        this.sundayDate = this.mondayDate + 6
+      }
+    },
+    // .
     // Function which sets properties for every day in week
-    // *****************************************************
+    // .
     formatMonthAndWeek () {
       // Contains number of day which left in week after month is ended
       const remainingDays = 7 - (this.dayInMonth - this.mondayDate + 1)
       if ((this.mondayDate + 6) > this.dayInMonth) {
         // Set date and name of day in week which contains two months for example: March 27-April 02
-        this.setDayAndDateInWeekWithTwoMonths(remainingDays, 'morning')
-        this.setDayAndDateInWeekWithTwoMonths(remainingDays, 'afternoon')
+        this.setDayAndDateInWeekWithTwoMonths(remainingDays, true)
+        this.setDayAndDateInWeekWithTwoMonths(remainingDays, false)
       } else {
         // Set date and name of day in week which contains one month
-        this.setDayAndDateInWeekWithOneMonth('morning')
-        this.setDayAndDateInWeekWithOneMonth('afternoon')
+        this.setDayAndDateInWeekWithOneMonth(true)
+        this.setDayAndDateInWeekWithOneMonth(false)
       }
     },
-    setDayAndDateInWeekWithOneMonth (periodName) {
-      this.mondayToSundayDate[0] = this.mondayDate
-      this.mondayToSundayDate[1] = this.mondayDate + 6
-      for (let i = this.mondayToSundayDate[0]; i <= this.mondayToSundayDate[1]; i++) {
-        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
+    loopCreateWeekDays (periodName, startValue, endValue, currentMonth) {
+      // This function create day object and insert it to dateInWeekMorning and dateInWeekAfternoon table
+      for (let i = startValue; i <= endValue; i++) {
+        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() - currentMonth, i)
         let day = {
           day: i < 10 ? `0${i}` : `${i}`,
           month: this.currentDate.getMonth(),
-          year: this.currentDate.getFullYear(),
+          year: (nowDate.getMonth() === 12) ? (this.currentDate.getFullYear() + 1) : this.currentDate.getFullYear(),
           weekDay: nowDate.getDay(),
-          dayTime: periodName,
+          dayTime: periodName ? 'morning' : 'afternoon',
           booked: false,
           forename: '',
           surname: ''
         }
-        if (periodName === 'morning') {
+        if (periodName) {
           this.dateInWeekMorning.push(day)
         } else {
           this.dateInWeekAfternoon.push(day)
         }
       }
+    },
+    setDayAndDateInWeekWithOneMonth (periodName) {
+      /* In this function create table with object for week in single month, for example:
+       monday date is 1st May and sunday date is 7th May */
+      const startVal = this.mondayDate
+      const endVal = this.mondayDate + 6
+      this.loopCreateWeekDays(periodName, startVal, endVal, 0)
     },
     setDayAndDateInWeekWithTwoMonths (remainingDays, periodName) {
-      this.mondayToSundayDate[0] = this.mondayDate
-      this.mondayToSundayDate[1] = remainingDays
-      for (let i = this.mondayToSundayDate[0]; i <= this.dayInMonth; i++) {
-        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
-        let day = {
-          day: i < 10 ? `0${i}` : `${i}`,
-          month: this.currentDate.getMonth(),
-          year: this.currentDate.getFullYear(),
-          weekDay: nowDate.getDay(),
-          dayTime: periodName
-        }
-        if (periodName === 'morning') {
-          this.dateInWeekMorning.push(day)
-        } else {
-          this.dateInWeekAfternoon.push(day)
-        }
-      }
-      for (let i = 1; i <= remainingDays; i++) {
-        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, i)
-        let day = {
-          day: `0${i}`,
-          month: this.currentDate.getMonth() + 1,
-          year: (nowDate.getMonth() === 12) ? (this.currentDate.getFullYear() + 1) : this.currentDate.getFullYear(),
-          weekDay: nowDate.getDay(),
-          dayTime: periodName
-        }
-        if (periodName === 'morning') {
-          this.dateInWeekMorning.push(day)
-        } else {
-          this.dateInWeekAfternoon.push(day)
-        }
-      }
+      const startVal = this.mondayDate
+      const endVal = this.dayInMonth
+      // First we create table with object for this date: from 29th May, to 31st May
+      this.loopCreateWeekDays(periodName, startVal, endVal, 1)
+      // Second we add to existing table date from 1st June to 4th June
+      this.loopCreateWeekDays(periodName, 1, remainingDays, 0)
     },
-    booking (date, time) {
-      console.log(date, time)
-    },
-    // formatMonth (month) {
-
-    // }
     fetchData () {
       this.loading = true
       this.$http.get('/schedule')
@@ -279,7 +281,7 @@ export default {
       const month = this.$t('schedule.months')
       const sunDate = this.sundayDate < 10 ? `0${this.sundayDate}` : this.sundayDate
       const monDate = this.mondayDate < 10 ? `0${this.mondayDate}` : this.mondayDate
-      if (this.sundayDay < this.mondayDate) {
+      if (this.sundayDate < this.mondayDate) {
         this.stringDate = `${month[this.monthNumber === -1 ? 11 : this.monthNumber]} ${monDate}- ${month[(this.monthNumber + 1) === 12 ? 0 : (this.monthNumber + 1)]} ${sunDate}`
       } else {
         this.stringDate = `${month[this.monthNumber]} ${monDate}-${sunDate}`
@@ -296,37 +298,38 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  width: 1366px; /* CHANGE TO EM */
-}
-td {
-  border-top: none;
-  padding: 0;
-}
-.navigateButton {
-  background: none;
-  border: none;
-  font-weight: bold;
-}
-.morningImg {
-  background: url("../assets/morning.png") no-repeat;
-  width: 70px; /* CHANGE TO EM */
-  height: 60px; /* CHANGE TO EM */
-}
-.afternoonImg {
-  background: url("../assets/afternoon.png") no-repeat;
-  width: 70px; /* CHANGE TO EM */
-  height: 70px; /* CHANGE TO EM */
-}
-.line {
-  display: inline-block;
-}
-.line:before {
-  content: "";
-  display: block;
-  border-top-style: dashed;
-  margin-left: 80px; /* CHANGE TO EM */
-  height: 60px; /* CHANGE TO EM */
-  transform: translateY(50%);
-}
+  .container {
+    width: 85.5em;
+  }
+  td {
+    border-top: none;
+    padding: 0;
+  }
+  .navigateButton {
+    background: none;
+    border: none;
+    font-weight: bold;
+  }
+  .morningImg {
+    background: url("../assets/morning.png") no-repeat;
+    width: 4.4em;
+    height: 3.8em;
+  }
+  .afternoonImg {
+    background: url("../assets/afternoon.png") no-repeat;
+    width: 4.4em;
+    height: 4.4em;
+  }
+  .line {
+    display: inline-block;
+  }
+  .line:before {
+    content: "";
+    display: block;
+    border-top-style: dashed;
+    margin-left: 5em;
+    height: 3.8em;
+    transform: translateY(50%);
+  }
 </style>
+
