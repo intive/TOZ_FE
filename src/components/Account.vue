@@ -5,7 +5,7 @@
         <router-link to="/accountPassword" class="nav-link">{{ $t("account.changePassword") }}</router-link>
       </li>
       <li class="nav-item">
-        <router-link to="/" class="nav-link">{{ $t("navigation.back.home") }}</router-link>
+        <router-link to="/" class="nav-link">{{ $t("common.backHome") }}</router-link>
       </li>
     </ul>
   </div>

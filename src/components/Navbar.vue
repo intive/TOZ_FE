@@ -19,12 +19,12 @@
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2"
                type="email"
-               :placeholder="$t('placeholder.login')">
+               :placeholder="$t('navbar.placeholder.login')">
         <input class="form-control mr-sm-2"
                type="password"
-               :placeholder="$t('placeholder.password')">
+               :placeholder="$t('navbar.placeholder.password')">
         <button class="btn btn-outline-success my-2 my-sm-0"
-                type="submit">{{ $t("button.ok") }}</button>
+                type="submit">{{ $t("common.button.signIn") }}</button>
       </form>
   </nav>
 </template>

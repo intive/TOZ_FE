@@ -28,8 +28,7 @@
           <div class="row">
             <div class="column news-container">
               <img :src="item.photoUrl"
-                   class="img-fluid"
-                   :alt="$t('img.alt.dog')">
+                   class="img-fluid">
             </div>
             <div class="column news-container">
               <router-link :to="{ name: 'news', params: { id: item.id } }">

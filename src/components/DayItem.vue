@@ -2,7 +2,7 @@
   <div>
     <div class="dayView" v-if="dayTime === 'morning'" @click='openModal'>
       <h1>{{ day }}</h1>
-      {{ $t('schedule.dayInWeek[' + this.weekDay + ']') }}
+      {{ $t('calendar.dayInWeek[' + this.weekDay + ']') }}
       <div class="booked" v-if="confirmed">{{ userInitials }}</div>
     </div>
     <div class="dayView" v-else @click='openModal'>
@@ -10,24 +10,24 @@
     </div>
 
     <booking v-if="showModal">
-      <h2 slot="header" class="modalHeader">{{ $t('schedule.book.header') }}</h2>
-      <h3 slot="slot1" class="underline">{{ day }} {{ $t('schedule.book.months[' + this.month + ']') }} {{ year }}, {{ dayTime === 'morning' ? $t('schedule.morningText') : $t('schedule.afternoonText') }}</h3>
+      <h2 slot="header" class="modalHeader">{{ $t('calendar.book.header') }}</h2>
+      <h3 slot="slot1" class="underline">{{ day }} {{ $t('calendar.book.months[' + this.month + ']') }} {{ year }}, {{ dayTime === 'morning' ? $t('calendar.morningText') : $t('calendar.afternoonText') }}</h3>
       <span slot='slot2'>
-        <button class="modal-button" @click='closeModal'>{{ $t('schedule.button.decline') }}</button>
-        <button class="modal-button" @click='openModalAccepted'>{{ $t('schedule.button.accept') }}</button>
+        <button class="modal-button" @click='closeModal'>{{ $t('calendar.button.decline') }}</button>
+        <button class="modal-button" @click='openModalAccepted'>{{ $t('calendar.button.accept') }}</button>
       </span>
     </booking>
 
     <booking v-if="showModalAccepted">
-      <h2 slot="header" class="modalAccepted">{{ $t('schedule.book.headerAccepted') }}</h2>
-      <h4 slot="slot1">{{ $t('schedule.book.textAccepted') }}</h4>
-      <button slot="slot2" class="modal-button accept-button" @click='closeAccepted'>{{ $t('schedule.book.goBack') }}</button>
+      <h2 slot="header" class="modalAccepted">{{ $t('calendar.book.headerAccepted') }}</h2>
+      <h4 slot="slot1">{{ $t('calendar.book.textAccepted') }}</h4>
+      <button slot="slot2" class="modal-button accept-button" @click='closeAccepted'>{{ $t('calendar.book.goBack') }}</button>
     </booking>
 
     <booking v-if="showModalBooked">
-      <h2 slot="header" class="modalHeader">{{ $t('schedule.bookedPeriod') }}</h2>
+      <h2 slot="header" class="modalHeader">{{ $t('calendar.bookedPeriod') }}</h2>
       <h3 slot="slot1" class="underline"> {{ currentUser.forename }} {{ currentUser.surname }} </h3>
-      <button slot="slot2" class="modal-button accept-button" @click='closeBooked'>{{ $t('schedule.book.goBack') }}</button>
+      <button slot="slot2" class="modal-button accept-button" @click='closeBooked'>{{ $t('calendar.book.goBack') }}</button>
     </booking>
 
   </div>

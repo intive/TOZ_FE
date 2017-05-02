@@ -9,10 +9,9 @@
       <h2>{{ newsDetails.date.day }} / {{ newsDetails.date.month }} / {{ newsDetails.date.year }}</h2>
       <h3>{{ newsDetails.longContent }}</h3>
       <img :src="newsDetails.photoUrl"
-           class="img-fluid"
-           :alt="$t('img.alt.dog')">
+           class="img-fluid">
     </div>
-    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
+    <router-link to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 

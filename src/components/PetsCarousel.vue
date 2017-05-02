@@ -27,14 +27,14 @@
         <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
           <div class="sliderContent">
             <img src="http://lorempixel.com/200/200/" alt="pet photo">
-            <h2>{{ $t("pets.name") }}: {{ pet.name }}</h2>
-            <h2>{{ $t("pets.type") }}: {{ pet.type }}</h2>
-            <h2>{{ $t("pets.sex") }}: {{ pet.sex }}</h2>
+            <h2>{{ $t("petDetails.name") }}: {{ pet.name }}</h2>
+            <h2>{{ $t("petDetails.type") }}: {{ pet.type }}</h2>
+            <h2>{{ $t("petDetails.sex") }}: {{ pet.sex }}</h2>
           </div>
         </router-link>
       </slide>
     </carousel>
-    <router-link to="/pets">{{ $t("navigation.gallery") }}</router-link>
+    <router-link to="/pets">{{ $t("petsCarousel.fullGallery") }}</router-link>
   </div>
 </template>
 

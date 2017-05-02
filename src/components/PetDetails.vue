@@ -22,33 +22,33 @@
             <div class="float-left-span backgroundImg circle"></div>
               <div class="center-span float-left-span">
                 <span>{{petDetails.name}}</span>
-                <span class="li-span-name">{{$t('pets.name')}}</span>
+                <span class="li-span-name">{{$t('petDetails.name')}}</span>
               </div>
           </li>
           <li class="pet-li">
             <div class="float-left-span backgroundImg dog"></div>
             <div class="name-wrapper float-left-span">
               <span>{{petDetails.type}}</span>
-              <span class="center-span li-span-dog">{{$t('pets.type')}}</span>
+              <span class="center-span li-span-dog">{{$t('petDetails.type')}}</span>
             </div>
             <div class="sex-wrapper">
               <div class="float-left-span backgroundImg sex"></div>
               <span class="center-span">{{petDetails.sex}}</span>
-              <span class="center-span li-span-sex">{{$t('pets.sex')}}</span>
+              <span class="center-span li-span-sex">{{$t('petDetails.sex')}}</span>
             </div>
           </li>
           <li class="pet-li">
             <div class="float-left-span backgroundImg calendar"></div>
             <div class="float-left-span center-span">
               <span>{{convertTimeStamp}}</span>
-              <span class="li-span-calendar center-span">{{$t('pets.creationDate')}}</span>
+              <span class="li-span-calendar center-span">{{$t('petDetails.creationDate')}}</span>
             </div>
           </li>
         </ul>
       </div>
       <h2>{{petDetails.description}}</h2>
     </div>
-    <router-link to="/">{{ $t("navigation.back.home") }}</router-link>
+    <router-link to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 <script>
@@ -97,7 +97,7 @@
     },
     computed: {
       convertTimeStamp () {
-        return new Date(this.petDetails.created).toLocaleDateString(this.$t('code.pl'), { day: '2-digit', month: '2-digit', year: 'numeric' })
+        return new Date(this.petDetails.created).toLocaleDateString(this.$t('petDetails.code'), { day: '2-digit', month: '2-digit', year: 'numeric' })
       }
     }
   }

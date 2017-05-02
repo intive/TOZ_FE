@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <button @click="previousWeekDate" v-if="previousWeek" class="navigateButton"> {{ $t('schedule.button.previous') }}</button>
+      <button @click="previousWeekDate" v-if="previousWeek" class="navigateButton"> {{ $t('calendar.button.previous') }}</button>
       {{ formatedStringWithDate }}
-      <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('schedule.button.next') }}</button>
+      <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('calendar.button.next') }}</button>
     </div>
 
     <div class="row justify-content-end">
@@ -218,7 +218,7 @@ export default {
   },
   computed: {
     formatedStringWithDate () {
-      const month = this.$t('schedule.months')
+      const month = this.$t('calendar.months')
       const sunDate = this.sundayDate < 10 ? `0${this.sundayDate}` : this.sundayDate
       const monDate = this.mondayDate < 10 ? `0${this.mondayDate}` : this.mondayDate
       if (this.sundayDay < this.mondayDate) {
