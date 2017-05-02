@@ -6,5 +6,7 @@ const news = '/news/:id'
 const calendar = '/calendar'
 const account = '/account'
 const accountPassword = '/accountPassword'
+const linkExpired = '/activation-link-expired'
+const firstSignIn = '/first-sign-in'
 
-export default { transfer, home, news, pets, petDetails, calendar, account, accountPassword }
+export default { transfer, home, news, pets, petDetails, calendar, account, accountPassword, linkExpired, firstSignIn }

@@ -69,6 +69,24 @@ const locales = {
       newPassword: 'Nowe hasło',
       confirmNewPassword: 'Potwierdź nowe hasło',
       changePassword: 'Zmień hasło'
+    },
+    firstSignIn: {
+      message: {
+        firstSignIn: 'Pierwsze logowanie',
+        info: 'Jeszcze tylko chwila dzieli Cię od zostania wolontariuszem'
+      },
+      label: {
+        login: 'Login',
+        password: 'Hasło',
+        confirmPassword: 'Powtórz hasło'
+      },
+      placeholder: 'Hasło'
+    },
+    activationLinkExpired: {
+      message: {
+        linkExpired: 'Link aktywacyjny wygasł.',
+        contactAdmin: 'Skontaktuj się z Administratorem.'
+      }
     }
   },
   en: {
@@ -138,6 +156,24 @@ const locales = {
       newPassword: 'New password',
       confirmNewPassword: 'Confirm new password',
       changePassword: 'Change password'
+    },
+    firstSignIn: {
+      message: {
+        firstSignIn: 'First sign in',
+        info: "It's just one moment to become a volunteer"
+      },
+      label: {
+        login: 'Login',
+        password: 'Password',
+        confirmPassword: 'Confirm password'
+      },
+      placeholder: 'Password'
+    },
+    activationLinkExpired: {
+      message: {
+        linkExpired: 'Activation link has expired.',
+        contactAdmin: 'Please contact with the Administrator.'
+      }
     }
   }
 }
