@@ -56,7 +56,7 @@
     },
     methods: {
       fetchData () {
-        // this.$http.get(this.apiUrl + '/news?shortened=false')
+        // this.$http.get(this.apiUrl + '/news?shortened=true')
         this.$http.get('/news')
             .then(response => {
               this.news = response.data
