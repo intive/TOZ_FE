@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loader v-if="loading"></loader>  
+    <loader v-if="loading"></loader>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
