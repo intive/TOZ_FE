@@ -20,7 +20,8 @@ const locales = {
       placeholder: {
         login: 'Login',
         password: 'Hasło'
-      }
+      },
+      accountLink: 'Moje konto'
     },
     nav: {
       home: 'Strona główna',
@@ -64,11 +65,12 @@ const locales = {
       header: 'Dane do przelewu'
     },
     account: {
-      accountLink: 'Moje konto',
+      changePassword: 'Zmień hasło'
+    },
+    accountPassword: {
       oldPassword: 'Stare hasło',
       newPassword: 'Nowe hasło',
-      confirmNewPassword: 'Potwierdź nowe hasło',
-      changePassword: 'Zmień hasło'
+      confirmNewPassword: 'Potwierdź nowe hasło'
     }
   },
   en: {
@@ -89,7 +91,8 @@ const locales = {
       placeholder: {
         login: 'Login',
         password: 'Password'
-      }
+      },
+      accountLink: 'My account'
     },
     nav: {
       home: 'Home',
@@ -133,11 +136,12 @@ const locales = {
       header: 'Transfer data'
     },
     account: {
-      accountLink: 'My account',
-      oldPassword: 'Old passsword',
-      newPassword: 'New password',
-      confirmNewPassword: 'Confirm new password',
       changePassword: 'Change password'
+    },
+    accountPassword: {
+      oldPassword: 'Old password',
+      newPassword: 'New password',
+      confirmNewPassword: 'Confirm new password'
     }
   }
 }
