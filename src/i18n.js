@@ -7,7 +7,8 @@ const locales = {
       button: {
         ok: 'OK',
         cancel: 'Anuluj',
-        signIn: 'Zaloguj się'
+        signIn: 'Zaloguj się',
+        help: 'Chce pomóc TOZ!'
       },
       backHome: 'Powrót do strony głównej'
     },
@@ -38,7 +39,8 @@ const locales = {
       sex: 'Płeć',
       name: 'Imię',
       creationDate: 'Data dodania',
-      code: 'pl-PL'
+      code: 'pl-PL',
+      dateFormat: 'L' // other formats: l:'7.5.2017', LL:'7 maja 2017', ll:'7 maj 2017'
     },
     calendar: {
       months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
@@ -78,7 +80,8 @@ const locales = {
       button: {
         ok: 'OK',
         cancel: 'Cancel',
-        signIn: 'Sign in'
+        signIn: 'Sign in',
+        help: 'Want to help TOZ!'
       },
       backHome: 'Back to Home page'
     },
@@ -109,7 +112,8 @@ const locales = {
       sex: 'Sex',
       name: 'Name',
       creationDate: 'Creation Date',
-      code: 'en-EN'
+      code: 'en-EN',
+      dateFormat: 'L'
     },
     calendar: {
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],

@@ -46,14 +46,17 @@
           </li>
         </ul>
       </div>
-      <h2>{{petDetails.description}}</h2>
+        <div class="description-container">
+          <h2>{{petDetails.description}}</h2>
+        </div>
+        <router-link to="/" class="help-link">{{$t('common.button.help')}}</router-link>
     </div>
     <router-link to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 <script>
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
-
+  import moment from 'moment'
   export default {
     data () {
       return {
@@ -97,7 +100,8 @@
     },
     computed: {
       convertTimeStamp () {
-        return new Date(this.petDetails.created).toLocaleDateString(this.$t('petDetails.code'), { day: '2-digit', month: '2-digit', year: 'numeric' })
+        let date = moment(this.petDetails.created).locale(this.$t('petDetails.code'))
+        return date.format(this.$t('petDetails.dateFormat'))
       }
     }
   }
@@ -112,6 +116,12 @@
   margin-left: 20%;
   width: 60%;
   display: block;
+}
+.description-container{
+  margin-left: 20%;
+  width: 60%;
+  display: block;
+  margin-bottom: 2em;
 }
 .pet-ul{
   width: 100%;
@@ -129,6 +139,18 @@
   font-weight: bold;
   display: flex;
   flex-direction: row;
+}
+.help-link{
+  font:22px arial,sans-serif;
+  font-weight: bold;
+  margin-left: 20%;
+  padding: 0.5em;
+  width: 60%;
+  height: 2.2em;
+  display: flex;
+  justify-content: center;
+  background-color: lightgray;
+  border-radius: 1px;
 }
 .sex-wrapper{
   width: 50%;
