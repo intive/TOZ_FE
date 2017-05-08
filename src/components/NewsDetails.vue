@@ -40,7 +40,7 @@ export default {
     this.fetchData()
   },
   watch: {
-    '$route': 'fetchData'
+    '$route.fullPath': 'fetchData'
   },
   methods: {
     fetchData () {
