@@ -22,7 +22,8 @@ const locales = {
         login: 'Login',
         password: 'Hasło'
       },
-      accountLink: 'Moje konto'
+      accountLink: 'Moje konto',
+      invalidLogin: 'Niepoprawny login'
     },
     nav: {
       home: 'Strona główna',
@@ -72,7 +73,9 @@ const locales = {
     firstSignIn: {
       message: {
         firstSignIn: 'Pierwsze logowanie',
-        info: 'Jeszcze tylko chwila dzieli Cię od zostania wolontariuszem'
+        info: 'Jeszcze tylko chwila dzieli Cię od zostania wolontariuszem',
+        inputRequired: 'Pole wymagane',
+        differentPasswords: 'Wprowadzone hasła różnią się'
       },
       label: {
         login: 'Login',
@@ -114,7 +117,8 @@ const locales = {
         login: 'Login',
         password: 'Password'
       },
-      accountLink: 'My account'
+      accountLink: 'My account',
+      invalidLogin: 'Invalid login'
     },
     nav: {
       home: 'Home',
@@ -164,7 +168,9 @@ const locales = {
     firstSignIn: {
       message: {
         firstSignIn: 'First sign in',
-        info: "It's just one moment to become a volunteer"
+        info: "It's just one moment to become a volunteer",
+        inputRequired: 'Input required',
+        differentPasswords: 'Input passwords are different'
       },
       label: {
         login: 'Login',
