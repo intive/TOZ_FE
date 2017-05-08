@@ -7,7 +7,8 @@ const locales = {
       button: {
         ok: 'OK',
         cancel: 'Anuluj',
-        signIn: 'Zaloguj się'
+        signIn: 'Zaloguj się',
+        help: 'Chce pomóc TOZ!'
       },
       backHome: 'Powrót do strony głównej'
     },
@@ -20,7 +21,8 @@ const locales = {
       placeholder: {
         login: 'Login',
         password: 'Hasło'
-      }
+      },
+      accountLink: 'Moje konto'
     },
     nav: {
       home: 'Strona główna',
@@ -37,7 +39,8 @@ const locales = {
       sex: 'Płeć',
       name: 'Imię',
       creationDate: 'Data dodania',
-      code: 'pl-PL'
+      code: 'pl-PL',
+      dateFormat: 'L' // other formats: l:'7.5.2017', LL:'7 maja 2017', ll:'7 maj 2017'
     },
     calendar: {
       months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
@@ -64,10 +67,6 @@ const locales = {
       header: 'Dane do przelewu'
     },
     account: {
-      accountLink: 'Moje konto',
-      oldPassword: 'Stare hasło',
-      newPassword: 'Nowe hasło',
-      confirmNewPassword: 'Potwierdź nowe hasło',
       changePassword: 'Zmień hasło'
     },
     firstSignIn: {
@@ -87,6 +86,12 @@ const locales = {
         linkExpired: 'Link aktywacyjny wygasł.',
         contactAdmin: 'Skontaktuj się z Administratorem.'
       }
+    },
+    accountPassword: {
+      oldPassword: 'Stare hasło',
+      newPassword: 'Nowe hasło',
+      confirmNewPassword: 'Potwierdź nowe hasło',
+      changePassword: 'Zmień hasło'
     }
   },
   en: {
@@ -94,7 +99,8 @@ const locales = {
       button: {
         ok: 'OK',
         cancel: 'Cancel',
-        signIn: 'Sign in'
+        signIn: 'Sign in',
+        help: 'Want to help TOZ!'
       },
       backHome: 'Back to Home page'
     },
@@ -107,7 +113,8 @@ const locales = {
       placeholder: {
         login: 'Login',
         password: 'Password'
-      }
+      },
+      accountLink: 'My account'
     },
     nav: {
       home: 'Home',
@@ -124,7 +131,8 @@ const locales = {
       sex: 'Sex',
       name: 'Name',
       creationDate: 'Creation Date',
-      code: 'en-EN'
+      code: 'en-EN',
+      dateFormat: 'L'
     },
     calendar: {
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -151,10 +159,6 @@ const locales = {
       header: 'Transfer data'
     },
     account: {
-      accountLink: 'My account',
-      oldPassword: 'Old passsword',
-      newPassword: 'New password',
-      confirmNewPassword: 'Confirm new password',
       changePassword: 'Change password'
     },
     firstSignIn: {
@@ -174,6 +178,11 @@ const locales = {
         linkExpired: 'Activation link has expired.',
         contactAdmin: 'Please contact with the Administrator.'
       }
+    },
+    accountPassword: {
+      oldPassword: 'Old password',
+      newPassword: 'New password',
+      confirmNewPassword: 'Confirm new password'
     }
   }
 }

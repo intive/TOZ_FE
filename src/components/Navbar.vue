@@ -13,7 +13,7 @@
       </ul>
       <ul class="navbar-nav mr-1">
         <li class="nav-item">
-          <router-link to="/account" class="nav-link">{{ $t("account.accountLink") }}</router-link>
+          <router-link to="/account" class="nav-link">{{ $t("navbar.accountLink") }}</router-link>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
