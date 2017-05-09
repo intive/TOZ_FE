@@ -53,6 +53,7 @@
         })
         .then(response => {
           console.log(response)
+          sessionStorage.setItem('token', response.data.jwt)
           this.logged = true
         })
          .catch(error => {

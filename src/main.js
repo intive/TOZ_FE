@@ -12,6 +12,8 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.apiUrl = API_URL
 
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token')
+
 Vue.component('Modal', Vue.extend(Modal))
 /* eslint-disable no-new */
 new Vue({

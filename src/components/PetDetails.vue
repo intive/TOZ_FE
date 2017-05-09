@@ -99,8 +99,8 @@
     },
     computed: {
       convertTimeStamp () {
-        const date = moment(this.petDetails.created).locale(this.$t('petDetails.code'))
-        return date.format(this.$t('petDetails.dateFormat'))
+        const date = moment(this.petDetails.created).locale(this.$t('common.code'))
+        return date.format(this.$t('common.dateFormat'))
       }
     }
   }
