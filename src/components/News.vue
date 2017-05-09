@@ -22,8 +22,8 @@
                 <h2>{{ item.title }}</h2>
               </router-link>
               <hr>
-              <h3>{{ item.date.day }} / {{ item.date.month }} / {{ item.date.year }}</h3>
-              <h4>{{ item.shortContent }}</h4>
+              <!-- <h3>{{ item.date.day }} / {{ item.date.month }} / {{ item.date.year }}</h3> -->
+              <h4>{{ item.contents }}</h4>
             </div>
           </div>
         </div>
@@ -56,16 +56,15 @@
     },
     methods: {
       fetchData () {
-        // this.$http.get(this.apiUrl + '/news?shortened=true')
-        this.$http.get('/news')
-            .then(response => {
-              this.news = response.data
-              this.loading = false
-            })
-            .catch(error => {
-              this.errors.push(error)
-              this.loading = false
-            })
+        this.$http.get(this.apiUrl + 'news?type=RELEASED&shortened=true')
+          .then(response => {
+            this.news = response.data
+            this.loading = false
+          })
+          .catch(error => {
+            this.errors.push(error)
+            this.loading = false
+          })
       }
     },
     components: {
