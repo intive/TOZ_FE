@@ -58,19 +58,18 @@ export default {
     }
   },
   created () {
-    this.$http.get('/transfer')
-    // this.$http.get(`http://dev.patronage2017.intive-projects.com/organization/info`)
-    .then(response => {
-      this.transferData.address = {...response.data.transferData.address}
-      this.transferData.bankAccount = {...response.data.transferData.bankAccount}
-      this.transferData.contact = {...response.data.transferData.contact}
-      this.transferData.name = response.data.transferData.name
-      this.loading = false
-    })
-    .catch(error => {
-      this.errors.push(error)
-      this.loading = false
-    })
+    this.$http.get(this.apiUrl + 'organization/info')
+      .then(response => {
+        this.transferData.address = {...response.data.address}
+        this.transferData.bankAccount = {...response.data.bankAccount}
+        this.transferData.contact = {...response.data.contact}
+        this.transferData.name = response.data.name
+        this.loading = false
+      })
+      .catch(error => {
+        this.errors.push(error)
+        this.loading = false
+      })
   }
 }
 </script>

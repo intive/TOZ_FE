@@ -64,8 +64,7 @@ export default {
     }
   },
   created () {
-    this.$http.get('/pets')
-    // this.$http.get('http://dev.patronage2017.intive-projects.com/pets')
+    this.$http.get(this.apiUrl + 'pets')
     .then(response => {
       this.petsList = response.data
       this.paginationConfig.numberOfPages = Math.ceil(this.petsList.length / this.itemsPerPage)

@@ -39,16 +39,15 @@ export default {
     }
   },
   created () {
-    // this.$http.get('http://dev.patronage2017.intive-projects.com/pets')
-    this.$http.get('/pets')
-    .then(response => {
-      this.petsList = response.data
-      this.loading = false
-    })
-    .catch(error => {
-      this.errors.push(error)
-      this.loading = false
-    })
+    this.$http.get(this.apiUrl + 'pets')
+      .then(response => {
+        this.petsList = response.data
+        this.loading = false
+      })
+      .catch(error => {
+        this.errors.push(error)
+        this.loading = false
+      })
   },
   components: {
     Carousel,

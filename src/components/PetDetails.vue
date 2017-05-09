@@ -57,6 +57,7 @@
 <script>
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
   import moment from 'moment'
+
   export default {
     data () {
       return {
@@ -86,10 +87,9 @@
         this.showModal = true
       },
       fetchData () {
-        this.$http.get('/pets/' + this.id)
-        // this.$http.get('http://dev.patronage2017.intive-projects.com/pets/' + this.id)
+        this.$http.get(this.apiUrl + '/pets/' + this.id)
           .then(response => {
-            this.petDetails = {...response.data[this.id - 1]}
+            this.petDetails = {...response.data}
             this.loading = false
           })
           .catch(error => {
