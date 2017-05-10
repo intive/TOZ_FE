@@ -16,15 +16,19 @@
           <router-link to="/account" class="nav-link">{{ $t("navbar.accountLink") }}</router-link>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form @submit.prevent class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2"
                type="email"
-               :placeholder="$t('navbar.placeholder.login')">
+               :placeholder="$t('navbar.placeholder.login')"
+               v-model="email">
+               <h6 if="emailWarning" class="text-danger">{{ emailWarning }}</h6>
         <input class="form-control mr-sm-2"
                type="password"
+               maxlength="30"
                :placeholder="$t('navbar.placeholder.password')">
-        <button class="btn btn-outline-success my-2 my-sm-0"
-                type="submit">{{ $t("common.button.signIn") }}</button>
+        <button class="btn my-2 my-sm-0"
+                type="submit"
+                @click="validateEmail">{{ $t("common.button.signIn") }}</button>
       </form>
   </nav>
 </template>
@@ -34,11 +38,15 @@
     name: 'Navbar',
     data () {
       return {
+        email: '',
+        emailWarning: ''
+      }
+    },
+    methods: {
+      validateEmail () {
+        const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+        !emailRegex.test(this.email) ? this.emailWarning = this.$t('navbar.invalidLogin') : this.emailWarning = ''
       }
     }
   }
 </script>
-
-<style scoped>
-
-</style>

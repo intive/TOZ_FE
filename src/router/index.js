@@ -8,6 +8,8 @@ import Home from '@/components/Home'
 import Calendar from '@/components/Calendar'
 import Account from '@/components/Account'
 import AccountPassword from '@/components/AccountPassword'
+import FirstSignIn from '@/components/FirstSignIn'
+import ActivationLinkExpired from '@/components/ActivationLinkExpired'
 import paths from './paths'
 Vue.use(Router)
 
@@ -52,6 +54,16 @@ export default new Router({
       path: paths.accountPassword,
       name: 'accountPassword',
       component: AccountPassword
+    },
+    {
+      path: paths.linkExpired,
+      name: 'activationLinkExpired',
+      component: ActivationLinkExpired
+    },
+    {
+      path: paths.firstSignIn,
+      name: 'firstSignIn',
+      component: FirstSignIn
     }
   ]
 })
