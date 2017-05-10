@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <img src="../assets/sadDog.jpg">
     <h1>{{ $t("activationLinkExpired.message.linkExpired") }}</h1>
     <h1>{{ $t("activationLinkExpired.message.contactAdmin") }}</h1>
     <button type="button" name="button" class="btn">

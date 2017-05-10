@@ -78,9 +78,8 @@ const locales = {
         differentPasswords: 'Wprowadzone hasła różnią się'
       },
       label: {
-        login: 'Login',
-        password: 'Hasło',
-        confirmPassword: 'Powtórz hasło'
+        password: 'Nowe hasło',
+        confirmPassword: 'Powtórz nowe hasło'
       },
       placeholder: 'Hasło'
     },
@@ -173,9 +172,8 @@ const locales = {
         differentPasswords: 'Input passwords are different'
       },
       label: {
-        login: 'Login',
-        password: 'Password',
-        confirmPassword: 'Confirm password'
+        password: 'New password',
+        confirmPassword: 'Confirm new password'
       },
       placeholder: 'Password'
     },
