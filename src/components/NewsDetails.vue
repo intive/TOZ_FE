@@ -6,7 +6,6 @@
     </div>
     <div v-else>
       <h1>{{ newsDetails.title }}</h1>
-       <!--<h2>{{ newsDetails.date.day }} / {{ newsDetails.date.month }} / {{ newsDetails.date.year }}</h2>-->
       <h3>{{ newsDetails.contents }}</h3>
       <img :src="newsDetails.photoUrl"
            class="img-fluid">

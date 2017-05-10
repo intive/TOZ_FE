@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <nav class="navbar navbar-toggleable-md navbar-inverse">
       <ul class="nav mr-auto">
         <li class="nav-item">
           <a href="#" class="nav-link"><i class="fa fa-facebook-official fa-2x"></i></a>
