@@ -22,7 +22,6 @@
                 <h2>{{ item.title }}</h2>
               </router-link>
               <hr>
-              <!-- <h3>{{ item.date.day }} / {{ item.date.month }} / {{ item.date.year }}</h3> -->
               <h4>{{ item.contents }}</h4>
             </div>
           </div>
