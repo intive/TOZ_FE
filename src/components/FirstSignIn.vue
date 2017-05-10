@@ -40,7 +40,7 @@
     <div class="form-group row">
       <div class="offset-sm-2 col-sm-10">
         <a href="#">{{ $t("common.button.cancel") }}</a>
-        <button type="submit" class="btn btn-secondary">{{ $t("common.button.ok") }}</button>
+        <button type="submit" class="btn">{{ $t("common.button.ok") }}</button>
       </div>
     </div>
   </form>
@@ -77,9 +77,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.btn {
-  border-radius: 0;
-}
-</style>

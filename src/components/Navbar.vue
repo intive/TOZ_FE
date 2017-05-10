@@ -26,7 +26,7 @@
                type="password"
                maxlength="30"
                :placeholder="$t('navbar.placeholder.password')">
-        <button class="btn btn-outline-success my-2 my-sm-0"
+        <button class="btn my-2 my-sm-0"
                 type="submit"
                 @click="validateEmail">{{ $t("common.button.signIn") }}</button>
       </form>
