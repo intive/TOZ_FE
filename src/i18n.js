@@ -22,7 +22,8 @@ const locales = {
         login: 'Login',
         password: 'Hasło'
       },
-      accountLink: 'Moje konto'
+      accountLink: 'Moje konto',
+      invalidLogin: 'Niepoprawny login'
     },
     nav: {
       home: 'Strona główna',
@@ -69,10 +70,30 @@ const locales = {
     account: {
       changePassword: 'Zmień hasło'
     },
+    firstSignIn: {
+      message: {
+        firstSignIn: 'Pierwsze logowanie',
+        info: 'Jeszcze tylko chwila dzieli Cię od zostania wolontariuszem',
+        inputRequired: 'Pole wymagane',
+        differentPasswords: 'Wprowadzone hasła różnią się'
+      },
+      label: {
+        password: 'Nowe hasło',
+        confirmPassword: 'Powtórz nowe hasło'
+      },
+      placeholder: 'Hasło'
+    },
+    activationLinkExpired: {
+      message: {
+        linkExpired: 'Link aktywacyjny wygasł.',
+        contactAdmin: 'Skontaktuj się z Administratorem.'
+      }
+    },
     accountPassword: {
       oldPassword: 'Stare hasło',
       newPassword: 'Nowe hasło',
-      confirmNewPassword: 'Potwierdź nowe hasło'
+      confirmNewPassword: 'Potwierdź nowe hasło',
+      changePassword: 'Zmień hasło'
     }
   },
   en: {
@@ -95,7 +116,8 @@ const locales = {
         login: 'Login',
         password: 'Password'
       },
-      accountLink: 'My account'
+      accountLink: 'My account',
+      invalidLogin: 'Invalid login'
     },
     nav: {
       home: 'Home',
@@ -141,6 +163,25 @@ const locales = {
     },
     account: {
       changePassword: 'Change password'
+    },
+    firstSignIn: {
+      message: {
+        firstSignIn: 'First sign in',
+        info: "It's just one moment to become a volunteer",
+        inputRequired: 'Input required',
+        differentPasswords: 'Input passwords are different'
+      },
+      label: {
+        password: 'New password',
+        confirmPassword: 'Confirm new password'
+      },
+      placeholder: 'Password'
+    },
+    activationLinkExpired: {
+      message: {
+        linkExpired: 'Activation link has expired.',
+        contactAdmin: 'Please contact with the Administrator.'
+      }
     },
     accountPassword: {
       oldPassword: 'Old password',
