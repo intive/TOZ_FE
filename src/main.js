@@ -6,11 +6,13 @@ import router from './router'
 import axios from 'axios'
 import Modal from './components/Modal.vue'
 import i18n from './i18n.js'
-import mock from '@/mockAdapter'
+// import mock from '@/mockAdapter'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.apiUrl = API_URL
+
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token')
 
 Vue.component('Modal', Vue.extend(Modal))
 /* eslint-disable no-new */
@@ -18,7 +20,7 @@ new Vue({
   el: '#app',
   router,
   i18n,
-  mock,
+  // mock,
   template: '<App/>',
   components: { App }
 })
