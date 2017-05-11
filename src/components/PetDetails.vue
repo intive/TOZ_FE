@@ -50,7 +50,7 @@
       <a class="helpLink col-lg-12" :class="{disabled: isDisabled}" @click.prevent="switchFlags">{{$t('common.button.help')}}</a>
       <transfer class="col-sm-12 col-lg-12" v-show="showTransfer"></transfer>
     </div>
-    <router-link to="/">{{ $t("common.backHome") }}</router-link>
+    <router-link v-show="!showTransfer" to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 <script>
@@ -138,6 +138,7 @@
   .pet-li
     width: 100%
     padding: 1.5em 0
+    margin: 0
     border: 0
     border-bottom: 1px solid lightgray
     font-weight: bold
@@ -154,7 +155,6 @@
     display: flex
     justify-content: center
     background-color: $orange
-    //color: #ffffff
     border-radius: 0.4em
 
   .disabled
