@@ -34,6 +34,10 @@ const locales = {
       aboutUs: 'O nas',
       schedule: 'Grafik'
     },
+    news: {
+      added: 'Dodane: ',
+      readMore: 'Czytaj więcej'
+    },
     petsCarousel: {
       fullGallery: 'Pełna galeria'
     },
@@ -127,6 +131,10 @@ const locales = {
       petsGallery: 'Gallery',
       aboutUs: 'About us',
       schedule: 'Schedule'
+    },
+    news: {
+      added: 'Added: ',
+      readMore: 'Read more'
     },
     petsCarousel: {
       fullGallery: 'Full gallery'
