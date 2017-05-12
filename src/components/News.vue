@@ -2,12 +2,12 @@
   <div>
     <loader v-if="loading"></loader>
     <div class="container">
-      <div v-for="item in news" :key="item.id" class="news-item clearfix">
+      <div v-for="item of news" :key="item.id" class="news-item clearfix">
         <div class="news-date">
           {{ $t('news.added') }} {{ convertTimeStamp }}
         </div>
         <h2 class="news-title">
-          <router-link :to="{ name: 'news', params: { id: item.id } }">
+          <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }">
             {{ item.title }}
           </router-link>
         </h2>
@@ -18,7 +18,7 @@
           <div class="col-md-7 content-wrapper">
             <p class="content"> {{ shortenContent(item) }} </p>
             <div class="wrapper">
-              <router-link :to="{ name: 'news', params: { id: item.id } }" class="btn">
+              <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }" class="btn">
                 {{ $t('news.readMore') }}
               </router-link>
             </div>
@@ -32,7 +32,6 @@
 <script>
   import Loader from './Loader'
   import moment from 'moment'
-
   export default {
     name: 'News',
     data () {
@@ -53,12 +52,12 @@
           'photoUrl': 'http://lorempixel.com/200/200',
           'created': 1494329863111
         }],
-        // news: [],
+//        news: [],
         loading: false
       }
     },
     created () {
-      // this.fetchData()
+//      this.fetchData()
     },
     computed: {
       convertTimeStamp () {
@@ -70,7 +69,7 @@
       fetchData () {
         this.$http.get(this.apiUrl + 'news?type=RELEASED&shortened=true')
           .then(response => {
-            this.news = response.data
+            this.news = {...response.data}
             this.loading = false
           })
           .catch(error => {
