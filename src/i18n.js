@@ -8,7 +8,7 @@ const locales = {
         ok: 'OK',
         cancel: 'Anuluj',
         signIn: 'Zaloguj się',
-        help: 'Chce pomóc TOZ!'
+        help: 'Wspomóż tego zwierzaka'
       },
       backHome: 'Powrót do strony głównej',
       code: 'pl-PL',
@@ -102,7 +102,7 @@ const locales = {
         ok: 'OK',
         cancel: 'Cancel',
         signIn: 'Sign in',
-        help: 'Want to help TOZ!'
+        help: 'Help this pet'
       },
       backHome: 'Back to Home page',
       code: 'en-EN',
