@@ -47,7 +47,7 @@
           </li>
         </ul>
       </div>
-      <a class="helpLink col-lg-12" :class="{disabled: isDisabled}" @click.prevent="switchFlags">{{$t('common.button.help')}}</a>
+      <button class="helpLink btn" :disabled="showTransfer" @click.once="showTransfer = true">{{$t('common.button.help')}}</button>
       <transfer class="col-sm-12 col-lg-12" v-show="showTransfer"></transfer>
     </div>
     <router-link v-show="!showTransfer" to="/">{{ $t("common.backHome") }}</router-link>
@@ -62,7 +62,6 @@
       return {
         showModal: false,
         showTransfer: false,
-        isDisabled: false,
         id: this.$route.params.id,
         petDetails: {},
         errors: [],
@@ -98,10 +97,6 @@
             this.errors.push(error)
             this.loading = false
           })
-      },
-      switchFlags () {
-        this.isDisabled = true
-        this.showTransfer = true
       }
     },
     computed: {
