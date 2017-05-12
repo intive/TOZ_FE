@@ -1,15 +1,10 @@
 <template>
   <div>
     <News></News>
-    <div class="carousel">
-      <h1>{{ $t("home.header.gallery") }}</h1>
-      <PetsCarousel></PetsCarousel>
-    </div>
   </div>
 </template>
 
 <script>
-import PetsCarousel from './PetsCarousel'
 import News from '@/components/News'
 
 export default {
@@ -18,11 +13,7 @@ export default {
     return {}
   },
   components: {
-    PetsCarousel,
     News
   }
 }
 </script>
-
-<style scoped>
-</style>
