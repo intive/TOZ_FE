@@ -5,12 +5,13 @@
       {{ formatedStringWithDate }}
       <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('calendar.button.next') }}</button>
     </div>
-
+    
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
     </div>
     <!-- Morning calendar-->
-    <div class="row justify-content-end">
+    <div v-if="loading" class="loader"></div>
+    <div v-else class="row justify-content-end">
       <div class="col-11 col-md-11 col-xl-11">
         <table class="table">
           <tr>
@@ -20,7 +21,13 @@
                 :currentMonth="days.month"
                 :currentYear="days.year"
                 :currentWeekDay="days.weekDay"
-                :currentDayTime="days.dayTime">
+                :currentDayTime="days.dayTime"
+                :getConfirmation="days.booked"
+                :firstName="days.forename"
+                :lastName="days.surname"
+                :currentUserId="currentUser.id"
+                :currentUserForename="currentUser.name"
+                :currentUserSurname="currentUser.surname">
               </dayItem>
             </td>
           </tr>
@@ -28,13 +35,13 @@
       </div>
     </div>
     <!-- END Morning Calendar -->
-
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line afternoonImg"></div>
     </div>
 
     <!-- Afternoon calendar-->
-    <div class="row justify-content-end">
+    <div v-if="loading" class="loader"></div>
+    <div v-else class="row justify-content-end">
       <div class="col-11 col-md-11 col-xl-11">
         <table class="table">
           <tr>
@@ -44,7 +51,13 @@
                 :currentMonth="days.month"
                 :currentYear="days.year"
                 :currentWeekDay="days.weekDay"
-                :currentDayTime="days.dayTime">
+                :currentDayTime="days.dayTime"
+                :getConfirmation="days.booked"
+                :firstName="days.forename"
+                :lastName="days.surname"
+                :currentUserId="currentUser.id"
+                :currentUserForename="currentUser.name"
+                :currentUserSurname="currentUser.surname">
               </dayItem>
             </td>
           </tr>
@@ -57,9 +70,8 @@
 
 <script>
 import DayItem from './DayItem'
-
 export default {
-  name: 'Calendar',
+  name: 'Calendar2',
   data () {
     return {
       currentDate: '',
@@ -72,7 +84,11 @@ export default {
       dateInWeekAfternoon: [],
       stringDate: '',
       previousWeek: true,
-      nextWeek: true
+      nextWeek: true,
+      loading: true,
+      reservations: {},
+      currentUser: {},
+      errors: []
     }
   },
   components: {
@@ -100,6 +116,7 @@ export default {
       } else {
         this.previousWeek = false
       }
+      this.fetchData()
     },
     nextWeekDate () {
       this.dateInWeekMorning.splice(0, this.dateInWeekMorning.length)
@@ -119,6 +136,7 @@ export default {
       } else {
         this.nextWeek = false
       }
+      this.fetchData()
     },
     setMondayDate () {
       const currentDay = (this.currentDate.getDay() === 0) ? 6 : (this.currentDate.getDay() - 1)
@@ -166,13 +184,16 @@ export default {
       this.mondayToSundayDate[0] = this.mondayDate
       this.mondayToSundayDate[1] = this.mondayDate + 6
       for (let i = this.mondayToSundayDate[0]; i <= this.mondayToSundayDate[1]; i++) {
-        let nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
+        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
         let day = {
           day: i < 10 ? `0${i}` : `${i}`,
           month: this.currentDate.getMonth(),
           year: this.currentDate.getFullYear(),
           weekDay: nowDate.getDay(),
-          dayTime: periodName
+          dayTime: periodName,
+          booked: false,
+          forename: '',
+          surname: ''
         }
         if (periodName === 'morning') {
           this.dateInWeekMorning.push(day)
@@ -185,7 +206,7 @@ export default {
       this.mondayToSundayDate[0] = this.mondayDate
       this.mondayToSundayDate[1] = remainingDays
       for (let i = this.mondayToSundayDate[0]; i <= this.dayInMonth; i++) {
-        let nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
+        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), i)
         let day = {
           day: i < 10 ? `0${i}` : `${i}`,
           month: this.currentDate.getMonth(),
@@ -200,7 +221,7 @@ export default {
         }
       }
       for (let i = 1; i <= remainingDays; i++) {
-        let nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, i)
+        const nowDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, i)
         let day = {
           day: `0${i}`,
           month: this.currentDate.getMonth() + 1,
@@ -214,6 +235,67 @@ export default {
           this.dateInWeekAfternoon.push(day)
         }
       }
+    },
+    fetchData () {
+      const firstDay = this.fullDate(this.dateInWeekMorning[0].year, this.dateInWeekMorning[0].month, this.mondayDate)
+      const lastDay = this.fullDate(this.dateInWeekMorning[6].year, this.dateInWeekMorning[6].month, this.sundayDate)
+      this.loading = true
+      this.$http.get(this.apiUrl + '/schedule?from=' + firstDay + '&to=' + lastDay)
+      .then(response => {
+        this.reservations = [...response.data.reservations]
+        this.displayBookedLaunch()
+        this.loading = false
+      })
+      .catch(error => {
+        this.errors.push(error)
+        this.loading = false
+      })
+    },
+    displayBookedLaunch () {
+      this.displayBooked(this.dateInWeekMorning, '08:00')
+      this.displayBooked(this.dateInWeekAfternoon, '16:00')
+    },
+    displayBooked (dayTime, start) {
+      const res = this.reservations
+      for (let days of dayTime) {
+        let date = this.fullDate(days.year, days.month, days.day)
+        for (let reservation of res) {
+          if (reservation.date === date && reservation.startTime === start) {
+            days.booked = true
+            days.forename = reservation.ownerName
+            days.surname = reservation.ownerSurname
+          }
+        }
+      }
+    },
+    fullDate (year, month, day) {
+      if (day.toString().length < 2) {
+        day = '0' + day
+      }
+      let fullMonth = (month + 1).toString()
+      if (fullMonth.length < 2) {
+        fullMonth = '0' + fullMonth
+      }
+      return year + '-' + fullMonth + '-' + day
+    },
+    getCurrentUser () {
+      this.$http.get(this.apiUrl + '/tokens/whoami')
+      .then(response => {
+        this.currentUser = {...response.data}
+        this.getUserById(this.currentUser.userId)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+    getUserById (id) {
+      this.$http.get(this.apiUrl + '/users/' + id)
+      .then(response => {
+        this.currentUser = {...response.data}
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
     }
   },
   computed: {
@@ -232,6 +314,8 @@ export default {
   created () {
     this.currentDate = new Date()
     this.setMondayDate()
+    this.fetchData()
+    this.getCurrentUser()
   }
 }
 </script>
