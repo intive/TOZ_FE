@@ -8,24 +8,25 @@ const locales = {
         ok: 'OK',
         cancel: 'Anuluj',
         signIn: 'Zaloguj się',
-        help: 'Chce pomóc TOZ!'
+        help: 'Wspomóż tego zwierzaka'
+      },
+      label: {
+        login: 'Login',
+        password: 'Hasło'
       },
       backHome: 'Powrót do strony głównej',
       code: 'pl-PL',
       dateFormat: 'L' // other formats: l:'7.5.2017', LL:'7 maja 2017', ll:'7 maj 2017'
     },
-    home: {
-      header: {
-        gallery: 'Galeria'
-      }
-    },
     navbar: {
-      placeholder: {
-        login: 'Login',
-        password: 'Hasło'
-      },
       accountLink: 'Moje konto',
-      invalidLogin: 'Niepoprawny login'
+      home: 'Strona główna',
+      transferDetails: 'Pomoc',
+      petsGallery: 'Galeria',
+      aboutUs: 'O nas',
+      schedule: 'Grafik',
+      signIn: 'Zaloguj się',
+      signOut: 'Wyloguj się'
     },
     nav: {
       home: 'Strona główna',
@@ -94,6 +95,9 @@ const locales = {
       newPassword: 'Nowe hasło',
       confirmNewPassword: 'Potwierdź nowe hasło',
       changePassword: 'Zmień hasło'
+    },
+    login: {
+      invalidLogin: 'Niepoprawny login'
     }
   },
   en: {
@@ -102,31 +106,32 @@ const locales = {
         ok: 'OK',
         cancel: 'Cancel',
         signIn: 'Sign in',
-        help: 'Want to help TOZ!'
+        help: 'Help this pet'
+      },
+      label: {
+        login: 'Login',
+        password: 'Password'
       },
       backHome: 'Back to Home page',
       code: 'en-EN',
       dateFormat: 'L'
     },
-    home: {
-      header: {
-        gallery: 'Gallery'
-      }
-    },
     navbar: {
-      placeholder: {
-        login: 'Login',
-        password: 'Password'
-      },
       accountLink: 'My account',
-      invalidLogin: 'Invalid login'
+      home: 'Home',
+      transferDetails: 'Help',
+      petsGallery: 'Gallery',
+      aboutUs: 'About us',
+      schedule: 'Schedule'
     },
     nav: {
       home: 'Home',
       transferDetails: 'Help',
       petsGallery: 'Gallery',
       aboutUs: 'About us',
-      schedule: 'Schedule'
+      schedule: 'Schedule',
+      signIn: 'Sign in',
+      signOut: 'Sign out'
     },
     petsCarousel: {
       fullGallery: 'Full gallery'
@@ -187,6 +192,9 @@ const locales = {
       oldPassword: 'Old password',
       newPassword: 'New password',
       confirmNewPassword: 'Confirm new password'
+    },
+    login: {
+      invalidLogin: 'Invalid login'
     }
   }
 }
