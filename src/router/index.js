@@ -10,6 +10,7 @@ import Account from '@/components/Account'
 import AccountPassword from '@/components/AccountPassword'
 import FirstSignIn from '@/components/FirstSignIn'
 import ActivationLinkExpired from '@/components/ActivationLinkExpired'
+import SignIn from '@/components/Login'
 import paths from './paths'
 Vue.use(Router)
 
@@ -41,19 +42,41 @@ export default new Router({
       component: petDetails
     },
     {
+      auth: true,
       path: paths.calendar,
       name: 'calendar',
-      component: Calendar
+      component: Calendar,
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('token')) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: paths.account,
       name: 'account',
-      component: Account
+      component: Account,
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('token')) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: paths.accountPassword,
       name: 'accountPassword',
-      component: AccountPassword
+      component: AccountPassword,
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('token')) {
+          next()
+        } else {
+          next(false)
+        }
+      }
     },
     {
       path: paths.linkExpired,
@@ -64,6 +87,18 @@ export default new Router({
       path: paths.firstSignIn,
       name: 'firstSignIn',
       component: FirstSignIn
+    },
+    {
+      path: paths.signIn,
+      name: 'signIn',
+      component: SignIn,
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('token')) {
+          next(false)
+        } else {
+          next()
+        }
+      }
     }
   ]
 })
