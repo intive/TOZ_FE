@@ -8,7 +8,7 @@ export default {
         console.log(response)
         sessionStorage.setItem('token', response.data.jwt)
         this.user.authenticated = true
-        context.$http.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.jwt
+        context.$http.defaults.headers.common['Authorization'] = `Bearer ${response.data.jwt}`
         context.$router.go(-1)
       })
        .catch(error => {
