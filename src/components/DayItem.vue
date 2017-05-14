@@ -35,10 +35,9 @@
 
 <script>
 import Booking from './Booking.vue'
-// import currentUser from '@/mocks/user'
 export default {
   name: 'DayItem',
-  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'firstName', 'lastName', 'currentUserId', 'currentUserForename', 'currentUserSurname' ],
+  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'firstName', 'lastName' ],
   data () {
     return {
       day: this.currentDay,
@@ -53,23 +52,20 @@ export default {
       showModalBooked: false,
       morning: 'morning',
       afternoon: 'afternoon',
-      message: '',
+      periodStartTime: '',
+      periodEndTime: '',
       getUser: {
         forename: this.firstName,
         surname: this.lastName
       },
-      currentUser: {
-        id: this.currentUserId,
-        forename: this.currentUserForename,
-        surname: this.currentUserSurname
-      },
+      currentUser: {},
       errors: [],
       postBody: {
         date: this.fullDate,
         // ownerId: this.currentUser.id,
-        startTime: '',
-        endTime: '',
-        modificationMessage: this.message
+        startTime: this.periodStartTime,
+        endTime: this.periodEndTime,
+        modificationMessage: ''
       }
     }
   },
@@ -82,8 +78,10 @@ export default {
       this.dayShortcut = `calendar.dayInWeek[${index}]`
     },
     openModal () {
-      let now = new Date()
-      let checkDate = new Date(this.fullDate)
+      this.switchTime()
+      const checkDate = new Date(this.fullDate).getTime()
+      const now = new Date().getTime()
+      console.log(now, checkDate)
       if (this.confirmed || this.getConfirmation) {
         this.showModalBooked = true
       } else if (checkDate < now) {
@@ -93,8 +91,8 @@ export default {
       }
     },
     openModalAccepted () {
-      this.showModalAccepted = true
       this.showModal = false
+      this.showModalAccepted = true
       this.confirmed = true
       this.postReservation()
     },
@@ -115,12 +113,31 @@ export default {
     },
     switchTime () {
       if (this.dayTime === this.morning) {
-        this.postBody.startTime = '08:00'
-        this.postBody.endTime = '12:00'
+        this.periodStartTime = '08:00'
+        this.periodEndTime = '12:00'
       } else {
-        this.postBody.startTime = '16:00'
-        this.postBody.endTime = '20:00'
+        this.periodStartTime = '16:00'
+        this.periodEndTime = '20:00'
       }
+    },
+    getCurrentUser () {
+      this.$http.get(this.apiUrl + '/tokens/whoami')
+      .then(response => {
+        this.currentUser = {...response.data}
+        this.getUserById(this.currentUser.userId)
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+    getUserById (id) {
+      this.$http.get(this.apiUrl + '/users/' + id)
+      .then(response => {
+        this.currentUser = {...response.data}
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
     },
     postReservation () {
       this.$http.post(this.apiUrl + '/schedule', {
@@ -132,11 +149,6 @@ export default {
     }
   },
   computed: {
-    fullDate () {
-      let monthFull = this.month + 1
-      return this.year + '-' + monthFull + '-' + this.day
-      // return new Date(this.year, this.month, this.day)
-    },
     inits () {
       if (this.getConfirmation) {
         return this.initials(this.getUser.forename, this.getUser.surname)
@@ -150,11 +162,21 @@ export default {
       } else {
         return this.currentUser.forename + ' ' + this.currentUser.surname
       }
+    },
+    fullDate () {
+      let fullDay = this.day.toString()
+      let fullMonth = (this.month + 1).toString()
+      if (fullDay.length < 2) {
+        fullDay = '0' + fullDay
+      }
+      if (fullMonth.length < 2) {
+        fullMonth = '0' + fullMonth
+      }
+      return this.year + ',' + fullMonth + ',' + fullDay + ' ' + this.periodStartTime
     }
   },
   created () {
     this.setDayShortcut()
-    this.switchTime()
   }
 }
 </script>

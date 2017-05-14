@@ -24,10 +24,7 @@
                 :currentDayTime="days.dayTime"
                 :getConfirmation="days.booked"
                 :firstName="days.forename"
-                :lastName="days.surname"
-                :currentUserId="currentUser.id"
-                :currentUserForename="currentUser.name"
-                :currentUserSurname="currentUser.surname">
+                :lastName="days.surname">
               </dayItem>
             </td>
           </tr>
@@ -54,10 +51,7 @@
                 :currentDayTime="days.dayTime"
                 :getConfirmation="days.booked"
                 :firstName="days.forename"
-                :lastName="days.surname"
-                :currentUserId="currentUser.id"
-                :currentUserForename="currentUser.name"
-                :currentUserSurname="currentUser.surname">
+                :lastName="days.surname">
               </dayItem>
             </td>
           </tr>
@@ -87,7 +81,6 @@ export default {
       nextWeek: true,
       loading: true,
       reservations: {},
-      currentUser: {},
       errors: []
     }
   },
@@ -240,7 +233,7 @@ export default {
       const firstDay = this.fullDate(this.dateInWeekMorning[0].year, this.dateInWeekMorning[0].month, this.mondayDate)
       const lastDay = this.fullDate(this.dateInWeekMorning[6].year, this.dateInWeekMorning[6].month, this.sundayDate)
       this.loading = true
-      this.$http.get(this.apiUrl + '/schedule?from=' + firstDay + '&to=' + lastDay)
+      this.$http.get(this.apiUrl + 'schedule?from=' + firstDay + '&to=' + lastDay)
       .then(response => {
         this.reservations = [...response.data.reservations]
         this.displayBookedLaunch()
@@ -277,25 +270,6 @@ export default {
         fullMonth = '0' + fullMonth
       }
       return year + '-' + fullMonth + '-' + day
-    },
-    getCurrentUser () {
-      this.$http.get(this.apiUrl + '/tokens/whoami')
-      .then(response => {
-        this.currentUser = {...response.data}
-        this.getUserById(this.currentUser.userId)
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
-    },
-    getUserById (id) {
-      this.$http.get(this.apiUrl + '/users/' + id)
-      .then(response => {
-        this.currentUser = {...response.data}
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
     }
   },
   computed: {
@@ -315,7 +289,6 @@ export default {
     this.currentDate = new Date()
     this.setMondayDate()
     this.fetchData()
-    this.getCurrentUser()
   }
 }
 </script>
