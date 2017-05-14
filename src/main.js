@@ -14,6 +14,9 @@ Vue.prototype.$http = axios
 Vue.prototype.apiUrl = API_URL
 
 auth.checkAuth()
+if (sessionStorage.getItem('token')) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.getItem('token')}`
+}
 
 Vue.component('Modal', Vue.extend(Modal))
 /* eslint-disable no-new */
