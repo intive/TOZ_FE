@@ -62,7 +62,7 @@ export default {
       errors: [],
       postBody: {
         date: this.fullDate,
-        // ownerId: this.currentUser.id,
+        ownerId: '',
         startTime: this.periodStartTime,
         endTime: this.periodEndTime,
         modificationMessage: ''
@@ -78,10 +78,9 @@ export default {
       this.dayShortcut = `calendar.dayInWeek[${index}]`
     },
     openModal () {
-      this.switchTime()
-      const checkDate = new Date(this.fullDate).getTime()
+      const checkDate = new Date(this.fullDate + ' ' + this.periodStartTime).getTime()
       const now = new Date().getTime()
-      console.log(now, checkDate)
+      this.switchTime()
       if (this.confirmed || this.getConfirmation) {
         this.showModalBooked = true
       } else if (checkDate < now) {
@@ -91,10 +90,11 @@ export default {
       }
     },
     openModalAccepted () {
+      this.getCurrentUser()
       this.showModal = false
       this.showModalAccepted = true
       this.confirmed = true
-      this.postReservation()
+      // this.postReservation()
     },
     openModalBooked () {
       this.showModalBooked = true
@@ -124,6 +124,7 @@ export default {
       this.$http.get(this.apiUrl + '/tokens/whoami')
       .then(response => {
         this.currentUser = {...response.data}
+        this.postBody.ownerId = this.currentUser.userId
         this.getUserById(this.currentUser.userId)
       })
       .catch(e => {
@@ -152,8 +153,6 @@ export default {
     inits () {
       if (this.getConfirmation) {
         return this.initials(this.getUser.forename, this.getUser.surname)
-      } else {
-        return this.initials(this.currentUser.forename, this.currentUser.surname)
       }
     },
     fullName () {
@@ -172,7 +171,7 @@ export default {
       if (fullMonth.length < 2) {
         fullMonth = '0' + fullMonth
       }
-      return this.year + ',' + fullMonth + ',' + fullDay + ' ' + this.periodStartTime
+      return this.year + ',' + fullMonth + ',' + fullDay
     }
   },
   created () {
