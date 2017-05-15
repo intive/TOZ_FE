@@ -16,12 +16,20 @@ const locales = {
       },
       backHome: 'Powrót do strony głównej',
       code: 'pl-PL',
+      back: 'Powrót',
       dateFormat: 'L' // other formats: l:'7.5.2017', LL:'7 maja 2017', ll:'7 maj 2017'
+    },
+    help: {
+      transfer: 'Wesprzyj TOZ finansowo',
+      volunteer: 'Zostań wolontariuszem TOZ!'
+    },
+    helpInfo: {
+      goToForm: 'Formularz zgłoszeniowy'
     },
     navbar: {
       accountLink: 'Moje konto',
       home: 'Strona główna',
-      transferDetails: 'Pomoc',
+      help: 'Pomoc',
       petsGallery: 'Galeria',
       aboutUs: 'O nas',
       schedule: 'Grafik',
@@ -98,6 +106,19 @@ const locales = {
     },
     login: {
       invalid: 'Niepoprawny login i/lub hasło'
+    },
+    volunteer: {
+      name: 'Imię',
+      surname: 'Nazwisko',
+      phoneNumber: 'Numer telefonu',
+      email: 'Email',
+      becomeVolunteer: 'Chcę zostać wolontariuszem',
+      becomeTemporaryHouse: 'Chcę zostać domem tymczasowym',
+      send: 'Wyślij',
+      cancel: 'Anuluj',
+      sendMessage: 'Zgłoszenie zostało wysłane',
+      fieldRequired: 'Pole wymagane',
+      incorrectData: 'Niepoprawne dane'
     }
   },
   en: {
@@ -114,12 +135,20 @@ const locales = {
       },
       backHome: 'Back to Home page',
       code: 'en-EN',
+      back: 'Back',
       dateFormat: 'L'
+    },
+    help: {
+      transfer: 'Support ACC financally',
+      volunteer: 'Become ACC volunteer'
+    },
+    helpInfo: {
+      goToForm: 'Application form'
     },
     navbar: {
       accountLink: 'My account',
       home: 'Home',
-      transferDetails: 'Help',
+      help: 'Help',
       petsGallery: 'Gallery',
       aboutUs: 'About us',
       schedule: 'Schedule'
@@ -195,6 +224,19 @@ const locales = {
     },
     login: {
       invalid: 'Invalid login and/or password'
+    },
+    volunteer: {
+      name: 'Name',
+      surname: 'Surname',
+      phoneNumber: 'Phone number',
+      email: 'Email',
+      becomeVolunteer: 'I want to become a volunteer',
+      becomeTemporaryHouse: 'I want become a temporary house',
+      send: 'Sent',
+      cancel: 'Cancel',
+      sendMessage: 'The application has been send',
+      fieldRequired: 'Field required',
+      incorrectData: 'Incorrect data'
     }
   }
 }

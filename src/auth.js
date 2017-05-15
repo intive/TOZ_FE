@@ -10,6 +10,9 @@ export default {
       .then(response => {
         console.log(response)
         sessionStorage.setItem('token', response.data.jwt)
+        sessionStorage.setItem('userId', response.data.userId)
+        sessionStorage.setItem('name', response.data.name)
+        sessionStorage.setItem('surname', response.data.surname)
         this.user.authenticated = true
         context.$http.defaults.headers.common['Authorization'] = `Bearer ${response.data.jwt}`
         this.user.fetching = false
