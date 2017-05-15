@@ -105,7 +105,7 @@ const locales = {
       changePassword: 'Zmień hasło'
     },
     login: {
-      invalidLogin: 'Niepoprawny login'
+      invalid: 'Niepoprawny login i/lub hasło'
     },
     volunteer: {
       name: 'Imię',
@@ -223,7 +223,7 @@ const locales = {
       confirmNewPassword: 'Confirm new password'
     },
     login: {
-      invalidLogin: 'Invalid login'
+      invalid: 'Invalid login and/or password'
     },
     volunteer: {
       name: 'Name',
