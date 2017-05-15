@@ -5,11 +5,9 @@
       {{ formatedStringWithDate }}
       <button @click="nextWeekDate" v-if="nextWeek" class="navigateButton">{{ $t('calendar.button.next') }}</button>
     </div>
-    
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line morningImg"></div>
     </div>
-    <!-- Morning calendar-->
     <div v-if="loading" class="loader"></div>
     <div v-else class="row justify-content-end">
       <div class="col-11 col-md-11 col-xl-11">
@@ -31,12 +29,9 @@
         </table>
       </div>
     </div>
-    <!-- END Morning Calendar -->
     <div class="row justify-content-end">
       <div class="col-12 col-md-12 col-xl-12 line afternoonImg"></div>
     </div>
-
-    <!-- Afternoon calendar-->
     <div v-if="loading" class="loader"></div>
     <div v-else class="row justify-content-end">
       <div class="col-11 col-md-11 col-xl-11">
@@ -58,10 +53,8 @@
         </table>
       </div>
     </div>
-    <!--END Afternoon Calendar-->
   </div>
 </template>
-
 <script>
 import DayItem from './DayItem'
 export default {
@@ -239,8 +232,8 @@ export default {
         this.displayBookedLaunch()
         this.loading = false
       })
-      .catch(error => {
-        this.errors.push(error)
+      .catch(e => {
+        this.errors.push(e)
         this.loading = false
       })
     },
