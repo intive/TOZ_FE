@@ -1,45 +1,45 @@
 <template>
   <div>
-    <div class="dayView" v-if="dayTime === 'morning'" @click='openModal'>
+    <div class="dayView" v-if="dayTime === morning" @click='openModal'>
       <h1>{{ day }}</h1>
       {{ $t('calendar.dayInWeek[' + this.weekDay + ']') }}
-      <div class="booked" v-if="confirmed">{{ userInitials }}</div>
+      <div v-if="!this.loading && confirmed || this.getConfirmation" class="booked">{{ inits }}</div>
+      <div v-if="loading" class="loader"></div>
     </div>
     <div class="dayView" v-else @click='openModal'>
-      <div class="booked" v-if="confirmed">{{ userInitials }}</div>
+      <div v-if="!this.loading && confirmed || this.getConfirmation" class="booked">{{ inits }}</div>
+      <div v-if="loading" class="loader"></div>
     </div>
-
     <booking v-if="showModal">
-      <h2 slot="header" class="modalHeader">{{ $t('calendar.book.header') }}</h2>
-      <h3 slot="slot1" class="underline">{{ day }} {{ $t('calendar.book.months[' + this.month + ']') }} {{ year }}, {{ dayTime === 'morning' ? $t('calendar.morningText') : $t('calendar.afternoonText') }}</h3>
+      <h3 slot="header" class="modalHeader">{{ $t('calendar.book.header') }}</h3>
+      <h4 slot="slot1" class="underline">{{ day }} {{ $t('calendar.book.months[' + this.month + ']') }} {{ year }}, {{ $t('calendar.' + this.dayTime + 'Text') }}</h4>
       <span slot='slot2'>
-        <button class="modal-button" @click='closeModal'>{{ $t('calendar.button.decline') }}</button>
-        <button class="modal-button" @click='openModalAccepted'>{{ $t('calendar.button.accept') }}</button>
+        <button class="modalButton" @click='closeModal'>{{ $t('calendar.button.decline') }}</button>
+        <button class="modalButton" @click='openModalAccepted'>{{ $t('calendar.button.accept') }}</button>
       </span>
     </booking>
-
     <booking v-if="showModalAccepted">
-      <h2 slot="header" class="modalAccepted">{{ $t('calendar.book.headerAccepted') }}</h2>
+      <h3 slot="header" class="modalAccepted">{{ $t('calendar.book.headerAccepted') }}</h3>
       <h4 slot="slot1">{{ $t('calendar.book.textAccepted') }}</h4>
-      <button slot="slot2" class="modal-button accept-button" @click='closeAccepted'>{{ $t('calendar.book.goBack') }}</button>
+      <button slot="slot2" class="modalButton buttonBack" @click='closeAccepted'>{{ $t('calendar.book.goBack') }}</button>
     </booking>
-
     <booking v-if="showModalBooked">
-      <h2 slot="header" class="modalHeader">{{ $t('calendar.bookedPeriod') }}</h2>
-      <h3 slot="slot1" class="underline"> {{ currentUser.forename }} {{ currentUser.surname }} </h3>
-      <button slot="slot2" class="modal-button accept-button" @click='closeBooked'>{{ $t('calendar.book.goBack') }}</button>
+      <h5 slot="header" class="modalHeader">{{ $t('calendar.bookedPeriod') }}</h5>
+      <h6 slot="slot1" class="underline"> {{ fullName }} </h6>
+      <button slot="slot2" class="modalButton buttonBack" @click='closeBooked'>{{ $t('calendar.book.goBack') }}</button>
     </booking>
-
+    <booking v-if="showErrors">
+      <h2 slot="header" v-for="error of errors">{{ error.message }}</h2>
+      <button slot="slot1" class="modalButton buttonBack" @click='closeErrors'>{{ $t('calendar.book.goBack') }}</button>
+    </booking>
   </div>
 </template>
 
 <script>
 import Booking from './Booking.vue'
-import currentUser from '@/mocks/user'
-
 export default {
   name: 'DayItem',
-  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime' ],
+  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'firstName', 'lastName' ],
   data () {
     return {
       day: this.currentDay,
@@ -47,21 +47,33 @@ export default {
       year: this.currentYear,
       weekDay: this.currentWeekDay,
       dayTime: this.currentDayTime,
+      confirmed: false,
       dayShortcut: '',
       showModal: false,
       showModalAccepted: false,
       showModalBooked: false,
-      confirmed: false,
-      configs: {
-        dayOfWeek: '',
-        numberOfPeriods: 0,
-        periods: {
-          periodEnd: '',
-          periodStart: ''
-        }
+      morning: 'morning',
+      afternoon: 'afternoon',
+      periodStartTime: '',
+      periodEndTime: '',
+      getUsers: {
+        forename: this.firstName,
+        surname: this.lastName
       },
-      reservations: [],
-      currentUser
+      currentUser: {
+        forename: sessionStorage.getItem('name'),
+        surname: sessionStorage.getItem('surname')
+      },
+      loading: false,
+      showErrors: false,
+      errors: [],
+      postBody: {
+        date: '',
+        ownerId: sessionStorage.getItem('userId'),
+        startTime: '',
+        endTime: '',
+        modificationMessage: 'string'
+      }
     }
   },
   components: {
@@ -70,24 +82,22 @@ export default {
   methods: {
     setDayShortcut () {
       const index = (this.weekDay === 0) ? 6 : (this.weekDay - 1)
-      this.dayShortcut = `schedule.dayInWeek[${index}]`
+      this.dayShortcut = `calendar.dayInWeek[${index}]`
     },
     openModal () {
-      const today = new Date().getDate()
-      const thisMonth = new Date().getMonth()
-      if ((this.month === thisMonth && this.day < today) || this.month < thisMonth) {
-        return
-      }
-      if (this.confirmed) {
+      const checkDate = new Date(this.fullDate + ' ' + this.periodStartTime).getTime()
+      const now = new Date().getTime()
+      if (this.confirmed || this.getConfirmation) {
         this.showModalBooked = true
+      } else if (checkDate < now) {
+        return false
       } else {
         this.showModal = true
       }
     },
     openModalAccepted () {
-      this.showModalAccepted = true
       this.showModal = false
-      this.confirmed = true
+      this.postReservation()
     },
     openModalBooked () {
       this.showModalBooked = true
@@ -100,14 +110,79 @@ export default {
     },
     closeBooked () {
       this.showModalBooked = false
+    },
+    closeErrors () {
+      this.showErrors = false
+    },
+    initials (first, last) {
+      return first.slice(0, 1) + '. ' + last.slice(0, 1) + '.'
+    },
+    switchTime () {
+      if (this.dayTime === this.morning) {
+        this.periodStartTime = '08:00'
+        this.periodEndTime = '12:00'
+      } else {
+        this.periodStartTime = '16:00'
+        this.periodEndTime = '20:00'
+      }
+    },
+    createPostBody () {
+      this.postBody.date = this.fullDate
+      this.postBody.startTime = this.periodStartTime
+      this.postBody.endTime = this.periodEndTime
+    },
+    postReservation () {
+      this.loading = true
+      this.createPostBody()
+      console.log(this.postBody.ownerId.length)
+      this.$http.post(this.apiUrl + 'schedule', {
+        body: this.postBody
+      })
+      .catch(e => {
+        this.errors.push(e)
+        this.loading = false
+      })
+      .then(response => {
+        if (this.errors.length && !this.loading) {
+          console.log(this.errors.length)
+          this.showErrors = true
+        } else {
+          this.showModalAccepted = true
+          this.confirmed = true
+        }
+      })
     }
   },
   computed: {
-    userInitials () {
-      return `${this.currentUser.forename.charAt(0)}. ${this.currentUser.surname.charAt(0)}.`
+    inits () {
+      if (this.getConfirmation) {
+        return this.initials(this.getUsers.forename, this.getUsers.surname)
+      } else {
+        return this.initials(this.currentUser.forename,
+          this.currentUser.surname)
+      }
+    },
+    fullName () {
+      if (this.getConfirmation) {
+        return this.getUsers.forename + ' ' + this.getUsers.surname
+      } else {
+        return this.currentUser.forename + ' ' + this.currentUser.surname
+      }
+    },
+    fullDate () {
+      let fullDay = this.day.toString()
+      let fullMonth = (this.month + 1).toString()
+      if (fullDay.length < 2) {
+        fullDay = '0' + fullDay
+      }
+      if (fullMonth.length < 2) {
+        fullMonth = '0' + fullMonth
+      }
+      return this.year + '-' + fullMonth + '-' + fullDay
     }
   },
   created () {
+    this.switchTime()
     this.setDayShortcut()
   }
 }
@@ -116,62 +191,72 @@ export default {
 <style scoped>
 .dayView {
   width: 100%;
-  height: 250px;
+  height: 25em;
   border-left-style: groove;
   border-bottom-style: groove;
   text-align: right;
   display: inline-block;
-  padding: 10px; /* CHANGE TO EM */
-  position: relative;
+  padding: 1em;
+  position: relative
 }
-h1, h2 {
-  font-weight: normal;
+.booked, .loader {
+  width: 100%;
+  text-align: center;
+  line-height: 12.5em;
+  position: absolute;
+}
+.booked {
+  background-color: #ddd;
+  top: 0;
+  left: 0;
+  font-size: 2em;
+  z-index: -1
+}
+.loader {
+  width: 8%;
+  height: 5%;
+  left: 50%;
+  top: 10%
 }
 .modalHeader {
-  margin-top: 30px;
+  margin-top: .5em
 }
 .underline {
   width: 90%;
   margin: 0 auto;
-  line-height: 50px;
-  border-bottom: 3px solid #000;
+  line-height: 2.5em;
+  border-bottom: .1em solid #000
 }
 h2.modalAccepted {
-  margin-top: 50px;
+  margin-top: 1.5em
 }
 .hidden {
   display: none
 }
 .initials {
-  text-align: center;
+  text-align: center
 }
-.modal-button {
+.modalButton {
+  width: 9em;
+  font-size: 1.5em;
   float: center;
-  margin: 20px;
+  margin: 1em;
+  line-height: 2em;
   font-weight: 700;
   border: none;
   background-color: #fff;
-  cursor: pointer;
+  cursor: pointer
 }
-.modal-button:nth-child(2) {
+.modalButton:nth-child(2) {
   background-color: #ff6961;
-  color: #fff;
+  color: #fff
 }
-.accept-button {
-  margin-top: 30px;
-  border: 1px solid #404040;
-  color: #404040;
+.buttonBack {
+  width: 15em;
+  font-size: 1.5em;
+  margin-top: 2.5em;
+  border: .1em solid #404040;
+  color: #404040
 }
-.booked {
-  height: 100%;
-  width: 100%;
-  background-color: #ddd;
-  text-align: center;
-  line-height: 250px;
-  font-size: 25px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
+
 </style>
