@@ -1,9 +1,9 @@
 <template>
   <div class="transfer">
     <h1>{{ $t("transfer.header") }}</h1>
-    <div class="loader" v-if="loading"></div>
+    <loader v-if="loading"></loader>
     <div class="errors" v-if="errors.length">
-      <h2 v-for="error of errors">{{ error.message }}</h2>
+      <h2 v-for="error in errors">{{ error.message }}</h2>
     </div>
     <div class="transfer-data" v-else-if="!loading">
       <h2>{{ transferData.name }}</h2>
@@ -17,11 +17,13 @@
       <h2>{{ transferData.contact.phone }}</h2>
       <h2>{{ transferData.contact.website }}</h2>
     </div>
-    <router-link to="/">{{ $t("common.backHome") }}</router-link>
+    <router-link to="/help">{{ $t("common.back") }}</router-link>
   </div>
 </template>
 
 <script>
+import Loader from './Loader'
+
 export default {
   name: 'transferData',
   data () {
@@ -70,13 +72,14 @@ export default {
         this.errors.push(error)
         this.loading = false
       })
+  },
+  components: {
+    Loader
   }
 }
 </script>
 
 <style scoped>
-@import "../assets/styles/loader.css";
-
 h1, h2 {
   font-weight: normal;
 }
