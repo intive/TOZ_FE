@@ -8,7 +8,7 @@
           <router-link to="/pets" class="nav-link">{{ $t("navbar.petsGallery") }}</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/transfer" class="nav-link">{{ $t("navbar.transferDetails") }}</router-link>
+          <router-link to="/help" class="nav-link">{{ $t("navbar.help") }}</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/" class="nav-link">{{ $t("nav.aboutUs") }}</router-link>

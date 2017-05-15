@@ -13,7 +13,18 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 
 module.exports = merge(baseWebpackConfig, {
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap }),
+    loaders: [ {
+      test: /\.js|.jsx?$/,
+      exclude: /(node_modules|bower_components)/,
+      loader: 'babel-loader',
+    }, {
+      test: /\.(jpe?g|png|gif|svg)$/i,
+      loaders: [
+        'file?hash=sha512&digest=hex&name=[hash].[ext]',
+        'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+      ]
+    } ]
   },
   // cheap-module-eval-source-map is faster for development
   devtool: '#source-map',

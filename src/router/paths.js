@@ -9,5 +9,8 @@ const linkExpired = '/activation-link-expired'
 const firstSignIn = '/first-sign-in'
 const accountPassword = '/account-password'
 const signIn = '/sign-in'
+const help = '/help'
+const helpInfo = '/help-info'
+const volunteer = '/volunteer'
 
-export default { transfer, home, news, pets, petDetails, calendar, account, accountPassword, linkExpired, firstSignIn, signIn }
+export default { transfer, home, news, pets, petDetails, calendar, account, accountPassword, linkExpired, firstSignIn, signIn, help, helpInfo, volunteer }

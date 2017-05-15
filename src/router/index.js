@@ -11,6 +11,9 @@ import AccountPassword from '@/components/AccountPassword'
 import FirstSignIn from '@/components/FirstSignIn'
 import ActivationLinkExpired from '@/components/ActivationLinkExpired'
 import SignIn from '@/components/Login'
+import Help from '@/components/Help'
+import HelpInfo from '@/components/HelpInfo'
+import Volunteer from '@/components/Volunteer'
 import paths from './paths'
 Vue.use(Router)
 
@@ -99,6 +102,21 @@ export default new Router({
           next()
         }
       }
+    },
+    {
+      path: paths.help,
+      name: 'help',
+      component: Help
+    },
+    {
+      path: paths.helpInfo,
+      name: 'helpInfo',
+      component: HelpInfo
+    },
+    {
+      path: paths.volunteer,
+      name: 'volunteer',
+      component: Volunteer
     }
   ]
 })

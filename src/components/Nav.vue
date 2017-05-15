@@ -10,7 +10,7 @@
     </li>
     <li class="nav-item">
       <img src="../assets/heart-icon.png" alt="">
-      <router-link to="/transfer" class="nav-link">{{ $t("nav.transferDetails") }}</router-link>
+      <router-link to="/help" class="nav-link">{{ $t("nav.transferDetails") }}</router-link>
     </li>
     <li class="nav-item">
       <img src="../assets/schedule-icon.png" alt="">
