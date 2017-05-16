@@ -23,10 +23,6 @@
             <router-link to="/sign-in" class="nav-link">{{ $t("navbar.signIn") }}</router-link>
         </li>
       </ul>
-      <button class="btn"
-            @click="logout"
-            v-if="volunteer.authenticated">{{ $t("navbar.signOut") }}
-      </button>
   </nav>
 </template>
 
@@ -37,12 +33,6 @@ export default {
   data () {
     return {
       volunteer: auth.user
-    }
-  },
-  methods: {
-    logout () {
-      auth.logout()
-      this.$router.push('/')
     }
   }
 }
