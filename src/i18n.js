@@ -68,6 +68,7 @@ const locales = {
       button: {
         accept: 'Potwierdzam',
         decline: 'Rezygnuję',
+        destroy: 'Usuń rezerwację',
         next: '>>',
         previous: '<<'
       },
@@ -187,6 +188,7 @@ const locales = {
       button: {
         accept: 'Accept',
         decline: 'Cancel',
+        destroy: 'Delete reservation',
         next: '>>',
         previous: '<<'
       },

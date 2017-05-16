@@ -15,6 +15,7 @@
           <tr>
             <td v-for="days in dateInWeekMorning" :key="days.day">
               <dayItem
+                @fetch="fetchData"
                 :currentDay="days.day"
                 :currentMonth="days.month"
                 :currentYear="days.year"
@@ -22,7 +23,9 @@
                 :currentDayTime="days.dayTime"
                 :getConfirmation="days.booked"
                 :firstName="days.forename"
-                :lastName="days.surname">
+                :lastName="days.surname"
+                :getUserId="days.userId"
+                :getResId="days.resId">
               </dayItem>
             </td>
           </tr>
@@ -39,6 +42,7 @@
           <tr>
             <td v-for="days in dateInWeekAfternoon" :key="days.day">
               <dayItem
+                @fetch="fetchData"
                 :currentDay="days.day"
                 :currentMonth="days.month"
                 :currentYear="days.year"
@@ -46,7 +50,9 @@
                 :currentDayTime="days.dayTime"
                 :getConfirmation="days.booked"
                 :firstName="days.forename"
-                :lastName="days.surname">
+                :lastName="days.surname"
+                :getUserId="days.userId"
+                :getResId="days.resId">
               </dayItem>
             </td>
           </tr>
@@ -58,7 +64,7 @@
 <script>
 import DayItem from './DayItem'
 export default {
-  name: 'Calendar2',
+  name: 'Calendar',
   data () {
     return {
       currentDate: '',
@@ -239,7 +245,7 @@ export default {
     },
     displayBookedLaunch () {
       this.displayBooked(this.dateInWeekMorning, '08:00')
-      this.displayBooked(this.dateInWeekAfternoon, '16:00')
+      this.displayBooked(this.dateInWeekAfternoon, '12:00')
     },
     displayBooked (dayTime, start) {
       const res = this.reservations
@@ -250,6 +256,8 @@ export default {
             days.booked = true
             days.forename = reservation.ownerName
             days.surname = reservation.ownerSurname
+            days.userId = reservation.ownerId
+            days.resId = reservation.id
           }
         }
       }
