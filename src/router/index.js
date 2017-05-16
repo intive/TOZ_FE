@@ -14,6 +14,7 @@ import SignIn from '@/components/Login'
 import Help from '@/components/Help'
 import HelpInfo from '@/components/HelpInfo'
 import Volunteer from '@/components/Volunteer'
+import ResetPassword from '@/components/ResetPassword'
 import paths from './paths'
 Vue.use(Router)
 
@@ -117,6 +118,11 @@ export default new Router({
       path: paths.volunteer,
       name: 'volunteer',
       component: Volunteer
+    },
+    {
+      path: paths.resetPassword,
+      name: 'resetPassword',
+      component: ResetPassword
     }
   ]
 })

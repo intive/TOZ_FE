@@ -7,7 +7,7 @@
         <label for="login" class="col-sm-2 col-form-label">{{ $t("common.label.login") }}</label>
         <div class="col-sm-10">
           <input type="email"
-          class="form-control"
+          class="form-control form-control-danger"
           id="login"
           maxlength="255"
           placeholder="login"
@@ -19,16 +19,17 @@
         <label for="password" class="col-sm-2 col-form-label">{{ $t("common.label.password") }}</label>
         <div class="col-sm-10">
           <input type="password"
-          class="form-control"
+          class="form-control form-control-danger"
           id="password"
           maxlength="30"
           placeholder="password"
           v-model="credentials.password">
         </div>
       </div>
-      <p v-if="warning || volunteer.errorMessage">{{ $t('login.invalid') }}</p>
+      <p v-if="emailWarning || volunteer.errorMessage">{{ $t('login.invalid') }}</p>
       <div class="form-group row">
         <div class="offset-sm-2 col-sm-10">
+          <router-link to="/reset-password" class="btn resetBtn">{{ $t('login.reset') }}</router-link>
           <button type="submit" class="btn" @click="signIn">{{ $t("common.button.ok") }}</button>
         </div>
       </div>
@@ -52,7 +53,7 @@ export default {
   },
   methods: {
     validateEmail () {
-      const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+      const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,15})+$/
       if (!emailRegex.test(this.credentials.login)) {
         this.emailWarning = true
         return false
@@ -70,6 +71,9 @@ export default {
       }
       auth.login(this, credentials)
     }
+  },
+  created () {
+    this.volunteer.errorMessage = ''
   }
 }
 </script>
@@ -77,4 +81,10 @@ export default {
 <style lang="sass">
   .loginForm
     margin-top: 100px
+
+  .resetBtn
+    text-decoration: none
+    &:focus,
+    &:hover
+      color: #fff
 </style>
