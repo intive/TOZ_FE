@@ -9,11 +9,11 @@
         <div v-for="pet in currentPage.slice((row - 1) * 3, row * 3)" :key="pet.id" class="col-lg-4">
           <div class="card">
             <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
-            <div class="card-block">
-              <img src="http://lorempixel.com/200/200/" alt="">
-              <h2 class="card-title">{{pet.name}}</h2>
-              <h3 class="card-text">{{pet.type}}</h3>
-            </div>
+              <div class="card-block">
+                <img class="imgCard" :src="setUrl(pet.imageUrl)" alt="">
+                <h2 class="card-title">{{pet.name}}</h2>
+                <h3 class="card-text">{{pet.type}}</h3>
+              </div>
             </router-link>
           </div>
         </div>
@@ -35,57 +35,63 @@
 </template>
 
 <script>
-import Paginate from 'vuejs-paginate'
+  import Paginate from 'vuejs-paginate'
 
-export default {
-  data () {
-    return {
-      petsList: [],
-      errors: [],
-      currentPage: [],
-      paginationConfig: {
-        numberOfPages: 0,
-        containerClass: 'pagination justify-content-center',
-        pageClass: 'page-item',
-        pageLinkClass: 'page-link',
-        prevText: '<<',
-        nextText: '>>',
-        prevClass: 'page-link',
-        nextClass: 'page-link',
-        clickCallback: this.changePage
+  export default {
+    data () {
+      return {
+        petsList: [],
+        errors: [],
+        currentPage: [],
+        paginationConfig: {
+          numberOfPages: 0,
+          containerClass: 'pagination justify-content-center',
+          pageClass: 'page-item',
+          pageLinkClass: 'page-link',
+          prevText: '<<',
+          nextText: '>>',
+          prevClass: 'page-link',
+          nextClass: 'page-link',
+          clickCallback: this.changePage
+        },
+        itemsPerPage: 9,
+        loading: true
+      }
+    },
+    methods: {
+      changePage (pageNum) {
+        this.currentPage = this.petsList.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
       },
-      itemsPerPage: 9,
-      loading: true
+      setUrl (pet) {
+        return this.apiUrl.substr(0, this.apiUrl.length - 4) + pet
+      }
+    },
+    created () {
+      this.$http.get(this.apiUrl + 'pets')
+        .then(response => {
+          this.petsList = response.data
+          this.paginationConfig.numberOfPages = Math.ceil(this.petsList.length / this.itemsPerPage)
+          this.changePage(1)
+          this.loading = false
+        })
+        .catch(error => {
+          this.errors.push(error)
+          this.loading = false
+        })
+    },
+    components: {
+      Paginate
     }
-  },
-  methods: {
-    changePage (pageNum) {
-      this.currentPage = this.petsList.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
-    }
-  },
-  created () {
-    this.$http.get(this.apiUrl + 'pets')
-    .then(response => {
-      this.petsList = response.data
-      this.paginationConfig.numberOfPages = Math.ceil(this.petsList.length / this.itemsPerPage)
-      this.changePage(1)
-      this.loading = false
-    })
-    .catch(error => {
-      this.errors.push(error)
-      this.loading = false
-    })
-  },
-  components: {
-    Paginate
   }
-}
 </script>
 <style>
-@import "../assets/styles/loader.css";
+  @import "../assets/styles/loader.css";
 
-.card {
-  border: none;
-}
-
+  .card {
+    border: none;
+  }
+  .imgCard {
+    width: 30em;
+    height: 30em;
+  }
 </style>

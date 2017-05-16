@@ -7,15 +7,15 @@
     <div id="pet-container" v-else-if="!loading">
       <div id="swiper-wrapper">
         <swiper :options="swiperOption">
-          <swiper-slide style="background-image:url(http://lorempixel.com/1000/500/)" v-for="n in range" :key="n">
-            <div class="slide-content" @click="openModal"></div>
+          <swiper-slide v-for="n in range" :key="n">
+            <div class="slide-content" @click="openModal"><img class="imgSlider":src="concatUrl" alt=""></div>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
           <div class="swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
       </div>
-      <Modal v-if="showModal" @close="showModal = false" class="modal col-sm-12 col-lg-12"></Modal>
+      <Modal :imageUrl="concatUrl" v-if="showModal" @close="showModal = false" class="modal col-sm-12 col-lg-12"></Modal>
       <div class="petInfo">
         <ul class="list-group pet-ul col-sm-12">
           <li class="pet-li row">
@@ -103,6 +103,9 @@
       convertTimeStamp () {
         const date = moment(this.petDetails.created).locale(this.$t('common.code'))
         return date.format(this.$t('common.dateFormat'))
+      },
+      concatUrl () {
+        return this.apiUrl.substr(0, this.apiUrl.length - 4) + this.petDetails.imageUrl
       }
     }
   }
@@ -191,6 +194,12 @@
     width: 96em
     height: 70em
     margin: 0 auto
+
+  .imgSlider
+    width: 96em
+    height: 70em
+    background-size: cover
+    background-position: center
 
   .swiper-slide
     background-position: center
