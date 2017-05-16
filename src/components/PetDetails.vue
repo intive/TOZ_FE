@@ -90,7 +90,6 @@
       fetchData () {
         this.$http.get(this.apiUrl + '/pets/' + this.id)
           .then(response => {
-            console.log(response.data)
             this.petDetails = {...response.data}
             this.loading = false
           })
