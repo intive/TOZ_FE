@@ -6,7 +6,7 @@
     <textarea cols="40" rows="5" maxlength="500" :disabled="editFlag" v-model="newContents"></textarea>
     <div v-if="!editFlag">
       <button @click="saveEditedComment">Zapisz</button>
-      <button>Anuluj</button>
+      <button @click="cancelEdit">Anuluj</button>
     </div>
   </div>
 </template>
@@ -53,6 +53,10 @@
         const con = (sessionStorage.getItem('userId') === this.comment.userUuid) ? this.isAuthor = true : this.isAuthor = false
         return con
       },
+      cancelEdit () {
+        this.editFlag = !this.editFlag
+        this.newContents = this.comment.contents
+      },
       saveEditedComment () {
         const editedComment = {
           id: this.comment.id,
@@ -83,9 +87,11 @@
     outline: none
     font: $font-stack
     font-size: 2em
+    text-align: center
     &:disabled
       background-color: #fff
       border: 0
       font: $font-stack
       font-size: 2em
+
 </style>

@@ -3,22 +3,48 @@
     <h4>Komentarze:</h4>
     <hr>
     <newComment :petId="petId" @newComment="updateComments"></newComment>
-    <comment v-for="(item,index) in commentsTable" :comment="item" :key="item.id"></comment>
+    <comment v-for="item in currentPage" :comment="item" :key="item.id"></comment>
+    <paginate
+      :page-count="paginationConfig.numberOfPages"
+      :container-class="paginationConfig.containerClass"
+      :page-class="paginationConfig.pageClass"
+      :page-link-class="paginationConfig.pageLinkClass"
+      :prev-text="paginationConfig.prevText"
+      :next-text="paginationConfig.nextText"
+      :prev-class="paginationConfig.prevClass"
+      :next-class="paginationConfig.nextClass"
+      :click-handler="paginationConfig.clickCallback">
+    </paginate>
   </div>
 </template>
 <script>
   import comment from './SingleComment.vue'
   import newComment from './NewComment.vue'
+  import Paginate from 'vuejs-paginate'
   export default {
     data () {
       return {
         commentsTable: [],
-        errors: []
+        errors: [],
+        currentPage: [],
+        paginationConfig: {
+          numberOfPages: 0,
+          containerClass: 'pagination justify-content-center',
+          pageClass: 'page-item',
+          pageLinkClass: 'page-link',
+          prevText: '<<',
+          nextText: '>>',
+          prevClass: 'page-link',
+          nextClass: 'page-link',
+          clickCallback: this.changePage
+        },
+        itemsPerPage: 20
       }
     },
     components: {
       comment,
-      newComment
+      newComment,
+      Paginate
     },
     props: ['petId'],
     methods: {
@@ -27,6 +53,8 @@
           .then(response => {
             console.log(response.data)
             this.commentsTable = [...response.data]
+            this.paginationConfig.numberOfPages = Math.ceil(this.commentsTable.length / this.itemsPerPage)
+            this.changePage(1)
             this.loading = false
           })
           .catch(error => {
@@ -36,6 +64,9 @@
       },
       updateComments (newComment) {
         this.commentsTable.unshift(newComment[0])
+      },
+      changePage (pageNum) {
+        this.currentPage = this.commentsTable.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
       }
     },
     created () {
