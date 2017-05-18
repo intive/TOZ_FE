@@ -9,10 +9,10 @@ vm.petDetails = petsList[0]
 describe('PetDetails.vue', () => {
   it('should render correct labels', () => {
     Vue.nextTick(() => {
-      expect(vm.$el.querySelectorAll('.li-span-name').textContent).to.equal($t('pets.name'))
-      expect(vm.$el.querySelectorAll('.li-span-sex').textContent).to.equal($t('pets.sex'))
-      expect(vm.$el.querySelectorAll('.li-span-type').textContent).to.equal($t('pets.type'))
-      expect(vm.$el.querySelectorAll('.li-span-calendar').textContent).to.equal($t('pets.creationDate'))
+      expect(vm.$el.querySelectorAll('.li-span-name').textContent).to.equal(vm.$t('pets.name'))
+      expect(vm.$el.querySelectorAll('.li-span-sex').textContent).to.equal(vm.$t('pets.sex'))
+      expect(vm.$el.querySelectorAll('.li-span-type').textContent).to.equal(vm.$t('pets.type'))
+      expect(vm.$el.querySelectorAll('.li-span-calendar').textContent).to.equal(vm.$t('pets.creationDate'))
     })
   })
   it('should convert the date properly', () => {

@@ -71,10 +71,10 @@ describe('Calendar.vue', () => {
     vm.nextWeekDate()
     expect(vm.currentDate.getDate()).to.equal(new Date(2017, 3, 17).getDate())
   })
-  it('should set string `KWIECIEŃ 10-16`', () => {
+  it('should set string `Kwiecień 10-16`', () => {
     vm.mondayDate = 10
     vm.sundayDate = 16
     vm.monthNumber = 3
-    expect(vm.formatedStringWithDate).to.equal('KWIECIEŃ 10-16')
+    expect(vm.formatedStringWithDate).to.equal(`${vm.$t('calendar.months[3]')} 10-16`)
   })
 })

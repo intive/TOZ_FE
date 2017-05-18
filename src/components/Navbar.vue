@@ -1,86 +1,62 @@
 <template>
   <nav class="navbar navbar-toggleable-md navbar-inverse">
-      <ul class="nav mr-auto">
+    <a class="navbar-brand" href="#">
+      <img src="../assets/toz_app_logo.svg" class="d-inline-block align-top" alt="">
+     </a>
+     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a href="#" class="nav-link"><i class="fa fa-facebook-official fa-2x"></i></a>
+          <router-link to="/" class="nav-link">{{ $t("navbar.home") }}</router-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link"><i class="fa fa-instagram fa-2x"></i></a>
+          <router-link to="/pets" class="nav-link">{{ $t("navbar.petsGallery") }}</router-link>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link"><i class="fa fa-twitter fa-2x"></i></a>
+          <router-link to="/help" class="nav-link">{{ $t("navbar.help") }}</router-link>
         </li>
-      </ul>
-      <ul class="navbar-nav mr-1">
         <li class="nav-item">
+          <router-link to="/" class="nav-link">{{ $t("nav.aboutUs") }}</router-link>
+        </li>
+        <li class="nav-item" v-if="volunteer.authenticated">
+          <router-link to="/calendar" class="nav-link">{{ $t("navbar.schedule") }}</router-link>
+        </li>
+        <li class="nav-item" v-if="volunteer.authenticated">
           <router-link to="/account" class="nav-link">{{ $t("navbar.accountLink") }}</router-link>
         </li>
-        <li v-if="logged">
-          <h6>Logged as {{ email }}</h6>
+        <li class="nav-item" v-if="!volunteer.authenticated">
+            <router-link to="/sign-in" class="nav-link">{{ $t("navbar.signIn") }}</router-link>
         </li>
       </ul>
-      <form v-if="!logged" @submit.prevent class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2"
-               type="email"
-               :placeholder="$t('navbar.placeholder.login')"
-               v-model="email">
-        <input class="form-control mr-sm-2"
-               type="password"
-               :placeholder="$t('navbar.placeholder.password')"
-               v-model="password">
-        <button class="btn my-2 my-sm-0"
-                type="submit"
-                @click="signIn">{{ $t("common.button.signIn") }}</button>
-      </form>
+    </div>
   </nav>
 </template>
 
 <script>
-  export default {
-    name: 'Navbar',
-    data () {
-      return {
-        email: '',
-        password: '',
-        emailWarning: '',
-        logged: false
-      }
-    },
-    methods: {
-      validateEmail () {
-        const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-        if (!emailRegex.test(this.email)) {
-          this.emailWarning = this.$t('navbar.invalidLogin')
-          return false
-        }
-        this.emailWarning = ''
-        return true
-      },
-      signIn () {
-        if (!this.validateEmail()) {
-          return false
-        }
-        this.$http.post(this.apiUrl + 'tokens/acquire', {
-          email: this.email,
-          password: this.password
-        })
-        .then(response => {
-          console.log(response)
-          sessionStorage.setItem('token', response.data.jwt)
-          this.logged = true
-        })
-         .catch(error => {
-           console.log(error)
-         })
-      }
+import auth from '../auth.js'
+
+export default {
+  data () {
+    return {
+      volunteer: auth.user
     }
   }
+}
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
   @import "../assets/styles/variables.sass"
+
   nav
-    height: 70px
     background-color: $black
+
+  @media (min-width: 992px)
+    nav
+      height: 70px
+
+  ul li a
+    font-size: 24px
 
 </style>

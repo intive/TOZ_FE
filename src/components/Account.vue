@@ -8,16 +8,20 @@
         <router-link to="/" class="nav-link">{{ $t("common.backHome") }}</router-link>
       </li>
     </ul>
+    <button class="btn" @click="logout">{{ $t("navbar.signOut") }}</button>
   </div>
 </template>
 
 
 <script>
+import auth from '../auth.js'
 
 export default {
   name: 'Account',
   methods: {
-    handleSubmit () {
+    logout () {
+      auth.logout()
+      this.$router.push('/')
     }
   }
 }
