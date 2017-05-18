@@ -8,14 +8,14 @@
       <div id="swiper-wrapper">
         <swiper :options="swiperOption">
           <swiper-slide v-for="n in range" :key="n">
-            <div class="slide-content" @click="openModal"><img class="imgSlider":src="concatUrl" alt=""></div>
+            <div class="slide-content" @click="openModal"><img class="imgSlider" :src="concatUrl()" @error="imageHandler" alt=""></div>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
           <div class="swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
       </div>
-      <Modal :imageUrl="concatUrl" v-if="showModal" @close="showModal = false" class="modal col-sm-12 col-lg-12"></Modal>
+      <Modal :imageUrl="concatUrl()" v-if="showModal" @close="showModal = false" class="modal col-sm-12 col-lg-12"></Modal>
       <div class="petInfo">
         <ul class="list-group pet-ul col-sm-12">
           <li class="pet-li row">
@@ -48,7 +48,10 @@
         </ul>
       </div>
       <button class="helpLink btn" :disabled="showTransfer" @click.once="showTransfer = true">{{$t('common.button.help')}}</button>
-      <transfer class="col-sm-12 col-lg-12" v-show="showTransfer"></transfer>
+      <div class="col-sm-12 col-lg-12" v-show="showTransfer">
+        <h6>Tutaj bedzie jakis tekst zachecający do wsparcia animalsa</h6>
+        <h5>63 1005 2123 5001 2213 2313 2222</h5>
+      </div>
       <hr>
       <comments :petId="petDetails.id"></comments>
     </div>
@@ -94,7 +97,6 @@
       fetchData () {
         this.$http.get(this.apiUrl + 'pets/' + this.id)
           .then(response => {
-            console.log(response.data)
             this.petDetails = {...response.data}
             this.loading = false
           })
@@ -102,15 +104,28 @@
             this.errors.push(error)
             this.loading = false
           })
+      },
+      imageHandler () {
+        if (this.petDetails.type === 'dog' || this.petDetails.type === 'DOG') {
+          this.petDetails.imageUrl = require('../assets/default_photo_dog.svg')
+          return this.petDetails.imageUrl
+        } else {
+          this.petDetails.imageUrl = require('../assets/default_photo_cat.svg')
+          return this.petDetails.imageUrl
+        }
+      },
+      concatUrl () {
+        if (this.petDetails.imageUrl.includes('data')) {
+          return this.petDetails.imageUrl
+        } else {
+          return this.apiUrl.substr(0, this.apiUrl.length - 4) + this.petDetails.imageUrl
+        }
       }
     },
     computed: {
       convertTimeStamp () {
         const date = moment(this.petDetails.created).locale(this.$t('common.code'))
         return date.format(this.$t('common.dateFormat'))
-      },
-      concatUrl () {
-        return this.apiUrl.substr(0, this.apiUrl.length - 4) + this.petDetails.imageUrl
       }
     }
   }
