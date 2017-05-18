@@ -1,9 +1,14 @@
 <template>
   <div class="container comment">
+    <div v-if="loading" class="loader"></div>
+    <div class="errors" v-if="errors.length">
+      <h2 v-for="error of errors">{{ error.message }}</h2>
+    </div>
     <button v-if="isAuthor" @click="editFlag = false">Edytuj</button>
     <span>{{convertTimeStamp}}</span>
     <h6>{{currentUser.name}} {{currentUser.surname}}</h6>
-    <textarea cols="40" rows="5" maxlength="500" :disabled="editFlag" v-model="newContents"></textarea>
+    <textarea cols="40" rows="5" maxlength="500" spellcheck="false" :disabled="editFlag" v-model="newContents"></textarea><br>
+    <span v-show="errorFlag" class="error">Pole komentarza nie może być puste</span>
     <div v-if="!editFlag">
       <button @click="saveEditedComment">Zapisz</button>
       <button @click="cancelEdit">Anuluj</button>
@@ -22,6 +27,8 @@
         },
         isAuthor: false,
         editFlag: true,
+        errorFlag: false,
+        loading: true,
         errors: []
       }
     },
@@ -58,18 +65,34 @@
         this.newContents = this.comment.contents
       },
       saveEditedComment () {
-        const editedComment = {
-          id: this.comment.id,
-          contents: this.newContents,
-          userUuid: this.comment.userUuid,
-          petUuid: this.comment.petUuid,
-          state: 'ACTIVE',
-          created: this.comment.created,
-          lastModified: this.createTimeStamp
+        if (this.checkIfEmpty()) {
+          const editedComment = {
+            id: this.comment.id,
+            contents: this.newContents,
+            userUuid: this.comment.userUuid,
+            petUuid: this.comment.petUuid,
+            state: 'ACTIVE',
+            created: this.comment.created,
+            lastModified: this.createTimeStamp
+          }
+          console.log(editedComment)
+          this.$http.put(this.apiUrl + 'comments/' + this.comment.id, editedComment)
+            .then(() => {
+              this.editFlag = true
+            })
+            .catch(error => {
+              console.log(error)
+            })
         }
-        console.log(editedComment)
-        this.$http.put(this.apiUrl + 'comments/' + this.comment.id, editedComment)
-          .catch(error => console.log(error))
+      },
+      checkIfEmpty () {
+        if (this.newContents === '') {
+          this.errorFlag = true
+          return false
+        } else {
+          this.errorFlag = false
+          return true
+        }
       }
     }
   }
@@ -93,5 +116,7 @@
       border: 0
       font: $font-stack
       font-size: 2em
-
+  .error
+    color: red
+    font: $font-stack
 </style>

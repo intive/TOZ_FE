@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="loading" class="loader"></div>
+    <div class="errors" v-if="errors.length">
+      <h2 v-for="error of errors">{{ error.message }}</h2>
+    </div>
     <h4>Komentarze:</h4>
     <hr>
     <newComment :petId="petId" @newComment="updateComments"></newComment>
@@ -38,7 +42,8 @@
           nextClass: 'page-link',
           clickCallback: this.changePage
         },
-        itemsPerPage: 20
+        itemsPerPage: 20,
+        loading: true
       }
     },
     components: {
@@ -64,6 +69,7 @@
       },
       updateComments (newComment) {
         this.commentsTable.unshift(newComment[0])
+        this.changePage(1)
       },
       changePage (pageNum) {
         this.currentPage = this.commentsTable.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
@@ -75,5 +81,5 @@
   }
 </script>
 <style>
-
+  @import "../assets/styles/loader.css";
 </style>
