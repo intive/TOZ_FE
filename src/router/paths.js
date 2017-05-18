@@ -12,5 +12,6 @@ const signIn = '/sign-in'
 const help = '/help'
 const helpInfo = '/help-info'
 const volunteer = '/volunteer'
+const resetPassword = '/reset-password'
 
-export default { transfer, home, news, pets, petDetails, calendar, account, accountPassword, linkExpired, firstSignIn, signIn, help, helpInfo, volunteer }
+export default { transfer, home, news, pets, petDetails, calendar, account, accountPassword, linkExpired, firstSignIn, signIn, help, helpInfo, volunteer, resetPassword }

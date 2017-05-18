@@ -105,7 +105,12 @@ const locales = {
       changePassword: 'Zmień hasło'
     },
     login: {
-      invalid: 'Niepoprawny login i/lub hasło'
+      invalid: 'Niepoprawny login i/lub hasło',
+      reset: 'Resetuj hasło'
+    },
+    resetPassword: {
+      message: 'W celu zresetowania hasła podaj swój login (adres e-mail)',
+      invalidLogin: 'Niepoprawny login'
     },
     volunteer: {
       name: 'Imię',
@@ -223,7 +228,12 @@ const locales = {
       confirmNewPassword: 'Confirm new password'
     },
     login: {
-      invalid: 'Invalid login and/or password'
+      invalid: 'Invalid login and/or password',
+      reset: 'Reset password'
+    },
+    resetPassword: {
+      message: 'To reset your password, please enter your login(e-mail address)',
+      invalidLogin: 'Invalid login'
     },
     volunteer: {
       name: 'Name',
