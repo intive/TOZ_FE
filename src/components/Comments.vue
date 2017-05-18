@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="container">
     <div v-if="loading" class="loader"></div>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
-    <h4>Komentarze:</h4>
-    <hr>
+    <div v-else-if="!loading">
+    <h4>Komentarze</h4>
+      <hr>
     <newComment :petId="petId" @newComment="updateComments"></newComment>
     <comment v-for="item in currentPage" :comment="item" :key="item.id"></comment>
     <paginate
@@ -19,6 +20,7 @@
       :next-class="paginationConfig.nextClass"
       :click-handler="paginationConfig.clickCallback">
     </paginate>
+    </div>
   </div>
 </template>
 <script>
@@ -52,6 +54,9 @@
       Paginate
     },
     props: ['petId'],
+    created () {
+      this.fetchData()
+    },
     methods: {
       fetchData () {
         this.$http.get(this.apiUrl + '/comments?petUuid=' + this.petId + '&isShortened=false&state=ACTIVE')
@@ -73,10 +78,10 @@
       },
       changePage (pageNum) {
         this.currentPage = this.commentsTable.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
+      },
+      newestComments () {
+        return this.commentsTable.slice(0, 5)
       }
-    },
-    created () {
-      this.fetchData()
     }
   }
 </script>

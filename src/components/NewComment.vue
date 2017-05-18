@@ -1,7 +1,7 @@
 <template>
   <div>
       <h6>Dodaj komentarz</h6>
-      <textarea name="comment" id="comment" cols="40" rows="5" maxlength="500" v-model="newComment"></textarea><br>
+      <textarea name="comment" id="comment" maxlength="500" v-model="newComment"></textarea><br>
       <span v-show="errorFlag" class="error">Pole komentarza nie może być puste</span>
       <button @click="addNewComment" class="btn">Dodaj</button>
   </div>
@@ -60,4 +60,7 @@
     outline: none
     font: $font-stack
     font-size: 2em
+    width: 35vw
+    height: 25vh
+    border-color: lightgray
 </style>
