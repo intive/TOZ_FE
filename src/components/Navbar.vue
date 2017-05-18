@@ -1,5 +1,12 @@
 <template>
   <nav class="navbar navbar-toggleable-md navbar-inverse">
+    <a class="navbar-brand" href="#">
+      <img src="../assets/toz_app_logo.svg" class="d-inline-block align-top" alt="">
+     </a>
+     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+    <div class="collapse navbar-collapse" id="navbarToggler">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <router-link to="/" class="nav-link">{{ $t("navbar.home") }}</router-link>
@@ -23,6 +30,7 @@
             <router-link to="/sign-in" class="nav-link">{{ $t("navbar.signIn") }}</router-link>
         </li>
       </ul>
+    </div>
   </nav>
 </template>
 
@@ -38,15 +46,17 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
   @import "../assets/styles/variables.sass"
+
   nav
-    height: 70px
     background-color: $black
 
-  ul
-    li
-      a
-        font-size: 24px
+  @media (min-width: 992px)
+    nav
+      height: 70px
+
+  ul li a
+    font-size: 24px
 
 </style>
