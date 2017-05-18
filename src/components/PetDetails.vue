@@ -49,12 +49,15 @@
       </div>
       <button class="helpLink btn" :disabled="showTransfer" @click.once="showTransfer = true">{{$t('common.button.help')}}</button>
       <transfer class="col-sm-12 col-lg-12" v-show="showTransfer"></transfer>
+      <hr>
+      <comments :petId="petDetails.id"></comments>
     </div>
     <router-link v-show="!showTransfer" to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 <script>
   import transfer from './Transfer.vue'
+  import comments from './Comments.vue'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
   import moment from 'moment'
   export default {
@@ -78,7 +81,8 @@
     components: {
       swiper,
       swiperSlide,
-      transfer
+      transfer,
+      comments
     },
     created () {
       this.fetchData()
@@ -88,8 +92,9 @@
         this.showModal = true
       },
       fetchData () {
-        this.$http.get(this.apiUrl + '/pets/' + this.id)
+        this.$http.get(this.apiUrl + 'pets/' + this.id)
           .then(response => {
+            console.log(response.data)
             this.petDetails = {...response.data}
             this.loading = false
           })
