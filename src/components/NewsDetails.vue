@@ -6,42 +6,42 @@
     </div>
     <div class="row" v-if="!errors.length">
       <div class="col">
-          <p class="text-left top-date">Dodane: {{ convertTimeStamp }}</p>
+        <p class="text-left top-date">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
         <div class="row title">
           <h3><u>{{ newsDetails.title }}</u></h3>
         </div>
         <div class="row">
-          <div class="col-md-9 left-panel">
+          <div class="col-8 left-panel">
             <img src="http://loremflickr.com/344/287" class="img">
-            <p class="text-left news-info added">Dodane: {{ convertTimeStamp }}</p>
-            <p class="text-left news-info autor">Opublikowała: Joanna Krupa</p>
+            <p class="text-left news-info added">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
+            <p class="text-left news-info autor">{{ $t('news.addedBy') }} Joanna Krupa</p>
             <p class="text-left">{{ lorem }}</p>
             <p class="text-left">{{ lorem }}</p>
             <p class="text-left">{{ lorem }}</p>
             <div class="row share">
               <div class="col-md-2">
-                <p class="text-left">Udostępnij to!</p>
+                <p class="text-left">{{ $t('news.share') }}</p>
               </div>
               <div class="col-md-5 hidden-lg-down">
                 <p>--------------------------------------------------------></p>
               </div>
               <div class="col-md-5 buttons-wrapper">
-                <button type="button" class="btn btn-social btn-twitter">
-                  <span class="fa fa-twitter"></span> Twitter
-                </button>
-                <button type="button" class="btn btn-social btn-facebook">
-                  <span class="fa fa-facebook"></span> Facebook
+                <button type="button" class="btn btn-social btn-pinterest">
+                  <span class="fa fa-pinterest"></span> {{ $t('news.pinterest') }}
                 </button>
                 <button type="button" class="btn btn-social btn-google">
-                  <span class="fa fa-google"></span> Google
+                  <span class="fa fa-google"></span> {{ $t('news.google') }}
                 </button>
-                <button type="button" class="btn btn-social btn-pinterest">
-                  <span class="fa fa-pinterest"></span> Pinterest
+                <button type="button" class="btn btn-social btn-facebook">
+                  <span class="fa fa-facebook"></span> {{ $t('news.facebook') }}
+                </button>
+                <button type="button" class="btn btn-social btn-twitter">
+                  <span class="fa fa-twitter"></span> {{ $t('news.twitter') }}
                 </button>
               </div>
             </div>
             <hr class="divider">
-            <p class="next-news-title">Następne wpisy</p>
+            <p class="next-news-title">{{ $t('news.nextNews') }}</p>
             <div class="row next-news-normal">
               <div class="col-md-4">
                 <img src="http://loremflickr.com/200/167" class="img-fluid img-small">
@@ -67,17 +67,17 @@
               </div>
             </div>
           </div>
-          <div class="col-md-2 right-panel">
-            <p class="right-panel-header">Towarzystwo opieki nad zwierzętami w Szczecinie</p>
-            <p class="right-panel-text">ul. Ojca Beyzyma 17</p>
-            <p class="right-panel-text">70-391 Szczecin</p>
-            <p class="right-panel-text last">tel/fax. 91 487-04-37</p>
-            <p class="right-panel-header">Godziny otwarcia</p>
-            <p class="right-panel-text last">Poniedziałek - Piątek: 9-17</p>
-            <p class="right-panel-header">Lecznica TOZ</p>
-            <p class="right-panel-text">Poniedziałek - Piątek: 8-18</p>
-            <p class="right-panel-text">Przerwa na zabiegi: 11-13</p>
-            <p class="right-panel-text last">Sobota: 10-15</p>
+          <div class="col-2 right-panel">
+            <p class="right-panel-header">{{ $t('news.rightPanel.companyName') }}</p>
+            <p class="right-panel-text">{{ $t('news.rightPanel.address.street') }}</p>
+            <p class="right-panel-text">{{ $t('news.rightPanel.address.country') }}</p>
+            <p class="right-panel-text last">{{ $t('news.rightPanel.address.tel') }}</p>
+            <p class="right-panel-header">{{ $t('news.rightPanel.openingHours.title') }}</p>
+            <p class="right-panel-text last">{{ $t('news.rightPanel.openingHours.hours') }}</p>
+            <p class="right-panel-header">{{ $t('news.rightPanel.clinic.title') }}</p>
+            <p class="right-panel-text">{{ $t('news.rightPanel.clinic.hours') }}</p>
+            <p class="right-panel-text">{{ $t('news.rightPanel.clinic.break') }}</p>
+            <p class="right-panel-text last">{{ $t('news.rightPanel.clinic.weekend') }}</p>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@
           navigationEnabled: true,
           paginationEnabled: false,
           navigationClickTargetSize: 0,
-          perPageCustom: [[338, 1]]
+          perPageCustom: [[300, 1], [500, 2], [730, 3]]
         },
         errors: [],
         newsDetails: {},
@@ -176,6 +176,8 @@
     margin: 35px 35px 25px 35px
     @media (max-width: 435px)
       margin: 0 0 25px 0
+    @media (min-width: 1200px)
+      margin-left: 105px
 
   .share
     margin-top: 40px
@@ -210,6 +212,9 @@
     height: 100%
     @media (min-width: 768px)
       margin: 0 0 100px 35px
+    @media (min-width: 1200px)
+      margin: 0 auto
+      margin-right: 0
 
   .left-panel-top
     border-bottom: 5px solid $green
@@ -220,8 +225,13 @@
     height: 100%
     margin: 0 50px 0 55px
     padding: 10px 0 0 18px
-    @media (max-width: 1696px)
+    @media (max-width: 1108px)
+      margin: 0
+      /*display: none*/
+    @media (max-width: 768px)
       display: none
+    @media (min-width: 1200px)
+      margin: 0 auto
 
   .right-panel-header
     font-size: 1.8em

@@ -8,24 +8,25 @@ const locales = {
         ok: 'OK',
         cancel: 'Anuluj',
         signIn: 'Zaloguj się',
-        help: 'Chce pomóc TOZ!'
+        help: 'Wspomóż tego zwierzaka'
+      },
+      label: {
+        login: 'Login',
+        password: 'Hasło'
       },
       backHome: 'Powrót do strony głównej',
       code: 'pl-PL',
       dateFormat: 'L' // other formats: l:'7.5.2017', LL:'7 maja 2017', ll:'7 maj 2017'
     },
-    home: {
-      header: {
-        gallery: 'Galeria'
-      }
-    },
     navbar: {
-      placeholder: {
-        login: 'Login',
-        password: 'Hasło'
-      },
       accountLink: 'Moje konto',
-      invalidLogin: 'Niepoprawny login'
+      home: 'Strona główna',
+      transferDetails: 'Pomoc',
+      petsGallery: 'Galeria',
+      aboutUs: 'O nas',
+      schedule: 'Grafik',
+      signIn: 'Zaloguj się',
+      signOut: 'Wyloguj się'
     },
     nav: {
       home: 'Strona główna',
@@ -36,7 +37,32 @@ const locales = {
     },
     news: {
       added: 'Dodane: ',
-      readMore: 'Czytaj więcej'
+      readMore: 'Czytaj więcej',
+      addedBy: 'Dodane przez: ',
+      share: 'Udostępnij to!',
+      nextNews: 'Następne wpisy',
+      facebook: 'Facebook',
+      twitter: 'Twitter',
+      google: 'Google',
+      pinterest: 'Pinterest',
+      rightPanel: {
+        companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
+        address: {
+          street: 'ul. Ojca Beyzyma 17',
+          country: '70-391 Szczecin',
+          tel: 'tel/fax. 91 487-04-37'
+        },
+        openingHours: {
+          title: 'Godziny otwarcia',
+          hours: 'Poniedziałek - Piątek: 9-17'
+        },
+        clinic: {
+          title: 'Lecznica TOZ',
+          hours: 'Poniedziałek - Piątek: 8-18',
+          break: 'Przerwa na zabiegi: 11-13',
+          weekend: 'Sobota: 10-15'
+        }
+      }
     },
     petsCarousel: {
       fullGallery: 'Pełna galeria'
@@ -98,6 +124,9 @@ const locales = {
       newPassword: 'Nowe hasło',
       confirmNewPassword: 'Potwierdź nowe hasło',
       changePassword: 'Zmień hasło'
+    },
+    login: {
+      invalidLogin: 'Niepoprawny login'
     }
   },
   en: {
@@ -106,35 +135,61 @@ const locales = {
         ok: 'OK',
         cancel: 'Cancel',
         signIn: 'Sign in',
-        help: 'Want to help TOZ!'
+        help: 'Help this pet'
+      },
+      label: {
+        login: 'Login',
+        password: 'Password'
       },
       backHome: 'Back to Home page',
       code: 'en-EN',
       dateFormat: 'L'
     },
-    home: {
-      header: {
-        gallery: 'Gallery'
-      }
-    },
     navbar: {
-      placeholder: {
-        login: 'Login',
-        password: 'Password'
-      },
       accountLink: 'My account',
-      invalidLogin: 'Invalid login'
-    },
-    nav: {
       home: 'Home',
       transferDetails: 'Help',
       petsGallery: 'Gallery',
       aboutUs: 'About us',
       schedule: 'Schedule'
     },
+    nav: {
+      home: 'Home',
+      transferDetails: 'Help',
+      petsGallery: 'Gallery',
+      aboutUs: 'About us',
+      schedule: 'Schedule',
+      signIn: 'Sign in',
+      signOut: 'Sign out'
+    },
     news: {
       added: 'Added: ',
-      readMore: 'Read more'
+      readMore: 'Read more',
+      addedBy: 'Added by: ',
+      share: 'Share it!',
+      nextNews: 'Next news',
+      facebook: 'Facebook',
+      twitter: 'Twitter',
+      google: 'Google',
+      pinterest: 'Pinterest',
+      rightPanel: {
+        companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
+        address: {
+          street: 'Ojca Beyzyma 17 St.',
+          country: '70-391 Szczecin',
+          tel: 'tel/fax. 91 487-04-37'
+        },
+        openingHours: {
+          title: 'Opening hours',
+          hours: 'Mon - Fri: 9-17'
+        },
+        clinic: {
+          title: 'TOZ Clinic',
+          hours: 'Mon - Fri: 8-18',
+          break: 'Surgery break: 11-13',
+          weekend: 'Sat: 10-15'
+        }
+      }
     },
     petsCarousel: {
       fullGallery: 'Full gallery'
@@ -195,6 +250,9 @@ const locales = {
       oldPassword: 'Old password',
       newPassword: 'New password',
       confirmNewPassword: 'Confirm new password'
+    },
+    login: {
+      invalidLogin: 'Invalid login'
     }
   }
 }
