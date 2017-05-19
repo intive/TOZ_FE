@@ -43,6 +43,35 @@ const locales = {
       aboutUs: 'O nas',
       schedule: 'Grafik'
     },
+    news: {
+      added: 'Dodane: ',
+      readMore: 'Czytaj więcej',
+      addedBy: 'Dodane przez: ',
+      share: 'Udostępnij to!',
+      nextNews: 'Następne wpisy',
+      facebook: 'Facebook',
+      twitter: 'Twitter',
+      google: 'Google',
+      pinterest: 'Pinterest',
+      rightPanel: {
+        companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
+        address: {
+          street: 'ul. Ojca Beyzyma 17',
+          country: '70-391 Szczecin',
+          tel: 'tel/fax. 91 487-04-37'
+        },
+        openingHours: {
+          title: 'Godziny otwarcia',
+          hours: 'Poniedziałek - Piątek: 9-17'
+        },
+        clinic: {
+          title: 'Lecznica TOZ',
+          hours: 'Poniedziałek - Piątek: 8-18',
+          break: 'Przerwa na zabiegi: 11-13',
+          weekend: 'Sobota: 10-15'
+        }
+      }
+    },
     petsCarousel: {
       fullGallery: 'Pełna galeria'
     },
@@ -106,6 +135,11 @@ const locales = {
       changePassword: 'Zmień hasło'
     },
     login: {
+      invalid: 'Niepoprawny login i/lub hasło',
+      reset: 'Resetuj hasło'
+    },
+    resetPassword: {
+      message: 'W celu zresetowania hasła podaj swój login (adres e-mail)',
       invalidLogin: 'Niepoprawny login'
     },
     volunteer: {
@@ -162,6 +196,35 @@ const locales = {
       schedule: 'Schedule',
       signIn: 'Sign in',
       signOut: 'Sign out'
+    },
+    news: {
+      added: 'Added: ',
+      readMore: 'Read more',
+      addedBy: 'Added by: ',
+      share: 'Share it!',
+      nextNews: 'Next news',
+      facebook: 'Facebook',
+      twitter: 'Twitter',
+      google: 'Google',
+      pinterest: 'Pinterest',
+      rightPanel: {
+        companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
+        address: {
+          street: 'Ojca Beyzyma 17 St.',
+          country: '70-391 Szczecin',
+          tel: 'tel/fax. 91 487-04-37'
+        },
+        openingHours: {
+          title: 'Opening hours',
+          hours: 'Mon - Fri: 9-17'
+        },
+        clinic: {
+          title: 'TOZ Clinic',
+          hours: 'Mon - Fri: 8-18',
+          break: 'Surgery break: 11-13',
+          weekend: 'Sat: 10-15'
+        }
+      }
     },
     petsCarousel: {
       fullGallery: 'Full gallery'
@@ -225,6 +288,11 @@ const locales = {
       confirmNewPassword: 'Confirm new password'
     },
     login: {
+      invalid: 'Invalid login and/or password',
+      reset: 'Reset password'
+    },
+    resetPassword: {
+      message: 'To reset your password, please enter your login(e-mail address)',
       invalidLogin: 'Invalid login'
     },
     volunteer: {
@@ -250,3 +318,4 @@ Vue.config.lang = 'pl'
 Object.keys(locales).forEach((lang) => {
   Vue.locale(lang, locales[lang])
 })
+>>>>>>> master
