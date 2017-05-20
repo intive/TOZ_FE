@@ -53,7 +53,7 @@
         <h5>63 1005 2123 5001 2213 2313 2222</h5>
       </div>
       <hr>
-      <comments :petId="petDetails.id"></comments>
+      <comments v-if="isAuthenticated" :petId="petDetails.id"></comments>
     </div>
     <router-link v-show="!showTransfer" to="/">{{ $t("common.backHome") }}</router-link>
   </div>
@@ -63,11 +63,13 @@
   import comments from './Comments.vue'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
   import moment from 'moment'
+  import auth from '../auth.js'
   export default {
     data () {
       return {
         showModal: false,
         showTransfer: false,
+        commentFlag: false,
         id: this.$route.params.id,
         petDetails: {},
         errors: [],
@@ -93,6 +95,9 @@
     methods: {
       openModal () {
         this.showModal = true
+      },
+      isAuthenticated () {
+        auth.checkAuth() ? this.commentFlag = true : this.commentFlag = false
       },
       fetchData () {
         this.$http.get(this.apiUrl + 'pets/' + this.id)

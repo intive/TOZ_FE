@@ -2,7 +2,7 @@
   <div class="container">
     <div v-if="loading" class="loader"></div>
     <div class="errors" v-if="errors.length">
-      <h2 v-for="error of errors">{{ error.message }}</h2>
+      <h6 v-for="error of errors">{{ error.message }}</h6>
     </div>
     <div v-else-if="!loading">
     <h4>Komentarze</h4>
@@ -33,6 +33,7 @@
         commentsTable: [],
         errors: [],
         currentPage: [],
+        tab: [],
         paginationConfig: {
           numberOfPages: 0,
           containerClass: 'pagination justify-content-center',
@@ -61,7 +62,6 @@
       fetchData () {
         this.$http.get(this.apiUrl + '/comments?petUuid=' + this.petId + '&isShortened=false&state=ACTIVE')
           .then(response => {
-            console.log(response.data)
             this.commentsTable = [...response.data]
             this.paginationConfig.numberOfPages = Math.ceil(this.commentsTable.length / this.itemsPerPage)
             this.changePage(1)
@@ -78,9 +78,6 @@
       },
       changePage (pageNum) {
         this.currentPage = this.commentsTable.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
-      },
-      newestComments () {
-        return this.commentsTable.slice(0, 5)
       }
     }
   }

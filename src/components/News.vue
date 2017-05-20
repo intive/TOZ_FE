@@ -19,13 +19,14 @@
         {{ $t('news.readMore') }}
       </router-link>
     </div>
+    <mainComments v-for="item in comments" :comment="item" :key="item.id"></mainComments>
   </div>
 </template>
 
 <script>
   import Loader from './Loader'
   import moment from 'moment'
-
+  import mainComments from './mainPageComments.vue'
   export default {
     name: 'News',
     data () {
@@ -56,11 +57,13 @@
         // }],
         news: [],
         errors: [],
+        comments: [],
         loading: true
       }
     },
     created () {
       this.fetchData()
+      this.getComments()
     },
     computed: {
       convertTimeStamp () {
@@ -73,6 +76,19 @@
         this.$http.get(this.apiUrl + 'news?type=RELEASED&shortened=true')
           .then(response => {
             this.news = {...response.data}
+            this.loading = false
+          })
+          .catch(error => {
+            this.errors.push(error)
+            this.loading = false
+          })
+      },
+      getComments () {
+        this.$http.get(this.apiUrl + 'comments?isShortened=true&state=ACTIVE')
+          .then(response => {
+            this.comments = [...response.data]
+            this.comments = this.comments.slice(0, 5)
+            console.log(this.comments)
             this.loading = false
           })
           .catch(error => {
@@ -93,7 +109,8 @@
       }
     },
     components: {
-      Loader
+      Loader,
+      mainComments
     }
   }
 </script>
