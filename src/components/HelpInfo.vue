@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <loader v-if="loading"></loader>
       <div class="col-12 col-md-12 col-xl-12" v-else-if="!loading">
-        <p>{{ howBeVolunteer.content }}</p>
+        <p>{{ howBeVolunteer }}</p>
       </div>
       <div class="col-12 col-md-12 col-xl-12" v-if="errors">
         <h3 v-for="error in errors">{{ error.message }}</h3>
@@ -26,9 +26,9 @@ export default {
     }
   },
   created () {
-    this.$http.get('/help-info')
+    this.$http.get(this.apiUrl + '/organization/becomevolunteer')
       .then(response => {
-        this.howBeVolunteer = response.data.info
+        this.howBeVolunteer = response.data.howToHelpDescription
         this.loading = false
       })
       .catch(error => {
