@@ -29,6 +29,20 @@ export default {
     this.user.authenticated = false
     this.user.errorMessage = ''
   },
+  changePassword (context, creds) {
+    this.user.fetching = true
+    context.$http.post(context.apiUrl + 'users/passwords', creds)
+      .then(response => {
+        context.$http.defaults.headers.common['Authorization'] = `Bearer ${response.data.jwt}`
+        this.user.fetching = false
+        this.logout()
+        context.$router.push('/')
+      })
+      .catch(error => {
+        this.user.fetching = false
+        this.user.errorMessage = error.message
+      })
+  },
   checkAuth () {
     const jwt = sessionStorage.getItem('token')
     jwt ? this.user.authenticated = true : this.user.authenticated = false
