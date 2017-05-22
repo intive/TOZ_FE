@@ -134,7 +134,6 @@ export default {
     postReservation () {
       this.loading = true
       this.createPostBody()
-      console.log(this.postBody.ownerId.length)
       this.$http.post(this.apiUrl + 'schedule', {
         body: this.postBody
       })
@@ -144,7 +143,6 @@ export default {
       })
       .then(response => {
         if (this.errors.length && !this.loading) {
-          console.log(this.errors.length)
           this.showErrors = true
         } else {
           this.showModalAccepted = true

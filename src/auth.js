@@ -8,7 +8,6 @@ export default {
     this.user.fetching = true
     context.$http.post(context.apiUrl + 'tokens/acquire', creds)
       .then(response => {
-        console.log(response)
         sessionStorage.setItem('token', response.data.jwt)
         sessionStorage.setItem('userId', response.data.userId)
         sessionStorage.setItem('name', response.data.name)
@@ -19,7 +18,6 @@ export default {
         context.$router.go(-1)
       })
        .catch(error => {
-         console.log(error)
          this.user.fetching = false
          this.user.errorMessage = error.message
        })

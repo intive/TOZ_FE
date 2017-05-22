@@ -15,7 +15,7 @@
       </h2>
       <img :src="item.photoUrl" alt="" class="news-image">
       <p class="news-body"> {{ shortenContent(item) }} </p>
-      <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }" class="btn btn-primary news-button">
+      <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }" class="btn news-button">
         {{ $t('news.readMore') }}
       </router-link>
     </div>

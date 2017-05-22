@@ -5,8 +5,8 @@
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div class="container">
-      <div v-for="row in currentPage.length" class="row">
-        <div v-for="pet in currentPage.slice((row - 1) * 3, row * 3)" :key="pet.id" class="col-lg-4">
+      <div class="row">
+        <div v-for="pet in currentPage" :key="pet.id" class="col-lg-4">
           <div class="card">
             <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
               <div class="card-block">
