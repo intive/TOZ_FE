@@ -32,8 +32,7 @@ export default {
   changePassword (context, creds) {
     this.user.fetching = true
     context.$http.post(context.apiUrl + 'users/passwords', creds)
-      .then(response => {
-        context.$http.defaults.headers.common['Authorization'] = `Bearer ${response.data.jwt}`
+      .then(() => {
         this.user.fetching = false
         this.logout()
         context.$router.push('/')
