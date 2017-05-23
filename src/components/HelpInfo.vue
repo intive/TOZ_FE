@@ -3,14 +3,14 @@
     <div class="row justify-content-center">
       <loader v-if="loading"></loader>
       <div class="col-12 col-md-12 col-xl-12" v-else-if="!loading">
-        <p>{{ howBeVolunteer }}</p>
+        <p>{{ howToBecomeVolunteer }}</p>
       </div>
       <div class="col-12 col-md-12 col-xl-12" v-if="errors">
         <h3 v-for="error in errors">{{ error.message }}</h3>
       </div>
       <router-link to="/volunteer" class="btn goToForm">{{ $t('helpInfo.goToForm') }}</router-link>
     </div>
-    <router-link to="/help">{{ $t("common.back") }}</router-link>
+    <router-link to="/help" class="routerLink">{{ $t("common.back") }}</router-link>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
   name: 'helpInfo',
   data () {
     return {
-      howBeVolunteer: [],
+      howToBecomeVolunteer: [],
       errors: [],
       loading: true
     }
@@ -28,7 +28,7 @@ export default {
   created () {
     this.$http.get(this.apiUrl + '/organization/becomevolunteer')
       .then(response => {
-        this.howBeVolunteer = response.data.howToHelpDescription
+        this.howToBecomeVolunteer = response.data.howToHelpDescription
         this.loading = false
       })
       .catch(error => {
@@ -43,8 +43,11 @@ export default {
 </script>
 
 <style scoped>
-.goToForm {
-  margin-top: 2em;
-  margin-bottom: 1.5em;
-}
+  .goToForm {
+    margin-top: 2em;
+    margin-bottom: 1.5em;
+  }
+  .routerLink {
+    font-size: 1.8em;
+  }
 </style>

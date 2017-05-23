@@ -74,7 +74,7 @@ const locales = {
       bookedPeriod: 'Termin zajęty przez:'
     },
     transfer: {
-      header: 'Dane do przelewu'
+      header: 'Pomoc finansowa'
     },
     account: {
       changePassword: 'Zmień hasło'
@@ -120,7 +120,7 @@ const locales = {
       target: 'Cel',
       becomeVolunteer: 'Chcę zostać wolontariuszem',
       becomeTemporaryHouse: 'Chcę zostać domem tymczasowym',
-      send: 'Wyślij',
+      sent: 'Wyślij',
       cancel: 'Anuluj',
       fieldRequired: 'Pole wymagane',
       incorrectData: 'Niepoprawne dane',
@@ -202,7 +202,7 @@ const locales = {
       bookedPeriod: 'Period is already booked by:'
     },
     transfer: {
-      header: 'Transfer data'
+      header: 'Financial support'
     },
     account: {
       changePassword: 'Change password'
@@ -247,7 +247,7 @@ const locales = {
       target: 'Target',
       becomeVolunteer: 'I want to become a volunteer',
       becomeTemporaryHouse: 'I want become a temporary house',
-      send: 'Sent',
+      sent: 'Sent',
       cancel: 'Cancel',
       fieldRequired: 'Field required',
       incorrectData: 'Incorrect data',

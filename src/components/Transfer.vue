@@ -1,23 +1,21 @@
 <template>
   <div class="transfer">
-    <h1>{{ $t("transfer.header") }}</h1>
+    <img src="../assets/financialSupport.jpg" alt="" class="logo">
+    <h2>{{ $t("transfer.header") }}</h2>
     <loader v-if="loading"></loader>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error in errors">{{ error.message }}</h2>
     </div>
     <div class="transfer-data" v-else-if="!loading">
-      <h2>{{ transferData.name }}</h2>
-      <h2>{{ transferData.address.street }} {{ transferData.address.houseNumber }}/{{ transferData.address.apartmentNumber }}</h2>
-      <h2>{{ transferData.address.postCode }} {{ transferData.address.city }}</h2>
-      <h2>{{ transferData.address.country }}</h2>
-      <h2>{{ transferData.bankAccount.bankName }}</h2>
-      <h2>{{ formattedAccountNumber }}</h2>
-      <h2>{{ transferData.contact.email }}</h2>
-      <h2>{{ transferData.contact.fax }}</h2>
-      <h2>{{ transferData.contact.phone }}</h2>
-      <h2>{{ transferData.contact.website }}</h2>
+      <p>{{ howToHelp }} </p>
+      <span class="transferDetails">{{ transferData.name }}</span>
+      <span class="transferDetails">{{ transferData.address.street }} {{ transferData.address.houseNumber }}/{{ transferData.address.apartmentNumber }}</span>
+      <span class="transferDetails">{{ transferData.address.postCode }} {{ transferData.address.city }}</span>
+      <span class="transferDetails">{{ transferData.address.country }}</span>
+      <span class="transferDetails">{{ transferData.bankAccount.bankName }}</span>
+      <span class="transferDetails">{{ formattedAccountNumber }}</span>
     </div>
-    <router-link to="/help">{{ $t("common.back") }}</router-link>
+    <router-link to="/help" class="routerLink">{{ $t("common.back") }}</router-link>
   </div>
 </template>
 
@@ -50,7 +48,10 @@ export default {
         }
       },
       errors: [],
-      loading: true
+      loadingInfo: true,
+      loadingHowToDonate: true,
+      loading: true,
+      howToHelp: ''
     }
   },
   computed: {
@@ -66,11 +67,24 @@ export default {
         this.transferData.bankAccount = {...response.data.bankAccount}
         this.transferData.contact = {...response.data.contact}
         this.transferData.name = response.data.name
-        this.loading = false
+        this.loadingInfo = false
+        !this.loadingHowToDonate && !this.loadingInfo ? this.loading = false : ''
       })
       .catch(error => {
         this.errors.push(error)
-        this.loading = false
+        this.loadingInfo = false
+        !this.loadingHowToDonate && !this.loadingInfo ? this.loading = false : ''
+      })
+    this.$http.get(this.apiUrl + 'organization/howtodonate')
+      .then(response => {
+        this.howToHelp = response.data.howToHelpDescription
+        this.loadingHowToDonate = false
+        !this.loadingHowToDonate && !this.loadingInfo ? this.loading = false : ''
+      })
+      .catch(error => {
+        this.errors.push(error)
+        this.loadingHowToDonate = false
+        !this.loadingHowToDonate && !this.loadingInfo ? this.loading = false : ''
       })
   },
   components: {
@@ -80,7 +94,22 @@ export default {
 </script>
 
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+  h1, h2 {
+    font-weight: normal;
+  }
+  .logo {
+    margin: 2.5em 0;
+    border: 2em solid #fff;
+    box-shadow: 1em 1em 3.5em #888;
+    transform: rotate(2deg);
+  }
+  .transferDetails {
+    margin: 0.1em;
+    font-size: 2em;
+    font-weight: bold;
+    display: block;
+  }
+  .routerLink {
+    font-size: 1.5em;
+  }
 </style>

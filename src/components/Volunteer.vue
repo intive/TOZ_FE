@@ -1,84 +1,89 @@
 <template>
-  <div class="container viewProperties">
+  <div class="container">
     <div>
+      <span class="icon-stack">
+        <i class="icon-chevron-down"></i>
+      </span>
+
+      <!-- Success modal -->
       <modals v-if="formSend && errors.length === 0" :isError="false">
-       <p slot="header" class="sendMessage">
-         <img src="../assets/ok.png" class="okImg" />
+       <p slot="header">
+         <span class="fa fa-chevron-down okIcon"></span>
          {{ $t('volunteer.submissionSent') }}
          <button type="button" class="close" @click="closeModal">&times;</button>
        </p>
       </modals>
 
+      <!-- Failed modal -->
       <modals v-if="formSend && errors.length > 0" :isError="true">
-        <p slot="header" class="sendMessage">
-          <img src="../assets/error.png" class="errorImg" />
+        <p slot="header">
+          <span class="fa fa-question errorIcon"></span>
           {{ $t('volunteer.submissionFailed') }}
           <button type="button" class="close" @click="closeModal">&times;</button>
         </p>
       </modals>
 
       <div class="row navigation">
-        <span class="grayText">{{ $t('volunteer.home') }} / {{ $t('volunteer.help') }} / </span><span class="darkGrayText">{{ $t('volunteer.becomeVolunteer') }}</span>
+        <span class="grayText spanProperties">{{ $t('volunteer.home') }} / {{ $t('volunteer.help') }} / </span><span class="darkGrayText spanProperties">{{ $t('volunteer.becomeVolunteer') }}</span>
       </div>
 
       <form >
-        <div class="row align-items-start">
-          <div class="col-4 col-md-4 col-xl-4 text-right">
-            {{ $t('volunteer.name') }}
-          </div>
-          <div class="col-5 col-md-5 col-xl-5 text-left">
-            <input type="text" class="inputField"
-                   v-bind:class="{ inputFieldErrors: nameError, inputFieldOk: nameOk }"
+        <!-- Name input field -->
+        <div class="form-group row align-items-start"
+             v-bind:class="[ nameError ? 'has-danger' : (nameOk ? 'has-success' : '') ]">
+          <label for="nameInput" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.name') }}</label>
+          <div class="col-5 col-md-5 col-xl-5">
+            <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="nameInput"
                    @blur="nameValidate"
                    v-model="nameValue"
                    maxlength="35">
-            <span class="errors" v-if="nameError">{{ nameError }}</span>
-          </div>
-        </div>
-        <div class="row align-items-start">
-          <div class="col-4 col-md-4 col-xl-4 text-right">
-            {{ $t('volunteer.surname') }}
-          </div>
-          <div class="col-5 col-md-5 col-xl-5 text-left">
-            <input type="text" class="inputField"
-                   v-bind:class="{ inputFieldErrors: surnameError, inputFieldOk: surnameOk }"
-                   @blur="surnameValidate"
-                   v-model="surnameValue"
-                   maxlength="35">
-            <span class="errors" v-if="surnameError">{{ surnameError }}</span>
-          </div>
-        </div>
-        <div class="row align-items-start">
-          <div class="col-4 col-md-4 col-xl-4 text-right">
-            {{ $t('volunteer.phoneNumber') }}
-          </div>
-          <div class="col-5 col-md-5 col-xl-5 text-left">
-            <input type="number" class="inputField"
-                   v-bind:class="{ inputFieldErrors: phoneError, inputFieldOk: phoneOk }"
-                   @blur="phoneValidate"
-                   v-model="phoneNumber"
-                   maxlength="11" >
-            <span class="errors" v-if="phoneError">{{ phoneError }}</span>
-          </div>
-        </div>
-        <div class="row align-items-start">
-          <div class="col-4 col-md-4 col-xl-4 text-right">
-            {{ $t('volunteer.email') }}
-          </div>
-          <div class="col-5 col-md-5 col-xl-5 text-left">
-            <input type="email" class="inputField"
-                   v-bind:class="{ inputFieldErrors: emailError, inputFieldOk: emailOk }"
-                   v-model="emailValue"
-                   @blur="emailValidate"
-                   maxlength="255" >
-            <span class="errors" v-if="emailError">{{ emailError }}</span>
+            <div class="form-control-feedback text-left">{{ nameError }}</div>
           </div>
         </div>
 
-        <div class="row align-items-start topMargin">
-          <div class="col-4 col-md-4 col-xl-4 radio-right">
-            {{ $t('volunteer.target') }}
+        <!-- Surname input field -->
+        <div class="form-group row align-items-start"
+             v-bind:class="[ surnameError ? 'has-danger' : (surnameOk ? 'has-success' : '') ]">
+          <label for="surnameInput" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.surname') }}</label>
+          <div class="col-5 col-md-5 col-xl-5">
+            <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="surnameInput"
+                   @blur="surnameValidate"
+                   v-model="surnameValue"
+                   maxlength="35">
+            <div class="form-control-feedback text-left">{{ surnameError }}</div>
           </div>
+        </div>
+
+        <!-- Phone number input field -->
+        <div class="form-group row align-items-start"
+             v-bind:class="[ phoneError ? 'has-danger' : (phoneOk ? 'has-success' : '') ]">
+          <label for="phoneInput" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.phoneNumber') }}</label>
+          <div class="col-5 col-md-5 col-xl-5">
+            <input type="number" class="form-control form-control-lg form-control-success form-control-danger" id="phoneInput"
+                   @blur="phoneValidate"
+                   v-model="phoneNumber"
+                   maxlength="11">
+            <div class="form-control-feedback text-left">{{ phoneError }}</div>
+          </div>
+        </div>
+
+        <!-- Email input field -->
+        <div class="form-group row align-items-start"
+             v-bind:class="[ emailError ? 'has-danger' : (emailOk ? 'has-success' : '') ]">
+          <label for="emailInput" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.email') }}</label>
+          <div class="col-5 col-md-5 col-xl-5">
+            <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="emailInput"
+                   @blur="emailValidate"
+                   v-model="emailValue"
+                   maxlength="35">
+            <div class="form-control-feedback text-left">{{ emailError }}</div>
+          </div>
+        </div>
+
+        <!-- Radio fields -->
+        <div class="form-group row align-items-start topMargin"
+        v-bind:class="[ radioFields ? 'has-danger' : '' ]">
+          <label for="becomeVolunteer" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.target') }}</label>
           <div class="col-5 col-md-5 col-xl-5 text-left">
             <div>
               <input type="radio"
@@ -86,7 +91,7 @@
                      class="radioInputs"
                      v-bind:value="$t('volunteer.becomeVolunteer')"
                      v-model="picked" @change="radioFieldsValidate">
-              <label for="becomeVolunteer">{{ $t('volunteer.becomeVolunteer') }}</label>
+              <label for="becomeVolunteer" class="radioLabel labelProperties">{{ $t('volunteer.becomeVolunteer') }}</label>
             </div>
 
             <div>
@@ -95,19 +100,20 @@
                      class="radioInputs"
                      v-bind:value="$t('volunteer.becomeTemporaryHouse')"
                      v-model="picked" @change="radioFieldsValidate">
-              <label for="becomeTemporaryHouse">{{  $t('volunteer.becomeTemporaryHouse') }}</label>
+              <label for="becomeTemporaryHouse" class="radioLabel labelProperties">{{  $t('volunteer.becomeTemporaryHouse') }}</label>
             </div>
-            <span class="errors" v-if="radioFields">{{ $t('volunteer.fieldRequired') }}</span>
+            <div class="form-control-feedback text-left" v-if="radioFields">{{ $t('volunteer.fieldRequired') }}</div>
           </div>
         </div>
 
+        <!-- Sent and Cancel buttons -->
         <div class="row align-items-start buttons">
-          <div class="col-9 col-md-9 col-xl-9 radio-right">
+          <div class="col-9 col-md-9 col-xl-9 text-right">
             <router-link to="/help-info" class="btn btnCancel">{{ $t('volunteer.cancel') }}</router-link>
           </div>
           <div class="col-3 col-md-3 col-xl-3 text-left">
-            <button type="button" class="btn btnSent" @click="sendForm" v-if="!loading">{{ $t('volunteer.send') }}</button>
-            <div class="example" v-if="loading">
+            <button type="button" class="btn btnSent" @click="sendForm" v-if="!loading">{{ $t('volunteer.sent') }}</button>
+            <div class="loadingBtn" v-if="loading">
               <div class="loader"></div>
             </div>
           </div>
@@ -150,9 +156,9 @@
         const reg = /^[a-zA-ZĄąĆćĘęŁłŃńÓóŚśŹźŻż]*$/
         if (!reg.test(this.nameValue)) {
           this.nameError = this.$t('volunteer.incorrectData')
-        } else if (this.nameValue.length === 0) {
+        } else if (!this.nameValue.length) {
           this.nameError = this.$t('volunteer.fieldRequired')
-        } else if (reg.test(this.nameValue) && this.nameValue.length > 0) {
+        } else if (reg.test(this.nameValue) && this.nameValue.length) {
           this.nameError = ''
           this.nameOk = true
         }
@@ -162,9 +168,9 @@
         const reg = /^[a-zA-ZĄąĆćĘęŁłŃńÓóŚśŹźŻż]*$/
         if (!reg.test(this.surnameValue)) {
           this.surnameError = this.$t('volunteer.incorrectData')
-        } else if (this.surnameValue.length === 0) {
+        } else if (!this.surnameValue.length) {
           this.surnameError = this.$t('volunteer.fieldRequired')
-        } else if (reg.test(this.surnameValue) && this.surnameValue.length > 0) {
+        } else if (reg.test(this.surnameValue) && this.surnameValue.length) {
           this.surnameError = ''
           this.surnameOk = true
         }
@@ -174,7 +180,7 @@
         if ((this.phoneNumber.length === 9) || (this.phoneNumber.length === 11)) {
           this.phoneError = ''
           this.phoneOk = true
-        } else if (this.phoneNumber.length === 0) {
+        } else if (!this.phoneNumber.length) {
           this.phoneError = this.$t('volunteer.fieldRequired')
         } else {
           this.phoneError = this.$t('volunteer.incorrectData')
@@ -183,11 +189,11 @@
       },
       emailValidate () {
         const reg = /^[a-zA-Z]{1}[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$/
-        if (this.emailValue.length === 0) {
+        if (!this.emailValue.length) {
           this.emailError = this.$t('volunteer.fieldRequired')
         } else if (!reg.test(this.emailValue)) {
           this.emailError = this.$t('volunteer.incorrectData')
-        } else if ((this.emailValue.length !== 0) && (reg.test(this.emailValue))) {
+        } else if ((this.emailValue.length) && (reg.test(this.emailValue))) {
           this.emailError = ''
           this.emailOk = true
         }
@@ -208,7 +214,7 @@
           !this.emailValidate() &&
           !this.radioFieldsValidate()) {
           this.loading = true
-          this.$http.post(this.apiUrl + 'proposals', {
+          this.$http.post(this.apiUrl + 'proposal', {
             name: this.nameValue,
             surname: this.surnameValue,
             phoneNumber: this.phoneNumber,
@@ -236,83 +242,56 @@
 </script>
 
 <style scoped>
-  .viewProperties {
+  .labelProperties {
     font-size: 1.8em;
   }
-  .sendMessage {
-    font-size: 1em;
+  .spanProperties {
+    font-size: 1.8em;
   }
   .navigation {
-    margin: 4.4em 0;
+    margin: 8em 0;
   }
   .buttons {
     padding: 1.6em;
   }
-  .radio-right {
-    text-align: right;
-  }
-  .text-right {
-    padding-top: 1.8em;
-  }
-  .inputField {
-    margin: 1em;
-    padding: 0.8em;
-    border: 0.1em solid #ddd;
-    border-radius: 0.2em;
-    width: 23em;
-    outline: none;
-  }
-  .inputField:focus {
-    border: 0.1em solid rgba(0,72,255,1);
-  }
-  .errors {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-left: 2em;
-    font-size: 0.7em;
-    color: red;
-    display: block;
-  }
-  .inputFieldErrors {
-    margin: 1em 1em 0 1em;
-    background: url('../assets/error_form.png') no-repeat scroll 20em 0.7em;
-  }
-  .inputFieldOk {
-    margin: 1em;
-    background: url('../assets/ok_form.png') no-repeat scroll 20em 0.7em;
-  }
   .radioInputs {
     display: none;
   }
-  label {
+  .radioLabel {
     padding-left: 3em;
   }
-  label:before {
+  .radioLabel:before {
     content: '';
     display: inline-block;
     width: 1.4em;
     height: 1.4em;
     border-radius: 0.7em;
-    margin: 0 1em 0 2em;
+    margin: 0 1em 0 1em;
     position: absolute;
     left: 0;
     background-color: #fff;
     box-shadow: inset 0px 0px 2px rgba(0, 0, 0, .7), 0px 0px 2px rgba(255, 255, 255, .8);
   }
-  input[type=radio]:checked + label:before {
+  .radioInputs:checked + .radioLabel:before {
     content: '';
-    background: url('../assets/radio.png') no-repeat;
+    background-color: #4cd374;
+    border-radius: 50%;
+    border: 0.2em solid #fff;
+    box-shadow: 0 0 10px #888888;
   }
-  .okImg {
-    margin-right: 2.5em;
+  .okIcon {
+    color: #4cd374;
+    font-size: 2em;
+    padding-right: 1em;
   }
-  .errorImg {
-    margin-right: 1.5em;
+  .errorIcon {
+    margin-right: 1em;
+    color: #f54b5e;
+    font-size: 1.4em;
+    padding: 0.1em 0.3em;
+    border: 0.1em solid #f54b5e;
+    border-radius: 50%;
   }
-  .topMargin {
-    margin-top: 1em;
-  }
-
   .grayText {
     color: #B9B9B9;
   }
@@ -327,13 +306,13 @@
     background-color: #fff;
     color: #000;
   }
-  .example {
+  .loadingBtn {
     background-color: #FFAF4F;
-    border-radius: 0.23em;
-    width: 8.23em;
-    height: 2.84em;
-    margin-left: -1.5em;
-    padding: 0.3em 0 0 2.9em;
+    border-radius: 0.3em;
+    width: 14.858em;
+    height: 5.1em;
+    margin-left: -2.8em;
+    padding: 0.5em 0 0 5.3em;
   }
 
   .loader {
