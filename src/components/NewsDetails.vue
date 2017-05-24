@@ -11,7 +11,7 @@
           <h3><u>{{ newsDetails.title }}</u></h3>
         </div>
         <div class="row">
-          <div class="col-8 left-panel">
+          <div class="col-lg-8 col-md-8 col-xs-12 left-panel">
             <img src="http://loremflickr.com/344/287" class="img">
             <p class="text-left news-info added">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
             <p class="text-left news-info autor">{{ $t('news.addedBy') }} Joanna Krupa</p>
@@ -67,7 +67,7 @@
               </div>
             </div>
           </div>
-          <div class="col-2 right-panel">
+          <div class="col-lg-2 col-md-2 right-panel">
             <p class="right-panel-header">{{ $t('news.rightPanel.companyName') }}</p>
             <p class="right-panel-text">{{ $t('news.rightPanel.address.street') }}</p>
             <p class="right-panel-text">{{ $t('news.rightPanel.address.country') }}</p>
@@ -194,7 +194,7 @@
     height: 287px
     margin-bottom: 30px
     width: 344px
-    @media (min-width: 435px)
+    @media (min-width: 430px)
       height: 600px
       width: 100%
 
@@ -227,7 +227,6 @@
     padding: 10px 0 0 18px
     @media (max-width: 1108px)
       margin: 0
-      /*display: none*/
     @media (max-width: 768px)
       display: none
     @media (min-width: 1200px)

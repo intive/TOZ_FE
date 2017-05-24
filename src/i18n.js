@@ -131,7 +131,12 @@ const locales = {
       oldPassword: 'Stare hasło',
       newPassword: 'Nowe hasło',
       confirmNewPassword: 'Potwierdź nowe hasło',
-      changePassword: 'Zmień hasło'
+      changePassword: 'Zmień hasło',
+      errors: {
+        required: 'Pole wymagane.',
+        wrongPassword: 'Niepoprawne hasło.',
+        differentPasswords: 'Wprowadzone hasła są różne.'
+      }
     },
     login: {
       invalid: 'Niepoprawny login i/lub hasło',
@@ -283,7 +288,12 @@ const locales = {
     accountPassword: {
       oldPassword: 'Old password',
       newPassword: 'New password',
-      confirmNewPassword: 'Confirm new password'
+      confirmNewPassword: 'Confirm new password',
+      errors: {
+        required: 'Field required.',
+        wrongPassword: 'Wrong password.',
+        differentPasswords: 'Passwords are different.'
+      }
     },
     login: {
       invalid: 'Invalid login and/or password',
