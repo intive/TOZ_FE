@@ -120,7 +120,9 @@
         }
       },
       concatUrl () {
-        if (this.petDetails.imageUrl.includes('data')) {
+        if (this.petDetails.imageUrl === '' || this.petDetails.imageUrl === null || this.petDetails.imageUrl === undefined) {
+          return this.imageHandler()
+        } else if (this.petDetails.imageUrl.includes('data')) {
           return this.petDetails.imageUrl
         } else {
           return this.apiUrl.substr(0, this.apiUrl.length - 4) + this.petDetails.imageUrl

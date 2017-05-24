@@ -10,7 +10,7 @@
           <div class="card">
             <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
               <div class="card-block">
-                <img class="imgCard" :src="setUrl(pet.imageUrl)" @error="defaultImg(pet)" alt="">
+                <img class="imgCard" :src="setUrl(pet)" @error="defaultImg(pet)" alt="">
                 <h2 class="card-title">{{pet.name}}</h2>
                 <h3 class="card-text">{{pet.type}}</h3>
               </div>
@@ -63,10 +63,12 @@
         this.currentPage = this.petsList.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
       },
       setUrl (pet) {
-        if (pet.includes('data')) {
-          return pet
+        if (pet.imageUrl === '' || pet.imageUrl === null || pet.imageUrl === undefined) {
+          return this.defaultImg(pet)
+        } else if (pet.imageUrl.includes('data')) {
+          return pet.imageUrl
         } else {
-          return this.apiUrl.substr(0, this.apiUrl.length - 4) + pet
+          return this.apiUrl.substr(0, this.apiUrl.length - 4) + pet.imageUrl
         }
       },
       defaultImg (pet) {
