@@ -34,14 +34,6 @@ export default {
 <style lang="sass">
   @import "../assets/styles/variables.sass"
 
-  .fa-large
-    display: block
-    margin: .2em 0
-    font-size: 15em
-    color: $black
-    @media (max-width: 767px)
-      font-size: 10em
-
   #dashboard [class^="col-"]:hover
     .fa
       transform: scale(1.1)
