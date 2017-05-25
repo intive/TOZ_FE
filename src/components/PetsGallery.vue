@@ -11,7 +11,7 @@
             <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
               <div class="card-block">
                 <img class="card-img-top img-fluid" :src="setUrl(pet)" @error="defaultImg(pet)" alt="">
-                <h2 class="card-title">{{pet.name}}</h2>
+                <h4 class="card-title">{{pet.name}}</h4>
                 <h6 class="card-subtitle mb-2">{{pet.type}}</h6>
               </div>
             </router-link>
@@ -117,6 +117,9 @@
 
   .card-subtitle
     color: $orange
+
+  .card-img-top
+    height: 300px
 
   .page-link
     font-size: 1.8em
