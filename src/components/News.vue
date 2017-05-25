@@ -64,11 +64,9 @@
           .then(response => {
             this.comments = [...response.data]
             this.comments = this.comments.slice(0, 5)
-            console.log(this.comments)
             this.loading = false
           })
-          .catch(error => {
-            this.errors.push(error)
+          .catch(() => {
             this.loading = false
           })
       },

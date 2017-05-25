@@ -8,7 +8,7 @@
       <div id="swiper-wrapper">
         <swiper :options="swiperOption">
           <swiper-slide v-for="n in range" :key="n">
-            <div class="slide-content" @click="openModal"><img class="imgSlider" :src="concatUrl()" @error="imageHandler" alt=""></div>
+            <div class="slide-content" @click="openModal"><img class="img-responsive img-fluid" :src="concatUrl()" @error="imageHandler" alt=""></div>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
           <div class="swiper-button-prev" slot="button-prev"></div>
@@ -29,7 +29,7 @@
               <h6>{{petDetails.type}}</h6>
               <span class="li-span-dog">{{$t('petDetails.type')}}</span>
             </div>
-            <div class="col-sm-12 col-lg-6">
+            <div class="col-sm-12 col-lg-6 divider">
               <h6 class="center-span">{{petDetails.sex}}</h6>
               <span class="center-span li-span-sex">{{$t('petDetails.sex')}}</span>
             </div>
@@ -55,7 +55,6 @@
       <hr>
       <comments v-if="isAuthenticated" :petId="petDetails.id"></comments>
     </div>
-    <router-link v-show="!showTransfer" to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 <script>
@@ -245,7 +244,7 @@
     margin: 0 auto
 
   /* MEDIA QUERIES */
-  @media only screen and (max-width: 450px)
+  @media only screen and (max-width: 576px)
     #swiper-wrapper
       width: 100%
       margin: 0 auto
@@ -271,5 +270,12 @@
     .sex-wrapper
       border-top: 1px black solid
       width: 40vw
+
+    .divider
+      border-top: 1px solid lightgray
+      padding-top: 1.4em
+
+    .li-span-dog
+      padding-bottom: 1.2em
 
 </style>

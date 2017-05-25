@@ -5,11 +5,9 @@
       <h6 v-for="error of errors">{{ error.message }}</h6>
     </div>
     <div v-else-if="!loading">
-    <h4>Komentarze</h4>
-      <hr>
     <newComment :petId="petId" @newComment="updateComments"></newComment>
     <comment v-for="item in currentPage" :comment="item" :key="item.id"></comment>
-    <paginate
+    <paginate class="paginator"
       :page-count="paginationConfig.numberOfPages"
       :container-class="paginationConfig.containerClass"
       :page-class="paginationConfig.pageClass"
@@ -82,6 +80,14 @@
     }
   }
 </script>
-<style>
-  @import "../assets/styles/loader.css";
+<style lang="sass">
+  @import "../assets/styles/loader.css"
+  @import "../assets/styles/variables"
+
+  .paginator
+    font: $font-stack
+    margin-top: 10em
+    @media screen and (max-width: 576px)
+      float: left
+      margin: 5em 0 10em 5em
 </style>

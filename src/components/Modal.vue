@@ -7,7 +7,7 @@
           <div class="modal-body">
             <swiper :options="swiperOption">
               <swiper-slide  v-for="n in range" :key="n">
-                <div class="modal-content"><img class="imgModal" :src="imageUrl" alt=""></div>
+                <div class="modal-content"><img class="img-responsive img-fluid" :src="imageUrl" alt=""></div>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
               <div class="swiper-button-prev" slot="button-prev"></div>
@@ -46,6 +46,7 @@
 <style>
   .modal-mask {
     position: fixed;
+    padding: 0;
     z-index: 9998;
     top:0;
     left: 0;
@@ -109,7 +110,8 @@
   /* MEDIA QUERIES */
   @media screen and (max-width: 420px) {
     .modal-wrapper {
-      margin: 14vh 0 0 0;
+      margin: 35% 0 0 0;
+      padding: 0;
     }
     .modal-default-button {
       padding: 0;
@@ -117,13 +119,13 @@
     }
     .modal-body{
       width: 100vw;
-      height: 20vh;
+      height: 50vh;
     }
     .modal-content {
       margin: 0;
       padding: 0;
       width: 100%;
-      height: 19em;
+      height: 50vh;
     }
   }
 </style>

@@ -10,7 +10,7 @@
           <div class="card my-2 border-0">
             <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
               <div class="card-block">
-                <img class="imgCard" :src="setUrl(pet)" @error="defaultImg(pet)" alt="">
+                <img class="card-img-top img-fluid" :src="setUrl(pet)" @error="defaultImg(pet)" alt="">
                 <h2 class="card-title">{{pet.name}}</h2>
                 <h6 class="card-subtitle mb-2">{{pet.type}}</h6>
               </div>
@@ -152,6 +152,5 @@
   .slide-fade-enter, .slide-fade-leave-to
     transform: translateY(3em)
     opacity: 0
-
 
 </style>

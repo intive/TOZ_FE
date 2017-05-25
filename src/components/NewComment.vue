@@ -1,9 +1,10 @@
 <template>
-  <div>
-      <h6>Dodaj komentarz</h6>
+  <div class="container wrapper">
+      <h6 class="header">Dodaj komentarz</h6>
       <textarea name="comment" id="comment" maxlength="500" v-model="newComment"></textarea><br>
       <span v-show="errorFlag" class="error">Pole komentarza nie może być puste</span>
-      <button @click="addNewComment" class="btn">Dodaj</button>
+      <button @click="addNewComment" class="btn addBTN">Dodaj</button>
+      <hr>
   </div>
 </template>
 <script>
@@ -55,7 +56,15 @@
 </script>
 <style lang="sass">
   @import "../assets/styles/variables.sass"
+  .wrapper
+    width: 50%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    @media screen and (max-width: 576px)
+      float: left
   #comment
+    margin: 0 auto
     resize: none
     outline: none
     font: $font-stack
@@ -63,4 +72,25 @@
     width: 35vw
     height: 25vh
     border-color: lightgray
+    @media screen and (max-width: 576px)
+      margin: 0
+      width: 50vw
+  .addBTN
+    margin: 0 auto
+    width: 12em
+    height: 4em
+    font: $font-stack
+    @media screen and (max-width: 576px)
+      width: 50vw
+  .error
+    color: red
+    font: $font-stack
+    font-size: 1.5em
+    @media screen and (max-width: 576px)
+      width: 50vw
+      font-size: 1.2em
+  .header
+    font: $font-stack
+    @media screen and (max-width: 576px)
+      width: 50vw
 </style>
