@@ -110,22 +110,28 @@ const locales = {
     },
     firstSignIn: {
       message: {
-        firstSignIn: 'Pierwsze logowanie',
-        info: 'Jeszcze tylko chwila dzieli Cię od zostania wolontariuszem',
+        invalidEmail: 'Niepoprawny adres e-mail',
         inputRequired: 'Pole wymagane',
         differentPasswords: 'Wprowadzone hasła różnią się'
       },
       label: {
+        email: 'E-mail',
         password: 'Nowe hasło',
         confirmPassword: 'Powtórz nowe hasło'
       },
-      placeholder: 'Hasło'
+      placeholder: {
+        password: 'Hasło',
+        email: 'E-mail'
+      }
     },
     activationLinkExpired: {
       message: {
         linkExpired: 'Link aktywacyjny wygasł.',
         contactAdmin: 'Skontaktuj się z Administratorem.'
       }
+    },
+    accountActivated: {
+      message: 'Twoje konto zostało aktywowane. Możesz się teraz zalogować.'
     },
     accountPassword: {
       oldPassword: 'Stare hasło',
@@ -268,22 +274,28 @@ const locales = {
     },
     firstSignIn: {
       message: {
-        firstSignIn: 'First sign in',
-        info: "It's just one moment to become a volunteer",
+        invalidEmail: 'Invalid e-mail address',
         inputRequired: 'Input required',
         differentPasswords: 'Input passwords are different'
       },
       label: {
+        email: 'E-mail',
         password: 'New password',
         confirmPassword: 'Confirm new password'
       },
-      placeholder: 'Password'
+      placeholder: {
+        password: 'Password',
+        email: 'E-mail'
+      }
     },
     activationLinkExpired: {
       message: {
         linkExpired: 'Activation link has expired.',
         contactAdmin: 'Please contact with the Administrator.'
       }
+    },
+    accountActivated: {
+      message: 'Your account has been activated. You can now sign in.'
     },
     accountPassword: {
       oldPassword: 'Old password',
