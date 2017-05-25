@@ -8,13 +8,12 @@ import Home from '@/components/Home'
 import Calendar from '@/components/Calendar'
 import Account from '@/components/Account'
 import AccountPassword from '@/components/AccountPassword'
-import FirstSignIn from '@/components/FirstSignIn'
-import ActivationLinkExpired from '@/components/ActivationLinkExpired'
 import SignIn from '@/components/Login'
 import Help from '@/components/Help'
 import HelpInfo from '@/components/HelpInfo'
 import Volunteer from '@/components/Volunteer'
 import ResetPassword from '@/components/ResetPassword'
+import AccountActivation from '@/components/AccountActivation'
 import paths from './paths'
 Vue.use(Router)
 
@@ -83,16 +82,6 @@ export default new Router({
       }
     },
     {
-      path: paths.linkExpired,
-      name: 'activationLinkExpired',
-      component: ActivationLinkExpired
-    },
-    {
-      path: paths.firstSignIn,
-      name: 'firstSignIn',
-      component: FirstSignIn
-    },
-    {
       path: paths.signIn,
       name: 'signIn',
       component: SignIn,
@@ -123,6 +112,11 @@ export default new Router({
       path: paths.resetPassword,
       name: 'resetPassword',
       component: ResetPassword
+    },
+    {
+      path: paths.accountActivation,
+      name: 'accountActivation',
+      component: AccountActivation
     }
   ]
 })
