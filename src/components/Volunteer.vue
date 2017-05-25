@@ -24,7 +24,8 @@
       </modals>
 
       <div class="row navigation">
-        <span class="grayText spanProperties">{{ $t('volunteer.home') }} / {{ $t('volunteer.help') }} / </span><span class="darkGrayText spanProperties">{{ $t('volunteer.becomeVolunteer') }}</span>
+        <span class="grayText spanProperties">{{ $t('volunteer.home') }} / {{ $t('volunteer.help') }} / </span>
+        <span class="darkGrayText spanProperties">{{ $t('volunteer.becomeVolunteer') }}</span>
       </div>
 
       <form >
@@ -33,73 +34,83 @@
              v-bind:class="[ nameError ? 'has-danger' : (nameOk ? 'has-success' : '') ]">
           <label for="nameInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.name') }}</label>
           <div class="col-5">
-            <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="nameInput"
-                   @blur="nameValidate"
-                   v-model="nameValue"
-                   maxlength="35">
+            <input type="text"
+              class="form-control form-control-lg form-control-success form-control-danger"
+              id="nameInput"
+              @blur="nameValidate"
+              v-model="nameValue"
+              maxlength="35">
             <div class="form-control-feedback text-left">{{ nameError }}</div>
           </div>
         </div>
 
         <!-- Surname input field -->
         <div class="form-group row align-items-start"
-             v-bind:class="[ surnameError ? 'has-danger' : (surnameOk ? 'has-success' : '') ]">
+          :class="[ surnameError ? 'has-danger' : (surnameOk ? 'has-success' : '') ]">
           <label for="surnameInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.surname') }}</label>
           <div class="col-5">
-            <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="surnameInput"
-                   @blur="surnameValidate"
-                   v-model="surnameValue"
-                   maxlength="35">
+            <input type="text"
+              class="form-control form-control-lg form-control-success form-control-danger"
+              id="surnameInput"
+              @blur="surnameValidate"
+              v-model="surnameValue"
+              maxlength="35">
             <div class="form-control-feedback text-left">{{ surnameError }}</div>
           </div>
         </div>
 
         <!-- Phone number input field -->
         <div class="form-group row align-items-start"
-             v-bind:class="[ phoneError ? 'has-danger' : (phoneOk ? 'has-success' : '') ]">
+          :class="[ phoneError ? 'has-danger' : (phoneOk ? 'has-success' : '') ]">
           <label for="phoneInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.phoneNumber') }}</label>
           <div class="col-5">
-            <input type="number" class="form-control form-control-lg form-control-success form-control-danger" id="phoneInput"
-                   @blur="phoneValidate"
-                   v-model="phoneNumber"
-                   maxlength="11">
+            <input type="number"
+              class="form-control form-control-lg form-control-success form-control-danger"
+              id="phoneInput"
+              @blur="phoneValidate"
+              v-model="phoneNumber"
+              maxlength="11">
             <div class="form-control-feedback text-left">{{ phoneError }}</div>
           </div>
         </div>
 
         <!-- Email input field -->
         <div class="form-group row align-items-start"
-             v-bind:class="[ emailError ? 'has-danger' : (emailOk ? 'has-success' : '') ]">
+          :class="[ emailError ? 'has-danger' : (emailOk ? 'has-success' : '') ]">
           <label for="emailInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.email') }}</label>
           <div class="col-5">
-            <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="emailInput"
-                   @blur="emailValidate"
-                   v-model="emailValue"
-                   maxlength="35">
+            <input type="text"
+              class="form-control form-control-lg form-control-success form-control-danger"
+              id="emailInput"
+              @blur="emailValidate"
+              v-model="emailValue"
+              maxlength="35">
             <div class="form-control-feedback text-left">{{ emailError }}</div>
           </div>
         </div>
 
         <!-- Radio fields -->
         <div class="form-group row align-items-start topMargin"
-        v-bind:class="[ radioFields ? 'has-danger' : '' ]">
+          :class="[ radioFields ? 'has-danger' : '' ]">
           <label for="becomeVolunteer" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.target') }}</label>
           <div class="col-5 text-left">
             <div>
               <input type="radio"
-                     id="becomeVolunteer"
-                     class="radioInputs"
-                     v-bind:value="$t('volunteer.becomeVolunteer')"
-                     v-model="picked" @change="radioFieldsValidate">
+                id="becomeVolunteer"
+                class="radioInputs"
+                :value="$t('volunteer.becomeVolunteer')"
+                v-model="picked"
+                @change="radioFieldsValidate">
               <label for="becomeVolunteer" class="radioLabel labelProperties">{{ $t('volunteer.becomeVolunteer') }}</label>
             </div>
 
             <div>
               <input type="radio"
-                     id="becomeTemporaryHouse"
-                     class="radioInputs"
-                     v-bind:value="$t('volunteer.becomeTemporaryHouse')"
-                     v-model="picked" @change="radioFieldsValidate">
+                id="becomeTemporaryHouse"
+                class="radioInputs"
+                :value="$t('volunteer.becomeTemporaryHouse')"
+                v-model="picked"
+                @change="radioFieldsValidate">
               <label for="becomeTemporaryHouse" class="radioLabel labelProperties">{{  $t('volunteer.becomeTemporaryHouse') }}</label>
             </div>
             <div class="form-control-feedback text-left" v-if="radioFields">{{ $t('volunteer.fieldRequired') }}</div>
@@ -113,9 +124,7 @@
           </div>
           <div class="col-3 text-left">
             <button type="button" class="btn btnSent" @click="sendForm" v-if="!loading">{{ $t('volunteer.sent') }}</button>
-            <div class="loadingBtn" v-if="loading">
-              <div class="loader"></div>
-            </div>
+            <div v-if="loading" class="loader"></div>
           </div>
         </div>
       </form>

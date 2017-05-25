@@ -1,6 +1,6 @@
 <template>
   <div class="transfer">
-    <img src="../assets/financialSupport.jpg" alt="" class="logo">
+    <img src="../assets/financialSupport.jpg" class="logo">
     <h2>{{ $t("transfer.header") }}</h2>
     <loader v-if="loading"></loader>
     <div class="errors" v-if="errors.length">
@@ -68,23 +68,31 @@ export default {
         this.transferData.contact = {...response.data.contact}
         this.transferData.name = response.data.name
         this.loadingInfo = false
-        if (!this.loadingHowToDonate && !this.loadingInfo) this.loading = false
+        if (!this.loadingHowToDonate && !this.loadingInfo) {
+          this.loading = false
+        }
       })
       .catch(error => {
         this.errors.push(error)
         this.loadingInfo = false
-        if (!this.loadingHowToDonate && !this.loadingInfo) this.loading = false
+        if (!this.loadingHowToDonate && !this.loadingInfo) {
+          this.loading = false
+        }
       })
     this.$http.get(this.apiUrl + 'organization/howtodonate')
       .then(response => {
         this.howToHelp = response.data.howToHelpDescription
         this.loadingHowToDonate = false
-        if (!this.loadingHowToDonate && !this.loadingInfo) this.loading = false
+        if (!this.loadingHowToDonate && !this.loadingInfo) {
+          this.loading = false
+        }
       })
       .catch(error => {
         this.errors.push(error)
         this.loadingHowToDonate = false
-        if (!this.loadingHowToDonate && !this.loadingInfo) this.loading = false
+        if (!this.loadingHowToDonate && !this.loadingInfo) {
+          this.loading = false
+        }
       })
   },
   components: {
