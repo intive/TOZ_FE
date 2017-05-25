@@ -1,21 +1,25 @@
 <template>
-  <div class="transfer">
-    <img src="../assets/financialSupport.jpg" class="logo">
-    <h2>{{ $t("transfer.header") }}</h2>
-    <loader v-if="loading"></loader>
-    <div class="errors" v-if="errors.length">
-      <h2 v-for="error in errors">{{ error.message }}</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <img src="../assets/financialSupport.jpg" class="logo img-fluid">
+        <h2>{{ $t("transfer.header") }}</h2>
+        <loader v-if="loading"></loader>
+        <div class="errors" v-if="errors.length">
+          <h2 v-for="error in errors">{{ error.message }}</h2>
+        </div>
+        <div class="transfer-data" v-else-if="!loading">
+          <p>{{ howToHelp }} </p>
+          <span class="transferDetails">{{ transferData.name }}</span>
+          <span class="transferDetails">{{ transferData.address.street }} {{ transferData.address.houseNumber }}/{{ transferData.address.apartmentNumber }}</span>
+          <span class="transferDetails">{{ transferData.address.postCode }} {{ transferData.address.city }}</span>
+          <span class="transferDetails">{{ transferData.address.country }}</span>
+          <span class="transferDetails">{{ transferData.bankAccount.bankName }}</span>
+          <span class="transferDetails">{{ formattedAccountNumber }}</span>
+        </div>
+        <router-link to="/help" class="btn mt-3">{{ $t("common.back") }}</router-link>
+      </div>
     </div>
-    <div class="transfer-data" v-else-if="!loading">
-      <p>{{ howToHelp }} </p>
-      <span class="transferDetails">{{ transferData.name }}</span>
-      <span class="transferDetails">{{ transferData.address.street }} {{ transferData.address.houseNumber }}/{{ transferData.address.apartmentNumber }}</span>
-      <span class="transferDetails">{{ transferData.address.postCode }} {{ transferData.address.city }}</span>
-      <span class="transferDetails">{{ transferData.address.country }}</span>
-      <span class="transferDetails">{{ transferData.bankAccount.bankName }}</span>
-      <span class="transferDetails">{{ formattedAccountNumber }}</span>
-    </div>
-    <router-link to="/help" class="routerLink">{{ $t("common.back") }}</router-link>
   </div>
 </template>
 
@@ -107,7 +111,7 @@ export default {
   }
   .logo {
     margin: 2.5em 0;
-    border: 2em solid #fff;
+    border: 1em solid #fff;
     box-shadow: 1em 1em 3.5em #888;
     transform: rotate(2deg);
   }
@@ -116,8 +120,5 @@ export default {
     font-size: 2em;
     font-weight: bold;
     display: block;
-  }
-  .routerLink {
-    font-size: 1.5em;
   }
 </style>
