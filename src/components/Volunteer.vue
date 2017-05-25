@@ -1,221 +1,341 @@
 <template>
   <div class="container">
     <div>
-      <div class="alert alert-success" role="alert" v-if="formSend">
-        {{ $t('help.form.sendMessage') }}
+      <span class="icon-stack">
+        <i class="icon-chevron-down"></i>
+      </span>
+
+      <!-- Success modal -->
+      <modals v-if="formSend && errors.length === 0" :isError="false">
+       <p slot="header">
+         <span class="fa fa-chevron-down okIcon"></span>
+         {{ $t('volunteer.submissionSent') }}
+         <button type="button" class="close" @click="closeModal">&times;</button>
+       </p>
+      </modals>
+
+      <!-- Failed modal -->
+      <modals v-if="formSend && errors.length > 0" :isError="true">
+        <p slot="header">
+          <span class="fa fa-question errorIcon"></span>
+          {{ $t('volunteer.submissionFailed') }}
+          <button type="button" class="close" @click="closeModal">&times;</button>
+        </p>
+      </modals>
+
+      <div class="row navigation">
+        <span class="grayText spanProperties">{{ $t('volunteer.home') }} / {{ $t('volunteer.help') }} / </span>
+        <span class="darkGrayText spanProperties">{{ $t('volunteer.becomeVolunteer') }}</span>
       </div>
+
       <form >
-        <div class="row justify-content-center">
-          <div class="col-6 col-md-6 col-xl-6 text-right">
-            {{ $t('volunteer.name') }}
-          </div>
-          <div class="col-6 col-md-6 col-xl-6 text-left">
-            <input type="text" class="inputField"
-              v-bind:class="{ inputFieldErrors: nameError }"
-              v-bind:placeholder="$t('volunteer.name')"
-              @blur="nameAndSurnameValidate(true)"
+        <!-- Name input field -->
+        <div class="form-group row align-items-start"
+             v-bind:class="[ nameError ? 'has-danger' : (nameOk ? 'has-success' : '') ]">
+          <label for="nameInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.name') }}</label>
+          <div class="col-5">
+            <input type="text"
+              class="form-control form-control-lg form-control-success form-control-danger"
+              id="nameInput"
+              @blur="nameValidate"
               v-model="nameValue"
               maxlength="35">
-            <p class="errors" v-if="nameError">{{ nameError }}</p>
+            <div class="form-control-feedback text-left">{{ nameError }}</div>
           </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-6 col-md-6 col-xl-6 text-right">
-            {{ $t('volunteer.surname') }}
-          </div>
-          <div class="col-6 col-md-6 col-xl-6 text-left">
-            <input type="text" class="inputField"
-              v-bind:class="{ inputFieldErrors: surnameError }"
-              v-bind:placeholder="$t('volunteer.surname')"
-              @blur="nameAndSurnameValidate(false)"
+
+        <!-- Surname input field -->
+        <div class="form-group row align-items-start"
+          :class="[ surnameError ? 'has-danger' : (surnameOk ? 'has-success' : '') ]">
+          <label for="surnameInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.surname') }}</label>
+          <div class="col-5">
+            <input type="text"
+              class="form-control form-control-lg form-control-success form-control-danger"
+              id="surnameInput"
+              @blur="surnameValidate"
               v-model="surnameValue"
               maxlength="35">
-            <p class="errors" v-if="surnameError">{{ surnameError }}</p>
+            <div class="form-control-feedback text-left">{{ surnameError }}</div>
           </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-6 col-md-6 col-xl-6 text-right">
-            {{ $t('volunteer.phoneNumber') }}
-          </div>
-          <div class="col-6 col-md-6 col-xl-6 text-left">
-            <input type="number" class="inputField"
-              v-bind:class="{ inputFieldErrors: phoneError }"
-              v-bind:placeholder="$t('volunteer.phoneNumber')"
+
+        <!-- Phone number input field -->
+        <div class="form-group row align-items-start"
+          :class="[ phoneError ? 'has-danger' : (phoneOk ? 'has-success' : '') ]">
+          <label for="phoneInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.phoneNumber') }}</label>
+          <div class="col-5">
+            <input type="number"
+              class="form-control form-control-lg form-control-success form-control-danger"
+              id="phoneInput"
               @blur="phoneValidate"
               v-model="phoneNumber"
-              maxlength="11" >
-            <p class="errors" v-if="phoneError">{{ phoneError }}</p>
+              maxlength="11">
+            <div class="form-control-feedback text-left">{{ phoneError }}</div>
           </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-6 col-md-6 col-xl-6 text-right">
-            {{ $t('volunteer.email') }}
-          </div>
-          <div class="col-6 col-md-6 col-xl-6 text-left">
-            <input type="email" class="inputField"
-              v-bind:class="{ inputFieldErrors: emailError }"
-              v-bind:placeholder="$t('volunteer.email')"
-              v-model="emailValue"
+
+        <!-- Email input field -->
+        <div class="form-group row align-items-start"
+          :class="[ emailError ? 'has-danger' : (emailOk ? 'has-success' : '') ]">
+          <label for="emailInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.email') }}</label>
+          <div class="col-5">
+            <input type="text"
+              class="form-control form-control-lg form-control-success form-control-danger"
+              id="emailInput"
               @blur="emailValidate"
-              maxlength="35" >
-            <p class="errors" v-if="emailError">{{ emailError }}</p>
+              v-model="emailValue"
+              maxlength="35">
+            <div class="form-control-feedback text-left">{{ emailError }}</div>
           </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-6 col-md-6 col-xl-6 radio-right">
-            <input type="radio" v-bind:value="$t('volunteer.becomeVolunteer')" v-model="picked" @change="radioFieldsValidate" @blur="radioFieldsValidate">
-          </div>
-          <div class="col-6 col-md-6 col-xl-6 text-left">
-            {{ $t('volunteer.becomeVolunteer') }}
+
+        <!-- Radio fields -->
+        <div class="form-group row align-items-start topMargin"
+          :class="[ radioFields ? 'has-danger' : '' ]">
+          <label for="becomeVolunteer" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.target') }}</label>
+          <div class="col-5 text-left">
+            <div>
+              <input type="radio"
+                id="becomeVolunteer"
+                class="radioInputs"
+                :value="$t('volunteer.becomeVolunteer')"
+                v-model="picked"
+                @change="radioFieldsValidate">
+              <label for="becomeVolunteer" class="radioLabel labelProperties">{{ $t('volunteer.becomeVolunteer') }}</label>
+            </div>
+
+            <div>
+              <input type="radio"
+                id="becomeTemporaryHouse"
+                class="radioInputs"
+                :value="$t('volunteer.becomeTemporaryHouse')"
+                v-model="picked"
+                @change="radioFieldsValidate">
+              <label for="becomeTemporaryHouse" class="radioLabel labelProperties">{{  $t('volunteer.becomeTemporaryHouse') }}</label>
+            </div>
+            <div class="form-control-feedback text-left" v-if="radioFields">{{ $t('volunteer.fieldRequired') }}</div>
           </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-6 col-md-6 col-xl-6 radio-right">
-            <input type="radio" class="notSelected" v-bind:value="$t('volunteer.becomeTemporaryHouse')" v-model="picked" @change="radioFieldsValidate" @blur="radioFieldsValidate">
+
+        <!-- Sent and Cancel buttons -->
+        <div class="row align-items-start buttons">
+          <div class="col-9 text-right">
+            <router-link to="/help-info" class="btn btnCancel">{{ $t('volunteer.cancel') }}</router-link>
           </div>
-          <div class="col-6 col-md-6 col-xl-6 text-left">
-            {{ $t('volunteer.becomeTemporaryHouse') }}
-            <p class="errors" v-if="radioFields">{{ $t('volunteer.fieldRequired') }}</p>
-          </div>
-        </div>
-        <div class="row justify-content-center buttons">
-          <div class="col-6 col-md-6 col-xl-6 radio-right">
-            <router-link to="/help/info" class="btn btn-danger">{{ $t('volunteer.cancel') }}</router-link>
-          </div>
-          <div class="col-6 col-md-6 col-xl-6 text-left">
-            <button type="button" class="btn btn-success" @click="sendForm">{{ $t('volunteer.send') }}</button>
+          <div class="col-3 text-left">
+            <button type="button" class="btn btnSent" @click="sendForm" v-if="!loading">{{ $t('volunteer.sent') }}</button>
+            <div v-if="loading" class="loader"></div>
           </div>
         </div>
       </form>
-      <router-link to="/help/info">{{ $t("common.back") }}</router-link>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'volunteer',
-  data () {
-    return {
-      formSend: false,
-      radioFields: false,
-      picked: false,
-      nameValue: '',
-      surnameValue: '',
-      phoneNumber: '',
-      emailValue: '',
-      nameError: '',
-      surnameError: '',
-      phoneError: '',
-      emailError: ''
-    }
-  },
-  methods: {
-    nameAndSurnameValidate (whichField) {
-      const reg = /^[a-zA-Z]*$/
-      let inputValue = ''
-      whichField ? inputValue = this.nameValue : inputValue = this.surnameValue
-      if (!reg.test(inputValue)) {
-        whichField ? this.nameError = this.$t('volunteer.incorrectData')
-        : this.surnameError = this.$t('volunteer.incorrectData')
-      } else if (inputValue.length === 0) {
-        whichField ? this.nameError = this.$t('volunteer.fieldRequired')
-        : this.surnameError = this.$t('volunteer.fieldRequired')
-      } else if (reg.test(inputValue) && inputValue.length > 0) {
-        whichField ? this.nameError = '' : this.surnameError = ''
-      }
-      if (whichField) {
-        return this.nameError
-      } else {
-        return this.surnameError
+  import Modals from './Modals'
+  export default {
+    name: 'volunteer',
+    data () {
+      return {
+        loading: false,
+        formSend: false,
+        radioFields: false,
+        picked: false,
+        nameValue: '',
+        surnameValue: '',
+        phoneNumber: '',
+        emailValue: '',
+        nameError: '',
+        nameOk: false,
+        surnameError: '',
+        surnameOk: false,
+        phoneError: '',
+        phoneOk: false,
+        emailError: '',
+        emailOk: false,
+        errors: []
       }
     },
-    phoneValidate () {
-      if ((this.phoneNumber.length === 9) || (this.phoneNumber.length === 11)) {
-        this.phoneError = ''
-      } else if (this.phoneNumber.length === 0) {
-        this.phoneError = this.$t('volunteer.fieldRequired')
-      } else {
-        this.phoneError = this.$t('volunteer.incorrectData')
-      }
-      return this.phoneError
+    components: {
+      Modals
     },
-    emailValidate () {
-      const reg = /^[a-zA-Z]{1}[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$/
-      if (this.emailValue.length === 0) {
-        this.emailError = this.$t('volunteer.fieldRequired')
-      } else if (!reg.test(this.emailValue)) {
-        this.emailError = this.$t('volunteer.incorrectData')
-      } else if ((this.emailValue.length !== 0) && (reg.test(this.emailValue))) {
-        this.emailError = ''
-      }
-      return this.emailError
-    },
-    radioFieldsValidate (e) {
-      let volunteer = false
-      let temporaryHouse = false
-      if (this.picked === this.$t('volunteer.becomeVolunteer')) {
-        volunteer = true
-      } else if (this.picked === this.$t('volunteer.becomeTemporaryHouse')) {
-        temporaryHouse = true
-      }
-      if (!volunteer && !temporaryHouse) {
-        this.radioFields = true
-      } else {
-        this.radioFields = false
-      }
-      return this.radioFields
-    },
-    sendForm () {
-      if (!this.nameAndSurnameValidate(true)) {
-        if (!this.nameAndSurnameValidate(false)) {
-          if (!this.phoneValidate()) {
-            if (!this.emailValidate()) {
-              if (!this.radioFieldsValidate()) {
-                // TODO: HERE WE WILL BE SENDING A FORMS
-                this.formSend = true
-              }
-            }
-          }
+    methods: {
+      nameValidate () {
+        const reg = /^[a-zA-ZĄąĆćĘęŁłŃńÓóŚśŹźŻż]*$/
+        if (!reg.test(this.nameValue)) {
+          this.nameError = this.$t('volunteer.incorrectData')
+        } else if (!this.nameValue.length) {
+          this.nameError = this.$t('volunteer.fieldRequired')
+        } else if (reg.test(this.nameValue) && this.nameValue.length) {
+          this.nameError = ''
+          this.nameOk = true
         }
+        return this.nameError
+      },
+      surnameValidate () {
+        const reg = /^[a-zA-ZĄąĆćĘęŁłŃńÓóŚśŹźŻż]*$/
+        if (!reg.test(this.surnameValue)) {
+          this.surnameError = this.$t('volunteer.incorrectData')
+        } else if (!this.surnameValue.length) {
+          this.surnameError = this.$t('volunteer.fieldRequired')
+        } else if (reg.test(this.surnameValue) && this.surnameValue.length) {
+          this.surnameError = ''
+          this.surnameOk = true
+        }
+        return this.surnameError
+      },
+      phoneValidate () {
+        if ((this.phoneNumber.length === 9) || (this.phoneNumber.length === 11)) {
+          this.phoneError = ''
+          this.phoneOk = true
+        } else if (!this.phoneNumber.length) {
+          this.phoneError = this.$t('volunteer.fieldRequired')
+        } else {
+          this.phoneError = this.$t('volunteer.incorrectData')
+        }
+        return this.phoneError
+      },
+      emailValidate () {
+        const reg = /^[a-zA-Z]{1}[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$/
+        if (!this.emailValue.length) {
+          this.emailError = this.$t('volunteer.fieldRequired')
+        } else if (!reg.test(this.emailValue)) {
+          this.emailError = this.$t('volunteer.incorrectData')
+        } else if ((this.emailValue.length) && (reg.test(this.emailValue))) {
+          this.emailError = ''
+          this.emailOk = true
+        }
+        return this.emailError
+      },
+      radioFieldsValidate () {
+        if (this.picked) {
+          this.radioFields = false
+        } else {
+          this.radioFields = true
+        }
+        return this.radioFields
+      },
+      sendForm () {
+        if (!this.nameValidate() &&
+          !this.surnameValidate() &&
+          !this.phoneValidate() &&
+          !this.emailValidate() &&
+          !this.radioFieldsValidate()) {
+          this.loading = true
+          this.$http.post(this.apiUrl + 'proposals', {
+            name: this.nameValue,
+            surname: this.surnameValue,
+            phoneNumber: this.phoneNumber,
+            email: this.emailValue,
+            roles: [
+              'VOLUNTEER'
+            ]
+          })
+            .then(response => {
+              this.formSend = true
+              this.loading = false
+            })
+            .catch(e => {
+              this.errors.push(e)
+              this.formSend = true
+              this.loading = false
+            })
+        }
+      },
+      closeModal () {
+        this.formSend = !this.formSend
       }
     }
   }
-}
 </script>
 
 <style scoped>
-.buttons {
-  padding: 1em;
-}
-.radio-right {
-  text-align: right;
-}
-.text-right {
-  padding-top: 0.8em;
-}
-.inputField {
-  margin: 0.5em;
-  padding: 0.5em;
-  border: 0.1em solid #ddd;
-  border-radius: 0.5em;
-  outline: none;
-}
-.inputField:focus {
-  -webkit-box-shadow: 0em 0em 0.5em 0em rgba(0,72,255,1);
-  -moz-box-shadow: 0em 0em 0.5em 0em rgba(0,72,255,1);
-  box-shadow: 0em 0em 0.5em 0em rgba(0,72,255,1);
-}
-.errors {
-  color: red;
-}
-.inputFieldErrors {
-  background-color: #f7aaaa;
-  border-color: red;
-}
-.inputFieldErrors:focus {
-  -webkit-box-shadow: 0em 0em 0.5em 0em rgba(255,0,34,1);
-  -moz-box-shadow: 0em 0em 0.5em 0em rgba(255,0,34,1);
-  box-shadow: 0em 0em 0.5em 0em rgba(255,0,34,1);
-}
+  .labelProperties {
+    font-size: 1.8em;
+  }
+  .spanProperties {
+    font-size: 1.8em;
+  }
+  .navigation {
+    margin: 8em 0;
+  }
+  .buttons {
+    padding: 1.6em;
+  }
+  .radioInputs {
+    display: none;
+  }
+  .radioLabel {
+    padding-left: 3em;
+  }
+  .radioLabel:before {
+    content: '';
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 0.7em;
+    margin: 0 1em 0 1em;
+    position: absolute;
+    left: 0;
+    background-color: #fff;
+    box-shadow: inset 0px 0px 2px rgba(0, 0, 0, .7), 0px 0px 2px rgba(255, 255, 255, .8);
+  }
+  .radioInputs:checked + .radioLabel:before {
+    content: '';
+    background-color: #4cd374;
+    border-radius: 50%;
+    border: 0.2em solid #fff;
+    box-shadow: 0 0 10px #888888;
+  }
+  .okIcon {
+    color: #4cd374;
+    font-size: 2em;
+    padding-right: 1em;
+  }
+  .errorIcon {
+    margin-right: 1em;
+    color: #f54b5e;
+    font-size: 1.4em;
+    padding: 0.1em 0.3em;
+    border: 0.1em solid #f54b5e;
+    border-radius: 50%;
+  }
+  .grayText {
+    color: #B9B9B9;
+  }
+  .darkGrayText {
+    color: #363636;
+    font-weight: bold;
+  }
+  .btnSent {
+    margin-left: -2em;
+  }
+  .btnCancel {
+    background-color: #fff;
+    color: #000;
+  }
+  .loadingBtn {
+    background-color: #FFAF4F;
+    border-radius: 0.3em;
+    width: 14.858em;
+    height: 5.1em;
+    margin-left: -2.8em;
+    padding: 0.5em 0 0 5.3em;
+  }
+
+  .loader {
+    border: 0.3em solid #b9b9b9;
+    border-top: 0.3em solid #363636;
+    border-radius: 50%;
+    width: 1.6em;
+    height: 1.6em;
+    margin: 0;
+    animation: spin 1.2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 </style>

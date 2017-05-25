@@ -103,7 +103,7 @@ const locales = {
       bookedPeriod: 'Termin zajęty przez:'
     },
     transfer: {
-      header: 'Dane do przelewu'
+      header: 'Pomoc finansowa'
     },
     account: {
       changePassword: 'Zmień hasło'
@@ -156,14 +156,18 @@ const locales = {
       name: 'Imię',
       surname: 'Nazwisko',
       phoneNumber: 'Numer telefonu',
-      email: 'Email',
+      email: 'Adres email',
+      target: 'Cel',
       becomeVolunteer: 'Chcę zostać wolontariuszem',
       becomeTemporaryHouse: 'Chcę zostać domem tymczasowym',
-      send: 'Wyślij',
+      sent: 'Wyślij',
       cancel: 'Anuluj',
-      sendMessage: 'Zgłoszenie zostało wysłane',
       fieldRequired: 'Pole wymagane',
-      incorrectData: 'Niepoprawne dane'
+      incorrectData: 'Niepoprawne dane',
+      submissionSent: 'Zgłoszenie zostało wysłane',
+      submissionFailed: 'Zgłoszenia nie zostało wysłane!',
+      home: 'Strona główna',
+      help: 'Pomoc'
     }
   },
   en: {
@@ -267,7 +271,7 @@ const locales = {
       bookedPeriod: 'Period is already booked by:'
     },
     transfer: {
-      header: 'Transfer data'
+      header: 'Financial support'
     },
     account: {
       changePassword: 'Change password'
@@ -319,14 +323,18 @@ const locales = {
       name: 'Name',
       surname: 'Surname',
       phoneNumber: 'Phone number',
-      email: 'Email',
+      email: 'Email address',
+      target: 'Target',
       becomeVolunteer: 'I want to become a volunteer',
       becomeTemporaryHouse: 'I want become a temporary house',
-      send: 'Sent',
+      sent: 'Sent',
       cancel: 'Cancel',
-      sendMessage: 'The application has been send',
       fieldRequired: 'Field required',
-      incorrectData: 'Incorrect data'
+      incorrectData: 'Incorrect data',
+      submissionSent: 'The application has been sent',
+      submissionFailed: 'Applications have not been sent!',
+      home: 'Home page',
+      help: 'Help'
     }
   }
 }
