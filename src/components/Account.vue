@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" id="dashboard">
     <div class="row justify-content-center">
       <div class="col-12 col-lg-4 mt-5">
         <span class="fa fa-key fa-large"></span>
@@ -42,7 +42,7 @@ export default {
     @media (max-width: 767px)
       font-size: 10em
 
-  [class^="col-"]:hover
+  #dashboard [class^="col-"]:hover
     .fa
       transform: scale(1.1)
       color: $green

@@ -1,24 +1,24 @@
 <template>
-  <div>
+  <div class="container" >
     <div v-if="loading" class="loader"></div>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
-    <div class="container">
-      <div class="row">
+    <transition name="slide-fade">
+      <div v-if="!loading && !errors.length" class="row">
         <div v-for="pet in currentPage" :key="pet.id" class="col-lg-4">
-          <div class="card">
+          <div class="card my-2 border-0">
             <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
               <div class="card-block">
                 <img class="imgCard" :src="setUrl(pet)" @error="defaultImg(pet)" alt="">
                 <h2 class="card-title">{{pet.name}}</h2>
-                <h3 class="card-text">{{pet.type}}</h3>
+                <h6 class="card-subtitle mb-2">{{pet.type}}</h6>
               </div>
             </router-link>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
     <paginate
       :page-count="paginationConfig.numberOfPages"
       :container-class="paginationConfig.containerClass"
@@ -30,7 +30,6 @@
       :next-class="paginationConfig.nextClass"
       :click-handler="paginationConfig.clickCallback">
     </paginate>
-    <router-link to="/">{{ $t("common.backHome") }}</router-link>
   </div>
 </template>
 
@@ -50,8 +49,8 @@
           pageLinkClass: 'page-link',
           prevText: '<<',
           nextText: '>>',
-          prevClass: 'page-link',
-          nextClass: 'page-link',
+          prevClass: 'page-link prev',
+          nextClass: 'page-link next',
           clickCallback: this.changePage
         },
         itemsPerPage: 9,
@@ -99,14 +98,60 @@
     }
   }
 </script>
-<style>
-  @import "../assets/styles/loader.css";
+<style lang="sass">
+  @import "../assets/styles/loader.css"
+  @import "../assets/styles/variables"
 
-  .card {
-    border: none;
-  }
-  .imgCard {
-    width: 30em;
-    height: 30em;
-  }
+  .card
+    transition-duration: .4s
+    a
+      color: $black
+      &:hover
+      text-decoration: none
+    &:hover
+      background-color: $green
+      .card-title
+        color: #fff
+      .card-subtitle
+        color: $black
+
+  .card-subtitle
+    color: $orange
+
+  .page-link
+    font-size: 1.8em
+    color: #fff
+    background-color: $green
+    border-color: #000
+    &:hover
+      border-color: #000
+      background-color: $green
+      text-decoration: none
+      color: #000
+
+  .page-item.active .page-link
+    background-color: $orange
+    border-color: #000
+    color: #fff
+
+  .next, .prev
+    &:hover
+      a
+        color: #000
+    a
+      color: #fff
+      &:hover
+        text-decoration: none
+
+  .slide-fade-enter-active
+    transition: all 1s ease
+
+  .slide-fade-leave-active
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+
+  .slide-fade-enter, .slide-fade-leave-to
+    transform: translateY(3em)
+    opacity: 0
+
+
 </style>
