@@ -31,8 +31,8 @@
         <!-- Name input field -->
         <div class="form-group row align-items-start"
              v-bind:class="[ nameError ? 'has-danger' : (nameOk ? 'has-success' : '') ]">
-          <label for="nameInput" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.name') }}</label>
-          <div class="col-5 col-md-5 col-xl-5">
+          <label for="nameInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.name') }}</label>
+          <div class="col-5">
             <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="nameInput"
                    @blur="nameValidate"
                    v-model="nameValue"
@@ -44,8 +44,8 @@
         <!-- Surname input field -->
         <div class="form-group row align-items-start"
              v-bind:class="[ surnameError ? 'has-danger' : (surnameOk ? 'has-success' : '') ]">
-          <label for="surnameInput" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.surname') }}</label>
-          <div class="col-5 col-md-5 col-xl-5">
+          <label for="surnameInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.surname') }}</label>
+          <div class="col-5">
             <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="surnameInput"
                    @blur="surnameValidate"
                    v-model="surnameValue"
@@ -57,8 +57,8 @@
         <!-- Phone number input field -->
         <div class="form-group row align-items-start"
              v-bind:class="[ phoneError ? 'has-danger' : (phoneOk ? 'has-success' : '') ]">
-          <label for="phoneInput" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.phoneNumber') }}</label>
-          <div class="col-5 col-md-5 col-xl-5">
+          <label for="phoneInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.phoneNumber') }}</label>
+          <div class="col-5">
             <input type="number" class="form-control form-control-lg form-control-success form-control-danger" id="phoneInput"
                    @blur="phoneValidate"
                    v-model="phoneNumber"
@@ -70,8 +70,8 @@
         <!-- Email input field -->
         <div class="form-group row align-items-start"
              v-bind:class="[ emailError ? 'has-danger' : (emailOk ? 'has-success' : '') ]">
-          <label for="emailInput" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.email') }}</label>
-          <div class="col-5 col-md-5 col-xl-5">
+          <label for="emailInput" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.email') }}</label>
+          <div class="col-5">
             <input type="text" class="form-control form-control-lg form-control-success form-control-danger" id="emailInput"
                    @blur="emailValidate"
                    v-model="emailValue"
@@ -83,8 +83,8 @@
         <!-- Radio fields -->
         <div class="form-group row align-items-start topMargin"
         v-bind:class="[ radioFields ? 'has-danger' : '' ]">
-          <label for="becomeVolunteer" class="col-4 col-md-4 col-xl-4 col-form-label text-right labelProperties">{{ $t('volunteer.target') }}</label>
-          <div class="col-5 col-md-5 col-xl-5 text-left">
+          <label for="becomeVolunteer" class="col-4 col-form-label text-right labelProperties">{{ $t('volunteer.target') }}</label>
+          <div class="col-5 text-left">
             <div>
               <input type="radio"
                      id="becomeVolunteer"
@@ -108,10 +108,10 @@
 
         <!-- Sent and Cancel buttons -->
         <div class="row align-items-start buttons">
-          <div class="col-9 col-md-9 col-xl-9 text-right">
+          <div class="col-9 text-right">
             <router-link to="/help-info" class="btn btnCancel">{{ $t('volunteer.cancel') }}</router-link>
           </div>
-          <div class="col-3 col-md-3 col-xl-3 text-left">
+          <div class="col-3 text-left">
             <button type="button" class="btn btnSent" @click="sendForm" v-if="!loading">{{ $t('volunteer.sent') }}</button>
             <div class="loadingBtn" v-if="loading">
               <div class="loader"></div>
@@ -214,7 +214,7 @@
           !this.emailValidate() &&
           !this.radioFieldsValidate()) {
           this.loading = true
-          this.$http.post(this.apiUrl + 'proposal', {
+          this.$http.post(this.apiUrl + 'proposals', {
             name: this.nameValue,
             surname: this.surnameValue,
             phoneNumber: this.phoneNumber,

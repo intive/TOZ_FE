@@ -68,23 +68,23 @@ export default {
         this.transferData.contact = {...response.data.contact}
         this.transferData.name = response.data.name
         this.loadingInfo = false
-        !this.loadingHowToDonate && !this.loadingInfo ? this.loading = false : ''
+        if (!this.loadingHowToDonate && !this.loadingInfo) this.loading = false
       })
       .catch(error => {
         this.errors.push(error)
         this.loadingInfo = false
-        !this.loadingHowToDonate && !this.loadingInfo ? this.loading = false : ''
+        if (!this.loadingHowToDonate && !this.loadingInfo) this.loading = false
       })
     this.$http.get(this.apiUrl + 'organization/howtodonate')
       .then(response => {
         this.howToHelp = response.data.howToHelpDescription
         this.loadingHowToDonate = false
-        !this.loadingHowToDonate && !this.loadingInfo ? this.loading = false : ''
+        if (!this.loadingHowToDonate && !this.loadingInfo) this.loading = false
       })
       .catch(error => {
         this.errors.push(error)
         this.loadingHowToDonate = false
-        !this.loadingHowToDonate && !this.loadingInfo ? this.loading = false : ''
+        if (!this.loadingHowToDonate && !this.loadingInfo) this.loading = false
       })
   },
   components: {
