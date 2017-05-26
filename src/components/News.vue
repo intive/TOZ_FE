@@ -1,9 +1,12 @@
 <template>
-  <div class="container">
+  <div class="container row wrapper">
+    <div class="col-lg-9">
     <loader v-if="loading"></loader>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
+      <h5 class="news-header">Aktualności:</h5>
+      <hr>
     <div v-for="item of news" :key="item.id" class="news-item clearfix">
       <div class="news-date">
         {{ $t('news.added') }} {{ convertTimeStamp }}
@@ -19,7 +22,21 @@
         {{ $t('news.readMore') }}
       </router-link>
     </div>
-    <mainComments v-for="item in comments" :comment="item" :key="item.id"></mainComments>
+    </div>
+    <div class="col-lg-3 col-md-2 right-panel">
+      <p class="right-panel-header">{{ $t('news.rightPanel.companyName') }}</p>
+      <p class="right-panel-text">{{ $t('news.rightPanel.address.street') }}</p>
+      <p class="right-panel-text">{{ $t('news.rightPanel.address.country') }}</p>
+      <p class="right-panel-text last">{{ $t('news.rightPanel.address.tel') }}</p>
+      <p class="right-panel-header">{{ $t('news.rightPanel.openingHours.title') }}</p>
+      <p class="right-panel-text last">{{ $t('news.rightPanel.openingHours.hours') }}</p>
+      <p class="right-panel-header">{{ $t('news.rightPanel.clinic.title') }}</p>
+      <p class="right-panel-text">{{ $t('news.rightPanel.clinic.hours') }}</p>
+      <p class="right-panel-text">{{ $t('news.rightPanel.clinic.break') }}</p>
+      <p class="right-panel-text last">{{ $t('news.rightPanel.clinic.weekend') }}</p>
+      <p class="right-panel-header">{{$t('news.rightPanel.newestComments}}</p>
+      <mainComments v-for="item in comments" :comment="item" :key="item.id"></mainComments>
+    </div>
   </div>
 </template>
 
@@ -93,17 +110,25 @@
   @import "../assets/styles/loader.css"
   @import "../assets/styles/variables.sass"
 
+  .wrapper
+    margin-top: 5em
+    height: 100%
+    width: 100%
   .news-item
-    padding: 2rem 0
+    padding: 1rem
     border-bottom: 2px solid $gray
     @media (min-width: 1024px)
       position: relative
       border: 2px solid $gray
       padding: 2rem
       margin-bottom: 1rem
-
+  .news-header
+    text-align: left
+    padding: 0
+    margin: 0
   .news-title
-    font-size: 2rem
+    font: $font-stack
+    font-size: 2em
     text-decoration: underline
     a
       color: black
@@ -111,22 +136,48 @@
       display: inline
 
   .news-image
-    max-width: 100%
-    width: 345px
-    height: 278px
-    @media (min-width: 1024px)
-      float: left
-      margin: -2rem 2rem -2rem -2rem
+      max-width: 100%
+      width: 345px
+      height: 278px
+      @media (min-width: 1024px)
+        float: left
+        margin: -2rem 2rem -2rem -2rem
 
   .news-date
-    text-align: left
-    @media (min-width: 1024px)
-      float: right
+      text-align: left
+      @media (min-width: 1024px)
+        float: right
 
   .news-button
-    border-color: $white
-    text-transform: none
-    text-align: center
-    @media (min-width: 1024px)
-      float: right
+      border-color: $white
+      text-transform: none
+      text-align: center
+      @media (min-width: 1024px)
+        float: right
+
+  .right-panel
+      height: 100%
+      margin: 5em 5em 0 5.5em
+      padding: 1em 0 0 .8em
+      @media (max-width: 1108px)
+        margin: 0
+      @media (max-width: 768px)
+        display: none
+      @media (min-width: 1200px)
+        margin: 0 auto
+
+      .right-panel-header
+        font-size: 1.8em
+        font-weight: bold
+        line-height: 1.3
+        text-align: left
+
+      .right-panel-text
+        color: #b9b9b9
+        font-size: 1.4em
+        line-height: 1
+        text-align: left
+
+      .last
+        margin-bottom: 50px
 </style>

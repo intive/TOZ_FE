@@ -1,16 +1,16 @@
 <template>
-  <div class="container news-item clearfix">
+  <div class="container clearfix">
     <div v-if="loading" class="loader"></div>
     <div>
-      <div class="news-date">
-        {{ $t('news.added') }} {{ convertTimeStamp }}
+      <div class="float-left">
+        <p class="commentDate">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
       </div>
-      <h6 class="news-title">
+      <h6 class="commentAuthor">
         {{currentUser.name}} {{currentUser.surname}}
       </h6>
-      <h6>
+      <h6 class="commentContent">
         <router-link :to="{name: 'petDetails', params: { id: comment.petUuid }}" class="news-title">
-        {{ comment.contents }}
+          {{ comment.contents }}
         </router-link>
       </h6>
     </div>
@@ -48,6 +48,25 @@
     }
   }
 </script>
-<style>
-
+<style lang="sass">
+  @import "../assets/styles/loader.css"
+  @import "../assets/styles/variables.sass"
+  .commentDate
+    margin: 0
+    font-size: 1.2em
+    float: left
+  .commentAuthor
+    margin: 0 0 .2em 0
+    padding: 0
+    font-size: 2.2em
+    float: left
+  .commentContent
+    font-size: 2em
+    float: left
+    text-align: left
+    border-bottom: 1px solid $silver
+    padding-bottom: 1em
+    a
+      color: $green
+      text-decoration: none
 </style>

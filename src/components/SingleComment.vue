@@ -9,13 +9,13 @@
       <button class="col-lg-2 col-12 editBtn" v-show="isAuthor" @click="editFlag = false">Edytuj</button>
     </div>
     <div class="row">
+      <span v-show="errorFlag" class="error">{{$t('comments.errorMessage')}}</span>
       <textarea class="commentContent col-12" maxlength="500" spellcheck="false" :disabled="editFlag" v-model="newContents"></textarea><br>
-      <span v-show="errorFlag" class="error">Pole komentarza nie może być puste</span>
       <span class="col-lg-5 commentDate">{{convertTimeStamp}}</span>
     </div>
     <div class="editWrapper" v-if="!editFlag">
-      <button class="control saveBtn" @click="saveEditedComment">Zapisz</button>
-      <button class="control cancelBtn" @click="cancelEdit">Anuluj</button>
+      <button class="control saveBtn" @click="saveEditedComment">{{$t('common.button.save')}}</button>
+      <button class="control cancelBtn" @click="cancelEdit">{{$t('common.button.cancel')}}</button>
     </div>
   </div>
 </template>
@@ -149,6 +149,8 @@
     text-transform: uppercase
     text-decoration: none
     box-sizing: border-box
+    &:hover
+        background-color: #FFAF4F
     @media screen and (max-width: 576px)
       left: 0
       margin: 0 0 1.5em 0
@@ -160,8 +162,8 @@
     width: 20%
     @media screen and (max-width: 576px)
       width: 50%
-      right: 5em
-      top: 80%
+      right: 6.2em
+      top: 75%
       margin: 1.5em 0 1.5em 0
     .control
       border: 0
@@ -173,6 +175,8 @@
       padding: .5em
     .saveBtn
       background-color: $orange
+      &:hover
+        background-color: #FFAF4F
     .cancelBtn
       background-color: $silver
 

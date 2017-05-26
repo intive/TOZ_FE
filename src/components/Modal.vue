@@ -7,7 +7,7 @@
           <div class="modal-body">
             <swiper :options="swiperOption">
               <swiper-slide  v-for="n in range" :key="n">
-                <div class="modal-content"><img class="img-responsive img-fluid" :src="imageUrl" alt=""></div>
+                <div class="modal-content"><img class="img-fluid" :src="imageUrl" alt=""></div>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
               <div class="swiper-button-prev" slot="button-prev"></div>
@@ -43,89 +43,97 @@
   }
 </script>
 
-<style>
-  .modal-mask {
-    position: fixed;
-    padding: 0;
-    z-index: 9998;
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, .5);
-    display: table;
-    transition: opacity .3s ease;
-  }
-  .modal-wrapper {
-    margin: 8% 0 0 11%;
-    display: block;
-  }
-  .modal-body {
-    width: 78vw;
-    height: 20vh;
-    margin:0;
-    padding:0;
-  }
-  .modal-container {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    transition: all .3s ease;
-    font-family: Helvetica, Arial, sans-serif;
-  }
-  .modal-header h3 {
-    padding: 0.1em;
-    color: #42b983;
-  }
-  .modal-default-button {
-    padding: 0;
-    margin:0 0 0 79%;
-    color: darkred;
-    font: 38px arial, sans-serif;
-  }
-  .modal-enter {
-    opacity: 0;
-  }
-  .modal-leave-active {
-    opacity: 0;
-  }
-  .modal-content {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 70vh;
-  }
-  .swiper-slide {
-    background-position: center;
-    background-size: cover;
-  }
-  .swiper-pagination {
-    color:#fff;
-    font: 18px arial, sans-serif;
-  }
-  .imgModal {
-    width: 100%;
-    height: 100%;
-  }
-  /* MEDIA QUERIES */
-  @media screen and (max-width: 420px) {
-    .modal-wrapper {
-      margin: 35% 0 0 0;
-      padding: 0;
-    }
-    .modal-default-button {
-      padding: 0;
-      margin:0 0 0 90%;
-    }
-    .modal-body{
-      width: 100vw;
-      height: 50vh;
-    }
-    .modal-content {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 50vh;
-    }
-  }
+<style lang="sass">
+  @import "../assets/styles/variables.sass"
+  .modal-mask
+    position: fixed
+    padding: 0
+    z-index: 9998
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background-color: rgba(0, 0, 0, .5)
+    display: table
+    transition: opacity .3s ease
+
+  .modal-wrapper
+    margin: 8% 0 0 11%
+    display: block
+
+  .modal-body
+    width: 78vw
+    height: 20vh
+    margin: 0
+    padding: 0
+
+  .modal-container
+    width: 100%
+    height: 100%
+    margin: 0 auto
+    transition: all .3s ease
+    font-family: Helvetica, Arial, sans-serif
+
+  .modal-header h3
+    padding: 0.1em
+    color: #42b983
+
+  .modal-default-button
+    padding: 0
+    margin: 0 0 0 75%
+    color: darkred
+    font: 38px arial, sans-serif
+
+  .modal-enter
+    opacity: 0
+
+  .modal-leave-active
+    opacity: 0
+
+  .modal-content
+    margin: 0
+    padding: 0
+    width: 100%
+    height: 70vh
+
+  .swiper-slide
+    background-position: center
+    background-size: cover
+
+  .swiper-pagination
+    background-color: #000000
+    opacity: 0.7
+    //font: $font-stack !important
+    padding: 1em
+
+  .swiper-pagination-fraction
+    bottom: 0 !important
+    color: $white
+
+  .imgModal
+    width: 100%
+    height: 100%
+
+
+    /* MEDIA QUERIES */
+  @media screen and (max-width: 420px)
+    .modal-wrapper
+      margin: 35% 0 0 0
+      padding: 0
+
+    .modal-default-button
+      padding: 0
+      margin: 0 0 0 85%
+
+    .modal-body
+      width: 100vw
+      height: 50vh
+
+    .modal-content
+      margin: 0
+      padding: 0
+      width: 100%
+      height: 50vh
+
+
 </style>

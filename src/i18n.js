@@ -8,7 +8,10 @@ const locales = {
         ok: 'OK',
         cancel: 'Anuluj',
         signIn: 'Zaloguj się',
-        help: 'Wspomóż tego zwierzaka'
+        help: 'Wspomóż tego zwierzaka',
+        add: 'Dodaj',
+        edit: 'Edytuj',
+        save: 'Zapisz'
       },
       label: {
         login: 'Login',
@@ -55,6 +58,7 @@ const locales = {
       pinterest: 'Pinterest',
       rightPanel: {
         companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
+        newestComments: 'Najnowsze komentarze',
         address: {
           street: 'ul. Ojca Beyzyma 17',
           country: '70-391 Szczecin',
@@ -164,6 +168,11 @@ const locales = {
       sendMessage: 'Zgłoszenie zostało wysłane',
       fieldRequired: 'Pole wymagane',
       incorrectData: 'Niepoprawne dane'
+    },
+    comments: {
+      addComment: 'Dodaj komentarz',
+      placeholder: 'Miejsce na twój komentarz...',
+      errorMessage: 'Pole komentarza nie może być puste'
     }
   },
   en: {
@@ -172,7 +181,10 @@ const locales = {
         ok: 'OK',
         cancel: 'Cancel',
         signIn: 'Sign in',
-        help: 'Help this pet'
+        help: 'Help this pet',
+        add: 'Add',
+        edit: 'Edit',
+        save: 'Save'
       },
       label: {
         login: 'Login',
@@ -219,6 +231,7 @@ const locales = {
       pinterest: 'Pinterest',
       rightPanel: {
         companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
+        newestComments: 'New comments',
         address: {
           street: 'Ojca Beyzyma 17 St.',
           country: '70-391 Szczecin',
@@ -327,6 +340,11 @@ const locales = {
       sendMessage: 'The application has been send',
       fieldRequired: 'Field required',
       incorrectData: 'Incorrect data'
+    },
+    comments: {
+      addComment: 'Add comment',
+      placeholder: 'Place for your comment...',
+      errorMessage: 'Comment field cannot be empty'
     }
   }
 }

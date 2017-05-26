@@ -8,7 +8,7 @@
       <div id="swiper-wrapper">
         <swiper :options="swiperOption">
           <swiper-slide v-for="n in range" :key="n">
-            <div class="slide-content" @click="openModal"><img class="img-responsive img-fluid" :src="concatUrl()" @error="imageHandler" alt=""></div>
+            <div class="slide-content" @click="openModal"><img class="img-fluid" :src="concatUrl()" @error="imageHandler" alt=""></div>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
           <div class="swiper-button-prev" slot="button-prev"></div>
@@ -96,6 +96,7 @@
         this.showModal = true
       },
       isAuthenticated () {
+        console.log('test')
         auth.checkAuth() ? this.commentFlag = true : this.commentFlag = false
       },
       fetchData () {
@@ -136,7 +137,7 @@
     }
   }
 </script>
-<style lang="sass">
+<style lang="sass" scoped>
   @import "../assets/styles/loader.css"
   @import "../assets/styles/variables.sass"
   #petDetails
@@ -151,6 +152,9 @@
     margin: 0 auto
     width: 96em
     display: block
+
+  .img-fluid
+    height: 100%
 
   .pet-ul
     width: 100%
@@ -234,11 +238,13 @@
   .swiper-pagination
     background-color: #000000
     opacity: 0.7
-    font: $font-stack !important
-    padding: 1em
+    font: $font-stack
+    padding: 2.5em
 
   .swiper-pagination-fraction
-    bottom: 0 !important
+    bottom: 0
+    color: $white
+    padding: 2.5em
   #swiper-wrapper
     width: 96em
     margin: 0 auto
