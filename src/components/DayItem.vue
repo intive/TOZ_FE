@@ -1,8 +1,7 @@
 <template>
   <div>
+    <h6>{{ day }}</h6>
     <div class="dayView" v-if="dayTime === morning" @click='openModal'>
-      <h1>{{ day }}</h1>
-      {{ $t('calendar.dayInWeek[' + weekDay + ']') }}
       <div v-if="confirmed" class="booked">{{ inits }}</div>
       <div v-if="loading" class="loader"></div>
     </div>
@@ -11,8 +10,8 @@
       <div v-if="loading" class="loader"></div>
     </div>
     <booking v-if="showModal">
-      <h3 slot="header" class="modalHeader">{{ $t('calendar.book.header') }}</h3>
-      <h4 slot="slot1" class="underline">{{ day }} {{ $t('calendar.book.months[' + month + ']') }} {{ year }}, {{ $t('calendar.' + dayTime + 'Text') }}</h4>
+      <h4 slot="header" class="modalHeader">{{ $t('calendar.book.header') }}</h4>
+      <h6 slot="slot1" class="underline">{{ day }} {{ $t('calendar.book.months[' + month + ']') }} {{ year }}, {{ $t('calendar.' + dayTime + 'Text') }}</h6>
       <span slot='slot2'>
         <button class="modalButton" @click='closeModal'>{{ $t('calendar.button.decline') }}</button>
         <button class="modalButton" @click='openModalAccepted'>{{ $t('calendar.button.accept') }}</button>
@@ -105,9 +104,6 @@ export default {
     },
     openModalBooked () {
       this.showModal = false
-      if (this.getUserId === sessionStorage.getItem('userId')) {
-        this.reservationOwner = true
-      }
       this.showModalBooked = true
     },
     closeModal () {
@@ -121,6 +117,11 @@ export default {
     },
     closeErrors () {
       this.showErrors = false
+    },
+    checkUser () {
+      if (this.getUserId === sessionStorage.getItem('userId')) {
+        this.reservationOwner = true
+      }
     },
     deleteReservation () {
       const id = this.getResId
@@ -186,39 +187,43 @@ export default {
         fullMonth = '0' + fullMonth
       }
       return this.year + '-' + fullMonth + '-' + fullDay
-    },
-    confirmedReservation () {}
+    }
   },
   created () {
     this.switchTime()
     this.setDayShortcut()
+    this.checkUser()
   }
 }
 </script>
 
 <style scoped>
 .dayView {
-  width: 100%;
-  height: 25em;
-  border-left-style: groove;
-  border-bottom-style: groove;
+  width: 60px;
+  margin-top: 60px;
+  height: 60px;
+  background-color: #ebebeb;
   text-align: right;
   display: inline-block;
   padding: 1em;
-  position: relative
+  position: relative;
+  border-radius: 10px
 }
 .booked, .loader {
   width: 100%;
   text-align: center;
-  line-height: 12.5em;
+  line-height: 60px;
   position: absolute;
 }
 .booked {
-  background-color: #ddd;
+  background-color: #999;
   top: 0;
   left: 0;
   font-size: 2em;
-  z-index: -1
+  border-radius: 5px;
+}
+.owner {
+  background-color: #ff8900;
 }
 .loader {
   width: 8%;

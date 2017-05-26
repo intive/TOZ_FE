@@ -318,4 +318,3 @@ Vue.config.lang = 'pl'
 Object.keys(locales).forEach((lang) => {
   Vue.locale(lang, locales[lang])
 })
->>>>>>> master
