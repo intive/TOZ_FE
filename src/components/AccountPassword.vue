@@ -1,53 +1,47 @@
 <template>
   <div class="container">
+    <div class="row icon-row">
+      <div class="col-sm-12">
+        <i class="fa fa-lock fa-5x" aria-hidden="true"></i>
+      </div>
+    </div>
     <form @submit.prevent class="loginForm" v-if="!volunteer.fetching">
-      <div class="form-group row label" :class="{'has-danger': isWarning.old || volunteer.errorMessage}">
-        <label for="oldPassword" class="col-sm-2 col-form-label">{{ $t("accountPassword.oldPassword") }}</label>
-        <div class="col-sm-10">
-          <input type="password"
-                 class="form-control"
-                 id="oldPassword"
-                 v-model="credentials.oldPassword"
-                 :placeholder="$t('accountPassword.oldPassword')"
-                 maxlength="30">
-          <span class="is-danger" v-if="isEmpty.old">{{ $t("accountPassword.errors.required") }}</span>
-          <br>
-          <span class="is-danger" v-if="volunteer.errorMessage">{{ $t("accountPassword.errors.wrongPassword") }}</span>
-        </div>
+      <div class="col-sm-6 offset-sm-3 form-group" :class="{ 'has-danger': isWarning.old || volunteer.errorMessage }">
+        <input type="password"
+               class="form-control"
+               :class="{ 'form-control-danger': isWarning.old || volunteer.errorMessage }"
+               id="oldPassword"
+               v-model="credentials.oldPassword"
+               :placeholder="$t('accountPassword.oldPassword')"
+               maxlength="30">
+        <div class="form-control-feedback" v-if="isEmpty.old">{{ $t("accountPassword.errors.required") }}</div>
+        <div class="form-control-feedback" v-if="volunteer.errorMessage">{{ $t("accountPassword.errors.wrongPassword") }}</div>
       </div>
-      <div class="form-group row label2" :class="{'has-danger': isWarning.new || volunteer.errorMessage}">
-        <label for="newPassword" class="col-sm-2 col-form-label">{{ $t("accountPassword.newPassword") }}</label>
-        <div class="col-sm-10">
-          <input type="password"
-                 class="form-control"
-                 id="newPassword"
-                 v-model="credentials.newPassword"
-                 :placeholder="$t('accountPassword.newPassword')"
-                 maxlength="30">
-          <span class="is-danger" v-if="isEmpty.new">{{ $t("accountPassword.errors.required") }}</span>
-          <br>
-          <span class="is-danger" v-if="!areEqual">{{ $t("accountPassword.errors.differentPasswords") }}</span>
-          <br>
-          <span class="is-danger" v-if="volunteer.errorMessage">{{ $t("accountPassword.errors.wrongPassword") }}</span>
-        </div>
+      <div class="col-sm-6 offset-sm-3 form-group" :class="{'has-danger': isWarning.new || volunteer.errorMessage}">
+        <input type="password"
+               class="form-control"
+               :class="{ 'form-control-danger': isWarning.new || volunteer.errorMessage }"
+               id="newPassword"
+               v-model="credentials.newPassword"
+               :placeholder="$t('accountPassword.newPassword')"
+               maxlength="30">
+        <div class="form-control-feedback" v-if="isEmpty.new">{{ $t("accountPassword.errors.required") }}</div>
+        <div class="form-control-feedback" v-if="!areEqual">{{ $t("accountPassword.errors.differentPasswords") }}</div>
+        <div class="form-control-feedback" v-if="volunteer.errorMessage">{{ $t("accountPassword.errors.wrongPassword") }}</div>
       </div>
-      <div class="form-group row label2" :class="{'has-danger': isWarning.confirm || volunteer.errorMessage}">
-        <label for="confirmNewPassword" class="col-sm-2 col-form-label">{{ $t("accountPassword.confirmNewPassword") }}</label>
-        <div class="col-sm-10">
-          <input type="password"
-                 class="form-control"
-                 id="confirmNewPassword"
-                 v-model="credentials.confirmNewPassword"
-                 :placeholder="$t('accountPassword.confirmNewPassword')"
-                 maxlength="30">
-          <span class="is-danger" v-if="isEmpty.confirm">{{ $t("accountPassword.errors.required") }}</span>
-          <br>
-          <span class="is-danger" v-if="!areEqual">{{ $t("accountPassword.errors.differentPasswords") }}</span>
-          <br>
-          <span class="is-danger" v-if="volunteer.errorMessage">{{ $t("accountPassword.errors.wrongPassword") }}</span>
-        </div>
+      <div class="col-sm-6 offset-sm-3 form-group" :class="{'has-danger': isWarning.confirm || volunteer.errorMessage}">
+        <input type="password"
+               class="form-control"
+               :class="{ 'form-control-danger': isWarning.confirm || volunteer.errorMessage }"
+               id="confirmNewPassword"
+               v-model="credentials.confirmNewPassword"
+               :placeholder="$t('accountPassword.confirmNewPassword')"
+               maxlength="30">
+        <div class="form-control-feedback" v-if="isEmpty.confirm">{{ $t("accountPassword.errors.required") }}</div>
+        <div class="form-control-feedback" v-if="!areEqual">{{ $t("accountPassword.errors.differentPasswords") }}</div>
+        <div class="form-control-feedback" v-if="volunteer.errorMessage">{{ $t("accountPassword.errors.wrongPassword") }}</div>
       </div>
-      <div class="form-group offset-sm-2 col-sm-10">
+      <div class="col-sm-6 offset-sm-3 form-group buttons">
         <button type="submit"
                 class="btn"
                 @click="tryResetPassword">{{ $t('common.button.ok') }}</button>
@@ -56,7 +50,6 @@
     </form>
   </div>
 </template>
-
 
 <script>
   import auth from '../auth.js'
@@ -117,8 +110,12 @@
         if (!this.isEmpty.new && !this.isEmpty.confirm) {
           if (this.credentials.newPassword !== this.credentials.confirmNewPassword) {
             this.areEqual = false
+            this.isWarning.new = true
+            this.isWarning.confirm = true
           } else {
             this.areEqual = true
+            this.isWarning.new = false
+            this.isWarning.confirm = false
           }
         }
       },
@@ -151,11 +148,34 @@
 </script>
 
 <style scoped lang="sass">
-  .is-danger
-    font-size: 14px
-    color: red
-  .label
-    margin-bottom: 0
-  .label2
-    margin-bottom: -15px
+
+  $grey: #a8a8a8
+
+  @mixin placeholder()
+    input::-webkit-input-placeholder
+      @content
+    input:-moz-placeholder
+      @content
+    input::-moz-placeholder
+      @content
+    input:-ms-input-placeholder
+      @content
+
+  .type-style
+    font-size: 15px
+    font-family: sans-serif
+    letter-spacing: 1px
+
+  @include placeholder()
+    color: $grey
+    @extend .type-style
+
+  .icon-row
+    margin-top: 2em
+  .loginForm
+    margin-top: 3em
+  .container
+    font-size: 1.8em
+  .buttons
+    margin-top: 2em
 </style>
