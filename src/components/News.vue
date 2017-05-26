@@ -23,7 +23,7 @@
       </router-link>
     </div>
     </div>
-    <div class="col-lg-3 col-md-2 right-panel">
+    <div class="col-lg-3 col-12 right-panel">
       <p class="right-panel-header">{{ $t('news.rightPanel.companyName') }}</p>
       <p class="right-panel-text">{{ $t('news.rightPanel.address.street') }}</p>
       <p class="right-panel-text">{{ $t('news.rightPanel.address.country') }}</p>
@@ -34,7 +34,7 @@
       <p class="right-panel-text">{{ $t('news.rightPanel.clinic.hours') }}</p>
       <p class="right-panel-text">{{ $t('news.rightPanel.clinic.break') }}</p>
       <p class="right-panel-text last">{{ $t('news.rightPanel.clinic.weekend') }}</p>
-      <p class="right-panel-header">{{$t('news.rightPanel.newestComments}}</p>
+      <p class="right-panel-header">{{$t('news.rightPanel.newestComments')}}</p>
       <mainComments v-for="item in comments" :comment="item" :key="item.id"></mainComments>
     </div>
   </div>
