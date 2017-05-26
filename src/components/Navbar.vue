@@ -27,7 +27,7 @@
           <router-link to="/account" class="nav-link">{{ $t("navbar.accountLink") }}</router-link>
         </li>
         <li class="nav-item" v-if="!volunteer.authenticated">
-            <router-link to="/sign-in" class="nav-link">{{ $t("navbar.signIn") }}</router-link>
+            <router-link to="/sign-in" class="nav-link" id="login-btn">{{ $t("navbar.signIn") }}</router-link>
         </li>
       </ul>
     </div>
@@ -49,14 +49,35 @@ export default {
 <style lang="sass">
   @import "../assets/styles/variables.sass"
 
-  nav
+  .navbar-inverse
     background-color: $black
+    .navbar-brand
+      padding-top: 0
+      padding-bottom: 0
+      margin-right: 0
+    img
+      width: 54px
+      height: 54px
+    .navbar-nav .nav-link
+      font-family: $font-stack
+      font-weight: 400
+      font-size: 14px
+      color: $gray
+
+  #login-btn
+    background-color: $orange
+    font-weight: 800
+    text-transform: uppercase
 
   @media (min-width: 992px)
     nav
       height: 70px
-
-  ul li a
-    font-size: 24px
+    .navbar
+      padding: 8px 112px
+    .navbar-toggleable-md .navbar-nav .nav-link
+      padding-right: 14px
+      padding-left: 14px
+    #login-btn
+      margin-left: 21px
 
 </style>

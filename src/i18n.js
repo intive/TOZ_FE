@@ -104,23 +104,26 @@ const locales = {
       bookedPeriod: 'Termin zajęty przez:'
     },
     transfer: {
-      header: 'Dane do przelewu'
+      header: 'Pomoc finansowa'
     },
     account: {
       changePassword: 'Zmień hasło'
     },
     firstSignIn: {
       message: {
-        firstSignIn: 'Pierwsze logowanie',
-        info: 'Jeszcze tylko chwila dzieli Cię od zostania wolontariuszem',
+        invalidEmail: 'Niepoprawny adres e-mail',
         inputRequired: 'Pole wymagane',
         differentPasswords: 'Wprowadzone hasła różnią się'
       },
       label: {
+        email: 'E-mail',
         password: 'Nowe hasło',
         confirmPassword: 'Powtórz nowe hasło'
       },
-      placeholder: 'Hasło'
+      placeholder: {
+        password: 'Hasło',
+        email: 'E-mail'
+      }
     },
     activationLinkExpired: {
       message: {
@@ -128,11 +131,19 @@ const locales = {
         contactAdmin: 'Skontaktuj się z Administratorem.'
       }
     },
+    accountActivated: {
+      message: 'Twoje konto zostało aktywowane. Możesz się teraz zalogować.'
+    },
     accountPassword: {
       oldPassword: 'Stare hasło',
       newPassword: 'Nowe hasło',
       confirmNewPassword: 'Potwierdź nowe hasło',
-      changePassword: 'Zmień hasło'
+      changePassword: 'Zmień hasło',
+      errors: {
+        required: 'Pole wymagane.',
+        wrongPassword: 'Niepoprawne hasło.',
+        differentPasswords: 'Wprowadzone hasła są różne.'
+      }
     },
     login: {
       invalid: 'Niepoprawny login i/lub hasło',
@@ -146,14 +157,18 @@ const locales = {
       name: 'Imię',
       surname: 'Nazwisko',
       phoneNumber: 'Numer telefonu',
-      email: 'Email',
+      email: 'Adres email',
+      target: 'Cel',
       becomeVolunteer: 'Chcę zostać wolontariuszem',
       becomeTemporaryHouse: 'Chcę zostać domem tymczasowym',
-      send: 'Wyślij',
+      sent: 'Wyślij',
       cancel: 'Anuluj',
-      sendMessage: 'Zgłoszenie zostało wysłane',
       fieldRequired: 'Pole wymagane',
-      incorrectData: 'Niepoprawne dane'
+      incorrectData: 'Niepoprawne dane',
+      submissionSent: 'Zgłoszenie zostało wysłane',
+      submissionFailed: 'Zgłoszenia nie zostało wysłane!',
+      home: 'Strona główna',
+      help: 'Pomoc'
     }
   },
   en: {
@@ -258,23 +273,26 @@ const locales = {
       bookedPeriod: 'Period is already booked by:'
     },
     transfer: {
-      header: 'Transfer data'
+      header: 'Financial support'
     },
     account: {
       changePassword: 'Change password'
     },
     firstSignIn: {
       message: {
-        firstSignIn: 'First sign in',
-        info: "It's just one moment to become a volunteer",
+        invalidEmail: 'Invalid e-mail address',
         inputRequired: 'Input required',
         differentPasswords: 'Input passwords are different'
       },
       label: {
+        email: 'E-mail',
         password: 'New password',
         confirmPassword: 'Confirm new password'
       },
-      placeholder: 'Password'
+      placeholder: {
+        password: 'Password',
+        email: 'E-mail'
+      }
     },
     activationLinkExpired: {
       message: {
@@ -282,10 +300,18 @@ const locales = {
         contactAdmin: 'Please contact with the Administrator.'
       }
     },
+    accountActivated: {
+      message: 'Your account has been activated. You can now sign in.'
+    },
     accountPassword: {
       oldPassword: 'Old password',
       newPassword: 'New password',
-      confirmNewPassword: 'Confirm new password'
+      confirmNewPassword: 'Confirm new password',
+      errors: {
+        required: 'Field required.',
+        wrongPassword: 'Wrong password.',
+        differentPasswords: 'Passwords are different.'
+      }
     },
     login: {
       invalid: 'Invalid login and/or password',
@@ -299,14 +325,18 @@ const locales = {
       name: 'Name',
       surname: 'Surname',
       phoneNumber: 'Phone number',
-      email: 'Email',
+      email: 'Email address',
+      target: 'Target',
       becomeVolunteer: 'I want to become a volunteer',
       becomeTemporaryHouse: 'I want become a temporary house',
-      send: 'Sent',
+      sent: 'Sent',
       cancel: 'Cancel',
-      sendMessage: 'The application has been send',
       fieldRequired: 'Field required',
-      incorrectData: 'Incorrect data'
+      incorrectData: 'Incorrect data',
+      submissionSent: 'The application has been sent',
+      submissionFailed: 'Applications have not been sent!',
+      home: 'Home page',
+      help: 'Help'
     }
   }
 }

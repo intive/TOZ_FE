@@ -1,21 +1,12 @@
 <template>
   <div class="container">
-    <h1>{{ $t("activationLinkExpired.message.linkExpired") }}</h1>
-    <h1>{{ $t("activationLinkExpired.message.contactAdmin") }}</h1>
-    <button type="button" name="button" class="btn">
-      <router-link to="/" class="nav-link">{{ $t("common.backHome") }}</router-link>
-    </button>
+    <div class="row">
+      <div class="col-12">
+        <span class="fa fa-frown-o fa-large"></span>
+        <h3>{{ $t("activationLinkExpired.message.linkExpired") }}</h3>
+        <h3>{{ $t("activationLinkExpired.message.contactAdmin") }}</h3>
+        <router-link to="/" class="btn my-3">{{ $t("common.backHome") }}</router-link>
+      </div>
+    </div>
   </div>
 </template>
-
-<style scoped>
-  img {
-    max-height: 300px;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-  .container {
-    width: 100%;
-    margin-bottom: 2em;
-  }
-</style>

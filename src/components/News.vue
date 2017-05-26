@@ -15,7 +15,7 @@
       </h2>
       <img :src="item.photoUrl" alt="" class="news-image">
       <p class="news-body"> {{ shortenContent(item) }} </p>
-      <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }" class="btn btn-primary news-button">
+      <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }" class="btn news-button">
         {{ $t('news.readMore') }}
       </router-link>
     </div>
@@ -30,30 +30,6 @@
     name: 'News',
     data () {
       return {
-        // news: [{
-        //   'id': '1',
-        //   'title': 'Zostań naszym wolontariuszem!',
-        //   'contents': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio sit nobis aut facilis praesentium, nihil, commodi dignissimos illum vitae. Quasi vel neque aspernatur ex placeat vero! Voluptates, temporibus ratione tempore atque et consequatur distinctio quisquam, dolore expedita assumenda non, facere magnam debitis quae! Veniam amet consequatur ab ipsum beatae dolor.',
-        //   'type': 'RELEASED',
-        //   'photoUrl': 'http://lorempixel.com/287/300',
-        //   'created': 1494329859282
-        // },
-        // {
-        //   'id': '567fc68a-0c6a-4dc6-948b-cbc002738839',
-        //   'title': 'W niedzielę schronisko zamknięte',
-        //   'contents': 'Lorem ipsum ptates, temporibus ratione tempore atque et consequatur distinctio quisquam, dolore expedita assumenda non, facere magnam debitis quae! Veniam amet consequatur ab ipsum beatae dolor.',
-        //   'type': 'RELEASED',
-        //   'photoUrl': 'http://lorempixel.com/200/200',
-        //   'created': 1494329863111
-        // },
-        // {
-        //   'id': 'd8728661-d429-4e96-893a-75c0f89af76e',
-        //   'title': 'Kto tu rządzi?',
-        //   'contents': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio sit nobis aut facilis praesentium, nihil, commodi dignissimos illum vitae. Quasi vel neque aspernatur ex placeat vero! Voluptates, temporibus ratione tempore atque et consequatur distinctio quisquam, dolore expedita assumenda non, facere magnam debitis quae! Veniam amet consequatur ab ipsum beatae dolor.',
-        //   'type': 'RELEASED',
-        //   'photoUrl': 'http://lorempixel.com/200/200',
-        //   'created': 1494329863111
-        // }],
         news: [],
         errors: [],
         loading: true
