@@ -1,13 +1,15 @@
 <template>
   <div class="container">
     <div class="row scheduleNav">
-      <button @click="setPreviousAndNextWeekDate(false)" v-if="previousWeek" class="navigateButton"> {{ $t('calendar.button.previous') }}</button>
-      {{ formattedStringWithDate }}
-      <button @click="setPreviousAndNextWeekDate(true)" v-if="nextWeek" class="navigateButton">{{ $t('calendar.button.next') }}</button>
+      <div class="col-8 offset-md-1 noPadding upper">{{ formattedStringWithDate }}</div>
+      <div class="col-2 noPadding">
+        <div class="next" @click="setPreviousAndNextWeekDate(true)" v-if="nextWeek">{{ $t('calendar.button.next') }}</div>
+        <div class="previous" @click="setPreviousAndNextWeekDate(false)" v-if="previousWeek"> {{ $t('calendar.button.previous') }}</div>
+      </div>
     </div>
-      <div class="dayTime">{{ $t('calendar.morningText') }}</div>    
-      <div class="row justify-content-end">
-      <div class="col-12 col-md-12 col-xl-12 line"></div>
+    <div class="row">
+      <div class="col dayTime offset-md-1">{{ $t('calendar.morningText') }}</div>
+      <div class="col-10 col-md-10 col-xl-10 offset-md-1 line"></div>
     </div>
     <span class="fullWeek">
       <div v-if="loading" class="loader"></div>
@@ -56,9 +58,9 @@
         </div>
       </div>
     </span>
-    <div class="dayTime">{{ $t('calendar.afternoonText') }}</div>
-    <div class="row justify-content-end">
-      <div class="col-12 col-md-12 col-xl-12 line"></div>
+    <div class="row">
+      <div class="col dayTime offset-md-1">{{ $t('calendar.afternoonText') }}</div>
+      <div class="col-10 col-md-10 col-xl-10 offset-md-1 line"></div>
     </div>
     <span class="fullWeek">
       <div v-if="loading" class="loader"></div>
@@ -342,35 +344,48 @@ export default {
 
 <style scoped>
 .container {
-  width: 1366px
+  width: 136.6em
 }
 td {
-  width: 60px
+  width: 6em
 }
 .scheduleNav {
-  text-align: right;
   font-size: 2em;
-}
-.navigateButton {
-  background: none;
-  border: none;
-  font-weight: bold
+  text-align: left;
+  margin-top: 4em
 }
 .table {
-  border: none
+  border: none;
+  margin-top: .5em
 }
 .dayTime {
+  width: 100%;
   text-align: left;
   text-transform: uppercase;
   font-size: 2.5em;
   margin-top: 3em
 }
-.noPadding {
+.upper {
+  text-transform: uppercase;
+}
+.previous, .next {
+  width: 1em;
+  height: 1em;
+  text-align: center;
+  line-height: .9em;
+  border-radius: 1em;
+  font-size: 1.75em;
+  float: right
+}
+.previous:hover, .next:hover {
+  cursor: pointer;
+  background-color: #4CD374
+}
+.noPadding, .table td, .dayTime {
   padding: 0
 }
 .line {
   display: block;
-  border-top: 5px solid #ebebeb;
-  transform: translateY(50%)
+  border-top: .5em solid #ebebeb;
 }
 </style>

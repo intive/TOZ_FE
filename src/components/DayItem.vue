@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h6>{{ day }}</h6>
+    <h6 class="dayNumber">{{ day }}</h6>
     <div class="dayView" v-if="dayTime === morning" @click='openModal'>
       <div v-if="confirmed" class="booked">{{ inits }}</div>
       <div v-if="loading" class="loader"></div>
@@ -207,7 +207,13 @@ export default {
   display: inline-block;
   padding: 1em;
   position: relative;
-  border-radius: 10px
+  border-radius: 10px;
+  cursor: pointer
+}
+.dayNumber {
+  margin: 0 auto;
+  width: 2.5em;
+  text-align: right;
 }
 .booked, .loader {
   width: 100%;
