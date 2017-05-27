@@ -173,7 +173,6 @@ const locales = {
       submissionFailed: 'Zgłoszenia nie zostało wysłane!',
       home: 'Strona główna',
       help: 'Pomoc'
-      incorrectData: 'Niepoprawne dane'
     },
     comments: {
       newComment: {
@@ -353,7 +352,6 @@ const locales = {
       submissionFailed: 'Applications have not been sent!',
       home: 'Home page',
       help: 'Help'
-      incorrectData: 'Incorrect data'
     },
     comments: {
       newComment: {
