@@ -1,62 +1,49 @@
 <template>
   <div class="container row wrapper">
-    <div class="col-lg-9">
-    <loader v-if="loading"></loader>
-    <div class="errors" v-if="errors.length">
-      <h2 v-for="error of errors">{{ error.message }}</h2>
-    </div>
-      <h5 class="news-header">Aktualności:</h5>
-      <hr>
-    <div v-for="item of news" :key="item.id" class="news-item clearfix">
-      <div class="news-date">
-        {{ $t('news.added') }} {{ convertTimeStamp }}
+    <div class="col-12 col-lg-9">
+      <loader v-if="loading"></loader>
+      <div class="errors" v-if="errors.length">
+        <h2 v-for="error of errors">{{ error.message }}</h2>
       </div>
-      <h2 class="news-title">
-        <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }">
-          {{ item.title }}
+        <h5 class="news-header">Aktualności:</h5>
+        <hr>
+      <div v-for="item of news" :key="item.id" class="news-item clearfix">
+        <div class="news-date">
+          {{ $t('news.added') }} {{ convertTimeStamp }}
+        </div>
+        <h2 class="news-title">
+          <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }">
+            {{ item.title }}
+          </router-link>
+        </h2>
+        <img :src="item.photoUrl" alt="" class="news-image">
+        <p class="news-body"> {{ shortenContent(item) }} </p>
+        <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }" class="btn news-button">
+          {{ $t('news.readMore') }}
         </router-link>
-      </h2>
-      <img :src="item.photoUrl" alt="" class="news-image">
-      <p class="news-body"> {{ shortenContent(item) }} </p>
-      <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }" class="btn news-button">
-        {{ $t('news.readMore') }}
-      </router-link>
+      </div>
     </div>
-    </div>
-    <div class="col-lg-3 col-12 right-panel">
-      <p class="right-panel-header">{{ $t('news.rightPanel.companyName') }}</p>
-      <p class="right-panel-text">{{ $t('news.rightPanel.address.street') }}</p>
-      <p class="right-panel-text">{{ $t('news.rightPanel.address.country') }}</p>
-      <p class="right-panel-text last">{{ $t('news.rightPanel.address.tel') }}</p>
-      <p class="right-panel-header">{{ $t('news.rightPanel.openingHours.title') }}</p>
-      <p class="right-panel-text last">{{ $t('news.rightPanel.openingHours.hours') }}</p>
-      <p class="right-panel-header">{{ $t('news.rightPanel.clinic.title') }}</p>
-      <p class="right-panel-text">{{ $t('news.rightPanel.clinic.hours') }}</p>
-      <p class="right-panel-text">{{ $t('news.rightPanel.clinic.break') }}</p>
-      <p class="right-panel-text last">{{ $t('news.rightPanel.clinic.weekend') }}</p>
-      <p class="right-panel-header">{{$t('news.rightPanel.newestComments')}}</p>
-      <mainComments v-for="item in comments" :comment="item" :key="item.id"></mainComments>
-    </div>
+    <Sidebar></Sidebar>
+
   </div>
 </template>
 
 <script>
   import Loader from './Loader'
   import moment from 'moment'
-  import mainComments from './mainPageComments.vue'
+  import Sidebar from './Sidebar.vue'
+
   export default {
     name: 'News',
     data () {
       return {
         news: [],
         errors: [],
-        comments: [],
         loading: true
       }
     },
     created () {
       this.fetchData()
-      this.getComments()
     },
     computed: {
       convertTimeStamp () {
@@ -76,17 +63,6 @@
             this.loading = false
           })
       },
-      getComments () {
-        this.$http.get(this.apiUrl + 'comments?isShortened=true&state=ACTIVE')
-          .then(response => {
-            this.comments = [...response.data]
-            this.comments = this.comments.slice(0, 5)
-            this.loading = false
-          })
-          .catch(() => {
-            this.loading = false
-          })
-      },
       shortenContent (item) {
         const MAX_WORDS = 30
         const words = item.contents.split(' ')
@@ -101,7 +77,7 @@
     },
     components: {
       Loader,
-      mainComments
+      Sidebar
     }
   }
 </script>

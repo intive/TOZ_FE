@@ -2,10 +2,10 @@
   <div class="container clearfix">
     <div v-if="loading" class="loader"></div>
     <div>
-      <div class="float-left">
+      <div class="text-right my-1">
         <p class="commentDate">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
       </div>
-      <h6 class="commentAuthor">
+      <h6 class="commentAuthor text-left">
         {{currentUser.name}} {{currentUser.surname}}
       </h6>
       <h6 class="commentContent">
@@ -51,19 +51,18 @@
 <style lang="sass">
   @import "../assets/styles/loader.css"
   @import "../assets/styles/variables.sass"
+
   .commentDate
     margin: 0
     font-size: 1.2em
-    float: left
+
   .commentAuthor
     margin: 0 0 .2em 0
     padding: 0
-    font-size: 2.2em
-    float: left
+    font-size: 1.8em
+
   .commentContent
-    font-size: 2em
-    float: left
-    text-align: left
+    font-size: 1.6em
     border-bottom: 1px solid $silver
     padding-bottom: 1em
     a

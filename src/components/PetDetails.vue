@@ -5,7 +5,7 @@
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div id="pet-container" v-else-if="!loading">
-      <div id="swiper-wrapper">
+      <div id="swiper-wrapper col-12">
         <swiper :options="swiperOption">
           <swiper-slide v-for="n in range" :key="n">
             <div class="slide-content" @click="openModal"><img class="img-fluid" :src="concatUrl()" @error="imageHandler" alt=""></div>
