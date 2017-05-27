@@ -9,7 +9,7 @@
       <button class="col-lg-2 col-12 editBtn" v-show="isAuthor" @click="editFlag = false">Edytuj</button>
     </div>
     <div class="row">
-      <span v-show="errorFlag" class="error">{{$t('comments.errorMessage')}}</span>
+      <span v-show="errorFlag" class="error">{{$t('comments.newComment.errorMessage')}}</span>
       <textarea class="commentContent col-12" maxlength="500" spellcheck="false" :disabled="editFlag" v-model="newContents"></textarea><br>
       <span class="col-lg-5 commentDate">{{convertTimeStamp}}</span>
     </div>
@@ -79,13 +79,12 @@
             created: this.comment.created,
             lastModified: this.createTimeStamp
           }
-          console.log(editedComment)
           this.$http.put(this.apiUrl + 'comments/' + this.comment.id, editedComment)
             .then(() => {
               this.editFlag = true
             })
             .catch(error => {
-              console.log(error)
+              this.errors.push(error)
             })
         }
       },

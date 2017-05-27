@@ -83,7 +83,8 @@ const locales = {
       type: 'Typ',
       sex: 'Płeć',
       name: 'Imię',
-      creationDate: 'Data dodania'
+      creationDate: 'Data dodania',
+      info: 'potrzebuję wsparcia, aby tego dokonać skorzystaj z poniższego numeru konta'
     },
     calendar: {
       months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
@@ -170,9 +171,11 @@ const locales = {
       incorrectData: 'Niepoprawne dane'
     },
     comments: {
-      addComment: 'Dodaj komentarz',
-      placeholder: 'Miejsce na twój komentarz...',
-      errorMessage: 'Pole komentarza nie może być puste'
+      newComment: {
+        placeholder: 'Miejsce na twój komentarz...',
+        addComment: 'Dodaj komentarz',
+        errorMessage: 'Pole komentarza nie może być puste'
+      }
     }
   },
   en: {
@@ -256,7 +259,8 @@ const locales = {
       type: 'Type',
       sex: 'Sex',
       name: 'Name',
-      creationDate: 'Creation Date'
+      creationDate: 'Creation Date',
+      info: 'needs help, to do so use account number below'
     },
     calendar: {
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -342,9 +346,11 @@ const locales = {
       incorrectData: 'Incorrect data'
     },
     comments: {
-      addComment: 'Add comment',
-      placeholder: 'Place for your comment...',
-      errorMessage: 'Comment field cannot be empty'
+      newComment: {
+        placeholder: 'Place for your comment...',
+        addComment: 'Add comment',
+        errorMessage: 'Comment field cannot be empty'
+      }
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="container wrapper">
-      <h6 class="header">{{$t('comments.addComment')}}</h6>
-      <textarea name="comment" class="comment" maxlength="500" :placeholder="$t('comments.placeholder')" v-model="newComment"></textarea><br>
-      <span v-show="errorFlag" class="error">Pole komentarza nie może być puste</span>
+      <h6 class="header">{{$t('comments.newComment.addComment')}}</h6>
+      <textarea name="comment" class="comment" maxlength="500" :placeholder="$t('comments.newComment.placeholder')" v-model="newComment"></textarea><br>
+      <span v-show="errorFlag" class="error">{{$t('comments.newComment.errorMessage')}}</span>
       <button @click="addNewComment" class="btn addBTN">{{$t('common.button.add')}}</button>
       <hr>
   </div>

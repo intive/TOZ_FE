@@ -31,7 +31,6 @@
         commentsTable: [],
         errors: [],
         currentPage: [],
-        tab: [],
         paginationConfig: {
           numberOfPages: 0,
           containerClass: 'pagination justify-content-center',

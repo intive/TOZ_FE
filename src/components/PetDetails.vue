@@ -34,7 +34,7 @@
               <span class="center-span li-span-sex">{{$t('petDetails.sex')}}</span>
             </div>
           </li>
-          <li class="pet-li row">
+          <li v-show="authenticated" class="pet-li row">
             <div class="center-span col-sm-12 col-lg-6">
               <h6>{{convertTimeStamp}}</h6>
               <span class="li-span-calendar center-span">{{$t('petDetails.creationDate')}}</span>
@@ -49,11 +49,11 @@
       </div>
       <button class="helpLink btn" :disabled="showTransfer" @click.once="showTransfer = true">{{$t('common.button.help')}}</button>
       <div class="col-sm-12 col-lg-12" v-show="showTransfer">
-        <h6>Tutaj bedzie jakis tekst zachecający do wsparcia animalsa</h6>
-        <h5>63 1005 2123 5001 2213 2313 2222</h5>
+        <h6> {{petDetails.name}} {{$t('petDetails.info')}} </h6>
+        <h5>{{formattedAccountNumber}}</h5>
       </div>
       <hr>
-      <comments v-if="isAuthenticated" :petId="petDetails.id"></comments>
+      <comments v-if="authenticated" :petId="petDetails.id"></comments>
     </div>
   </div>
 </template>
@@ -68,9 +68,12 @@
       return {
         showModal: false,
         showTransfer: false,
-        commentFlag: false,
+        authenticated: auth.user.authenticated,
         id: this.$route.params.id,
         petDetails: {},
+        bankAccount: {
+          number: ''
+        },
         errors: [],
         range: 10,
         swiperOption: {
@@ -90,19 +93,27 @@
     },
     created () {
       this.fetchData()
+      this.getTransferData()
     },
     methods: {
       openModal () {
         this.showModal = true
       },
-      isAuthenticated () {
-        console.log('test')
-        auth.checkAuth() ? this.commentFlag = true : this.commentFlag = false
-      },
       fetchData () {
         this.$http.get(this.apiUrl + 'pets/' + this.id)
           .then(response => {
             this.petDetails = {...response.data}
+            this.loading = false
+          })
+          .catch(error => {
+            this.errors.push(error)
+            this.loading = false
+          })
+      },
+      getTransferData () {
+        this.$http.get(this.apiUrl + 'organization/info')
+          .then(response => {
+            this.bankAccount.number = response.data.bankAccount.number
             this.loading = false
           })
           .catch(error => {
@@ -133,6 +144,10 @@
       convertTimeStamp () {
         const date = moment(this.petDetails.created).locale(this.$t('common.code'))
         return date.format(this.$t('common.dateFormat'))
+      },
+      formattedAccountNumber () {
+        const accountNumber = this.bankAccount.number
+        return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
       }
     }
   }
@@ -239,12 +254,12 @@
     background-color: #000000
     opacity: 0.7
     font: $font-stack
-    padding: 2.5em
 
   .swiper-pagination-fraction
     bottom: 0
     color: $white
-    padding: 2.5em
+    font-size: 1.8em !important
+
   #swiper-wrapper
     width: 96em
     margin: 0 auto
