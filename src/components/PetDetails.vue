@@ -68,7 +68,7 @@
       return {
         showModal: false,
         showTransfer: false,
-        authenticated: auth.user.authenticated,
+        authenticated: false,
         id: this.$route.params.id,
         petDetails: {},
         bankAccount: {
