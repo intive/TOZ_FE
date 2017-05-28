@@ -68,7 +68,7 @@
       return {
         showModal: false,
         showTransfer: false,
-        authenticated: auth.user.authenticated,
+        authenticated: false,
         id: this.$route.params.id,
         petDetails: {},
         bankAccount: {
@@ -91,7 +91,7 @@
       transfer,
       comments
     },
-    created () {
+    mounted () {
       this.fetchData()
       this.getTransferData()
     },
@@ -103,6 +103,7 @@
         this.$http.get(this.apiUrl + 'pets/' + this.id)
           .then(response => {
             this.petDetails = {...response.data}
+            this.authenticated = auth.user.authenticated
             this.loading = false
           })
           .catch(error => {

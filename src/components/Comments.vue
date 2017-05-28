@@ -28,6 +28,7 @@
   export default {
     data () {
       return {
+        id: this.petId,
         commentsTable: [],
         errors: [],
         currentPage: [],
@@ -57,6 +58,7 @@
     },
     methods: {
       fetchData () {
+        this.$http.get(this.apiUrl + 'comments?petUuid=' + this.id + '&isShortened=false&state=ACTIVE')
         this.$http.get(this.apiUrl + '/comments?petUuid=' + this.petId + '&isShortened=false&state=ACTIVE')
           .then(response => {
             this.commentsTable = [...response.data]
