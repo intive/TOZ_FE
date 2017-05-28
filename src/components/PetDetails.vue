@@ -68,7 +68,7 @@
       return {
         showModal: false,
         showTransfer: false,
-        authenticated: false,
+        authenticated: auth.user.authenticated,
         id: this.$route.params.id,
         petDetails: {},
         bankAccount: {
@@ -102,7 +102,6 @@
       fetchData () {
         this.$http.get(this.apiUrl + 'pets/' + this.id)
           .then(response => {
-            console.log(response.data.id + 'petdetails')
             this.petDetails = {...response.data}
             this.authenticated = auth.user.authenticated
             this.loading = false

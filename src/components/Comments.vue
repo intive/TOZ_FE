@@ -60,6 +60,7 @@
       fetchData () {
         console.log(this.id)
         this.$http.get(this.apiUrl + 'comments?petUuid=' + this.id + '&isShortened=false&state=ACTIVE')
+        this.$http.get(this.apiUrl + '/comments?petUuid=' + this.petId + '&isShortened=false&state=ACTIVE')
           .then(response => {
             this.commentsTable = [...response.data]
             this.paginationConfig.numberOfPages = Math.ceil(this.commentsTable.length / this.itemsPerPage)
