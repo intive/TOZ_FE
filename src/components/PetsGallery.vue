@@ -10,8 +10,8 @@
           <div class="card my-2 border-0">
             <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
               <div class="card-block">
-                <img class="card-img-top img-fluid" :src="setUrl(pet.imageUrl)">
-                <h2 class="card-title">{{pet.name}}</h2>
+                <img class="card-img-top img-fluid" :src="setUrl(pet)" @error="defaultImg(pet)" alt="">
+                <h4 class="card-title">{{pet.name}}</h4>
                 <h6 class="card-subtitle mb-2">{{pet.type}}</h6>
               </div>
             </router-link>
@@ -62,7 +62,22 @@
         this.currentPage = this.petsList.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
       },
       setUrl (pet) {
-        return this.apiUrl.substr(0, this.apiUrl.length - 4) + pet
+        if (pet.imageUrl === '' || pet.imageUrl === null || pet.imageUrl === undefined) {
+          return this.defaultImg(pet)
+        } else if (pet.imageUrl.includes('data')) {
+          return pet.imageUrl
+        } else {
+          return this.apiUrl.substr(0, this.apiUrl.length - 4) + pet.imageUrl
+        }
+      },
+      defaultImg (pet) {
+        if (pet.type === 'dog' || pet.type === 'DOG') {
+          pet.imageUrl = require('../assets/default_avatar_dog.svg')
+          return pet.imageUrl
+        } else {
+          pet.imageUrl = require('../assets/default_avatar_cat.svg')
+          return pet.imageUrl
+        }
       }
     },
     created () {
@@ -103,6 +118,9 @@
   .card-subtitle
     color: $orange
 
+  .card-img-top
+    height: 300px
+
   .page-link
     font-size: 1.8em
     color: #fff
@@ -137,6 +155,5 @@
   .slide-fade-enter, .slide-fade-leave-to
     transform: translateY(3em)
     opacity: 0
-
 
 </style>
