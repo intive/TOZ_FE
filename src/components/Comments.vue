@@ -28,6 +28,7 @@
   export default {
     data () {
       return {
+        id: this.petId,
         commentsTable: [],
         errors: [],
         currentPage: [],
@@ -57,7 +58,8 @@
     },
     methods: {
       fetchData () {
-        this.$http.get(this.apiUrl + '/comments?petUuid=' + this.petId + '&isShortened=false&state=ACTIVE')
+        console.log(this.id)
+        this.$http.get(this.apiUrl + 'comments?petUuid=' + this.id + '&isShortened=false&state=ACTIVE')
           .then(response => {
             this.commentsTable = [...response.data]
             this.paginationConfig.numberOfPages = Math.ceil(this.commentsTable.length / this.itemsPerPage)
@@ -65,6 +67,7 @@
             this.loading = false
           })
           .catch(error => {
+            console.log(error)
             this.errors.push(error)
             this.loading = false
           })

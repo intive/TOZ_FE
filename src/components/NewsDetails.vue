@@ -60,7 +60,7 @@
                           :paginationEnabled="settings.paginationEnabled"
                           :navigationClickTargetSize="settings.navigationClickTargetSize"
                           :perPageCustom="settings.perPageCustom">
-                  <slide v-for="item of images">
+                  <slide v-for="item of images" :key="item.id">
                     <img :src="item" class="img-fluid img-small">
                   </slide>
                 </carousel>
