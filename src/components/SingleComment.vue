@@ -25,6 +25,7 @@
     data () {
       return {
         newContents: this.comment.contents,
+        editedContent: '',
         currentUser: {
           name: '',
           surname: ''
@@ -66,7 +67,7 @@
       },
       cancelEdit () {
         this.editFlag = !this.editFlag
-        this.newContents = this.comment.contents
+        this.newContents = this.editedContent
       },
       saveEditedComment () {
         if (this.checkIfEmpty()) {
@@ -80,7 +81,8 @@
             lastModified: this.createTimeStamp
           }
           this.$http.put(this.apiUrl + 'comments/' + this.comment.id, editedComment)
-            .then(() => {
+            .then(response => {
+              this.editedContent = response.data.contents
               this.editFlag = true
             })
             .catch(error => {
