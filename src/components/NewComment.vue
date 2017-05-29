@@ -35,11 +35,14 @@
             created: this.timestamp,
             lastModified: this.timestamp
           }
-          this.$emit('newComment', [newComment])
           this.$http.post(this.apiUrl + 'comments', newComment)
+            .then(response => {
+              this.$emit('newComment', [response.data])
+            })
             .catch(error => {
               this.errors.push(error)
             })
+          this.newComment = ''
         }
       },
       checkIfEmpty () {
