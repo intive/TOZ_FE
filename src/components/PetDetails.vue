@@ -75,7 +75,6 @@
           number: ''
         },
         errors: [],
-        range: this.galleryLength,
         swiperOption: {
           nextButton: '.swiper-button-next',
           prevButton: '.swiper-button-prev',
@@ -102,7 +101,6 @@
       fetchData () {
         this.$http.get(this.apiUrl + 'pets/' + this.id)
           .then(response => {
-            console.log(response.data)
             this.petDetails = {...response.data}
             this.authenticated = auth.user.authenticated
             this.loading = false
