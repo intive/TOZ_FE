@@ -15,7 +15,7 @@
           <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
       </div>
-      <Modal :imageUrl="concatUrl()" v-if="showModal" @close="showModal = false" class="modal col-sm-12 col-lg-12"></Modal>
+      <Modal :pet="petDetails" v-if="showModal" @close="showModal = false" class="modal col-sm-12 col-lg-12"></Modal>
       <div class="petInfo">
         <ul class="list-group pet-ul col-sm-12">
           <li class="pet-li row">
@@ -265,6 +265,7 @@
     bottom: 0
     color: $white
     font-size: 1.8em !important
+    padding: 1em
 
   #swiper-wrapper
     width: 96em
