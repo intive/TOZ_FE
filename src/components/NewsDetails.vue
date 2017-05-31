@@ -6,38 +6,15 @@
     </div>
     <div class="row" v-if="!errors.length">
       <div class="col">
-        <p class="text-left top-date">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
+        <p class="text-left top-date">{{ $t('news.added') }} {{ convertTimeStamp(newsDetails.published) }}</p>
         <div class="row title">
           <h3><u>{{ newsDetails.title }}</u></h3>
         </div>
         <div class="row">
           <div class="col-lg-8 col-md-8 col-xs-12 left-panel">
-            <!--<img src="http://loremflickr.com/344/287" class="img">-->
             <img :src="newsDetails.imageUrl" class="img">
-            <p class="text-left news-info added">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
+            <p class="text-left news-info added">{{ $t('news.added') }} {{ convertTimeStamp(newsDetails.published) }}</p>
             <p class="text-left">{{ newsDetails.contents }}</p>
-            <div class="row share">
-              <div class="col-md-2">
-                <p class="text-left">{{ $t('news.share') }}</p>
-              </div>
-              <div class="col-md-5 hidden-lg-down">
-                <p>--------------------------------------------------------></p>
-              </div>
-              <div class="col-md-5 buttons-wrapper">
-                <button type="button" class="btn btn-social btn-pinterest">
-                  <span class="fa fa-pinterest"></span> {{ $t('news.pinterest') }}
-                </button>
-                <button type="button" class="btn btn-social btn-google">
-                  <span class="fa fa-google"></span> {{ $t('news.google') }}
-                </button>
-                <button type="button" class="btn btn-social btn-facebook">
-                  <span class="fa fa-facebook"></span> {{ $t('news.facebook') }}
-                </button>
-                <button type="button" class="btn btn-social btn-twitter">
-                  <span class="fa fa-twitter"></span> {{ $t('news.twitter') }}
-                </button>
-              </div>
-            </div>
             <hr class="divider">
             <p class="next-news-section-title">{{ $t('news.nextNews') }}</p>
             <div class="row next-news-normal">
@@ -48,11 +25,11 @@
                           :navigationClickTargetSize="settings.navigationClickTargetSize"
                           :perPageCustom="settings.perPageCustom">
                   <slide v-for="item of nextNews" :key="item.id" v-show="item.id !== newsDetails.id">
-                    <img src="http://loremflickr.com/400/309" class="img-fluid img-normal">
+                    <img :src="item.imageUrl" class="img-fluid img-normal">
                     <router-link class="next-news-normal-link" :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }">
                       {{ item.title }}
                     </router-link>
-                    <p>{{ convertTimeStamp }}</p>
+                    <p>{{ convertTimeStamp(item.published) }}</p>
                   </slide>
                 </carousel>
               </div>
@@ -108,29 +85,9 @@
         },
         errors: [],
         newsDetails: {},
-        nextNews: [],
+        nextNews: {},
         id: this.$route.params.id,
-        loading: true,
-        imagesBig: {
-          1: {
-            id: '1',
-            img: 'http://loremflickr.com/400/400'
-          },
-          2: {
-            id: '2',
-            img: 'http://loremflickr.com/400/400'
-          },
-          3: {
-            id: '3',
-            img: 'http://loremflickr.com/400/400'
-          }
-        },
-        images: [
-          'http://loremflickr.com/200/167',
-          'http://loremflickr.com/200/167',
-          'http://loremflickr.com/200/167'
-        ],
-        lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent diam tellus, tempus eget sem tempus, auctor tempus ex. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam erat volutpat. Fusce fringilla lacinia laoreet. Vivamus eu massa viverra ipsum suscipit facilisis. Nulla vitae metus sagittis metus condimentum congue et sit amet lectus. Integer sapien felis, faucibus sed tempus et, accumsan quis sapien.'
+        loading: true
       }
     },
     created () {
@@ -138,36 +95,57 @@
       this.fetchNextNews()
     },
     watch: {
-//      '$route.fullPath': ['fetchData', 'fetchNextNews']
-    },
-    computed: {
-      convertTimeStamp () {
-        const date = moment(this.newsDetails.created).locale(this.$t('common.code'))
-        return date.format(this.$t('common.dateFormat'))
-      }
+      '$route': 'reloadPage'
     },
     methods: {
+      reloadPage () {
+        location.reload()
+      },
+      sortNews (key, order = 'asc') {
+        return (a, b) => {
+          if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            return 0
+          }
+
+          const varA = (typeof a[key] === 'string') ? a[key].toUpperCase() : a[key]
+          const varB = (typeof b[key] === 'string') ? b[key].toUpperCase() : b[key]
+
+          let comparison = 0
+          if (varA > varB) {
+            comparison = 1
+          } else if (varA < varB) {
+            comparison = -1
+          }
+
+          return ((order === 'desc') ? (comparison * -1) : comparison)
+        }
+      },
+      convertTimeStamp (published) {
+        const date = moment(published).locale(this.$t('common.code'))
+        return date.format(this.$t('common.dateFormat'))
+      },
       fetchData () {
         this.$http.get(this.apiUrl + 'news/' + this.id)
-            .then(response => {
-              this.newsDetails = {...response.data}
-              this.loading = false
-            })
-            .catch(error => {
-              this.errors.push(error)
-              this.loading = false
-            })
+          .then(response => {
+            this.newsDetails = response.data
+            this.loading = false
+          })
+          .catch(error => {
+            this.errors.push(error)
+            this.loading = false
+          })
       },
       fetchNextNews () {
         this.$http.get(this.apiUrl + 'news?type=RELEASED&shortened=true')
-            .then(response => {
-              this.nextNews = {...response.data}
-              this.loading = false
-            })
-            .catch(error => {
-              this.errors.push(error)
-              this.loading = false
-            })
+          .then(response => {
+            this.nextNews = response.data
+            this.loading = false
+            this.nextNews.sort(this.sortNews('published'))
+          })
+          .catch(error => {
+            this.errors.push(error)
+            this.loading = false
+          })
       }
     }
   }
@@ -178,44 +156,18 @@
   @import "../assets/styles/variables.sass"
 
   $green: #4CD374
-  $twitter: #55acee
-  $facebook: #3b5998
-  $google: #dd4b39
-  $pinterest: #dc143c
 
   p
     line-height: 1.7
-
-  .news-info
-    @media (max-width: 435px)
-      display: none
 
   .added
     margin-bottom: -2px
     margin-bottom: 40px
 
-  .top-date
-    font-size: 1.8em
-    margin: 35px 0 12px 0
-    @media (min-width: 435px)
-      display: none
-
-  .title
-    margin: 35px 35px 25px 35px
-    @media (max-width: 435px)
-      margin: 0 0 25px 0
-    @media (min-width: 1200px)
-      margin-left: 105px
-
-  .share
-    margin-top: 40px
-    margin-bottom: 55px
-    p
-      font-size: 2.2em
-
   .divider
     background-color: $green
     height: 5px
+    margin-top: 40px
 
   .img
     float: left
@@ -234,10 +186,12 @@
       width: 100%
 
   .img-normal
+    width: 400px
+    height: 309px
     margin-bottom: 20px
 
-  .text-left
-    line-height: 1.35
+  .last
+    margin-bottom: 50px
 
   .left-panel
     height: 100%
@@ -249,6 +203,27 @@
 
   .left-panel-top
     border-bottom: 5px solid $green
+
+  .news-info
+    @media (max-width: 435px)
+      display: none
+
+  .next-news-normal
+    @media (max-width: 767px)
+      display: none
+
+  .next-news-normal-link
+    margin-top: 50px
+    font-size: 1.8em
+
+  .next-news-tiny
+    @media (min-width: 767px)
+      display: none
+
+  .next-news-section-title
+    font-size: 2.5em
+    font-weight: bold
+    margin: 25px 0 25px 0
 
   .right-panel
     border-top: 5px solid $green
@@ -275,61 +250,19 @@
     line-height: 1
     text-align: left
 
-  .last
-    margin-bottom: 50px
+  .text-left
+    line-height: 1.35
 
-  .next-news-section-title
-    font-size: 2.5em
-    font-weight: bold
-    margin: 25px 0 25px 0
-
-  .next-news-normal
-    @media (max-width: 767px)
-      display: none
-
-  .next-news-normal-link
-    margin-top: 50px
-    font-size: 1.8em
-
-  .next-news-tiny
-    @media (min-width: 767px)
-      display: none
-
-  .btn
-    background-color: inherit
-    border-radius: 5px
-    cursor: pointer
-    float: right
-    font-size: 1.8em
-    margin-right: 7px
-    padding: 5px 10px 5px 10px
-    text-transform: none
+  .title
+    margin: 35px 35px 25px 35px
     @media (max-width: 435px)
-      margin-bottom: 20px
-    &:hover
-      background-color: #f6f6f6
+      margin: 0 0 25px 0
+    @media (min-width: 1200px)
+      margin-left: 105px
 
-  .buttons-wrapper
-    @media (max-width: 435px)
-      display: grid
-      width: 50%
-
-  .btn-social
-    border-width: 2px
-
-  .btn-twitter
-    border-color: $twitter
-    color: $twitter
-
-  .btn-facebook
-    border-color: $facebook
-    color: $facebook
-
-  .btn-google
-    border-color: $google
-    color: $google
-
-  .btn-pinterest
-    border-color: $pinterest
-    color: $pinterest
+  .top-date
+    font-size: 1.8em
+    margin: 35px 0 12px 0
+    @media (min-width: 435px)
+      display: none
 </style>
