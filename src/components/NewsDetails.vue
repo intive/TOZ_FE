@@ -17,7 +17,7 @@
             <p class="text-left">{{ newsDetails.contents }}</p>
             <hr class="divider">
             <p class="next-news-section-title">{{ $t('news.nextNews') }}</p>
-            <div class="row next-news-normal">
+            <div class="row">
               <div class="col">
                 <carousel class="carousel"
                           :navigationEnabled="settings.navigationEnabled"
@@ -25,24 +25,15 @@
                           :navigationClickTargetSize="settings.navigationClickTargetSize"
                           :perPageCustom="settings.perPageCustom">
                   <slide v-for="item of nextNews" :key="item.id" v-show="item.id !== newsDetails.id">
-                    <img :src="item.imageUrl" class="img-fluid img-normal">
-                    <router-link class="next-news-normal-link" :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }">
-                      {{ item.title }}
-                    </router-link>
-                    <p>{{ convertTimeStamp(item.published) }}</p>
-                  </slide>
-                </carousel>
-              </div>
-            </div>
-            <div class="row next-news-tiny">
-              <div class="col">
-                <carousel class="carousel"
-                          :navigationEnabled="settings.navigationEnabled"
-                          :paginationEnabled="settings.paginationEnabled"
-                          :navigationClickTargetSize="settings.navigationClickTargetSize"
-                          :perPageCustom="settings.perPageCustom">
-                  <slide v-for="item of nextNews" :key="item.id">
-                    <img :src="item.imageUrl" class="img-fluid img-small">
+                    <div class="card" @click="openNews(item.id)">
+                      <img class="card-img-top" :src="item.imageUrl" alt="">
+                      <div class="card-block">
+                        <h4 class="card-title">
+                        </h4>
+                        <p class="card-text">{{ item.title }}</p>
+                        <p class="card-text"><small class="text-muted">{{ convertTimeStamp(item.published) }}</small></p>
+                      </div>
+                    </div>
                   </slide>
                 </carousel>
               </div>
@@ -81,7 +72,7 @@
           navigationEnabled: true,
           paginationEnabled: false,
           navigationClickTargetSize: 0,
-          perPageCustom: [[300, 1], [500, 2], [730, 3]]
+          perPageCustom: [[300, 1], [500, 2], [1864, 3]]
         },
         errors: [],
         newsDetails: {},
@@ -146,6 +137,9 @@
             this.errors.push(error)
             this.loading = false
           })
+      },
+      openNews (itemId) {
+        this.$router.push({ name: 'news', params: { id: itemId }, query: { type: 'RELEASED', shortened: false } })
       }
     }
   }
@@ -164,6 +158,16 @@
     margin-bottom: -2px
     margin-bottom: 40px
 
+  .card
+    cursor: pointer
+    margin: 5px
+    &:hover
+      background-color: inherit
+      border: 1px solid $green
+
+  .card-text
+    font-size: 1.41rem
+
   .divider
     background-color: $green
     height: 5px
@@ -177,18 +181,6 @@
     @media (min-width: 430px)
       height: 600px
       width: 100%
-
-  .img-small
-    width: 200px
-    height: 167px
-    @media (min-width: 768px)
-      height: 100%
-      width: 100%
-
-  .img-normal
-    width: 400px
-    height: 309px
-    margin-bottom: 20px
 
   .last
     margin-bottom: 50px
@@ -252,6 +244,9 @@
 
   .text-left
     line-height: 1.35
+
+  .text-muted
+    font-size: .9rem
 
   .title
     margin: 35px 35px 25px 35px
