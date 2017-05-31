@@ -12,12 +12,10 @@
         </div>
         <div class="row">
           <div class="col-lg-8 col-md-8 col-xs-12 left-panel">
-            <img src="http://loremflickr.com/344/287" class="img">
+            <!--<img src="http://loremflickr.com/344/287" class="img">-->
+            <img :src="newsDetails.imageUrl" class="img">
             <p class="text-left news-info added">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
-            <p class="text-left news-info autor">{{ $t('news.addedBy') }} Joanna Krupa</p>
-            <p class="text-left">{{ lorem }}</p>
-            <p class="text-left">{{ lorem }}</p>
-            <p class="text-left">{{ lorem }}</p>
+            <p class="text-left">{{ newsDetails.contents }}</p>
             <div class="row share">
               <div class="col-md-2">
                 <p class="text-left">{{ $t('news.share') }}</p>
@@ -41,27 +39,33 @@
               </div>
             </div>
             <hr class="divider">
-            <p class="next-news-title">{{ $t('news.nextNews') }}</p>
+            <p class="next-news-section-title">{{ $t('news.nextNews') }}</p>
             <div class="row next-news-normal">
-              <div class="col-md-4">
-                <img src="http://loremflickr.com/200/167" class="img-fluid img-small">
-              </div>
-              <div class="col-md-4">
-                <img src="http://loremflickr.com/200/167" class="img-fluid img-small">
-              </div>
-              <div class="col-md-4">
-                <img src="http://loremflickr.com/200/167" class="img-fluid img-small">
-              </div>
-            </div>
-            <div class="row next-news-carousel">
               <div class="col">
                 <carousel class="carousel"
                           :navigationEnabled="settings.navigationEnabled"
                           :paginationEnabled="settings.paginationEnabled"
                           :navigationClickTargetSize="settings.navigationClickTargetSize"
                           :perPageCustom="settings.perPageCustom">
-                  <slide v-for="item of images">
-                    <img :src="item" class="img-fluid img-small">
+                  <slide v-for="item of nextNews" :key="item.id" v-show="item.id !== newsDetails.id">
+                    <img src="http://loremflickr.com/400/309" class="img-fluid img-normal">
+                    <router-link class="next-news-normal-link" :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', shortened: false } }">
+                      {{ item.title }}
+                    </router-link>
+                    <p>{{ convertTimeStamp }}</p>
+                  </slide>
+                </carousel>
+              </div>
+            </div>
+            <div class="row next-news-tiny">
+              <div class="col">
+                <carousel class="carousel"
+                          :navigationEnabled="settings.navigationEnabled"
+                          :paginationEnabled="settings.paginationEnabled"
+                          :navigationClickTargetSize="settings.navigationClickTargetSize"
+                          :perPageCustom="settings.perPageCustom">
+                  <slide v-for="item of nextNews" :key="item.id">
+                    <img :src="item.imageUrl" class="img-fluid img-small">
                   </slide>
                 </carousel>
               </div>
@@ -104,8 +108,23 @@
         },
         errors: [],
         newsDetails: {},
+        nextNews: [],
         id: this.$route.params.id,
         loading: true,
+        imagesBig: {
+          1: {
+            id: '1',
+            img: 'http://loremflickr.com/400/400'
+          },
+          2: {
+            id: '2',
+            img: 'http://loremflickr.com/400/400'
+          },
+          3: {
+            id: '3',
+            img: 'http://loremflickr.com/400/400'
+          }
+        },
         images: [
           'http://loremflickr.com/200/167',
           'http://loremflickr.com/200/167',
@@ -116,9 +135,10 @@
     },
     created () {
       this.fetchData()
+      this.fetchNextNews()
     },
     watch: {
-      '$route.fullPath': 'fetchData'
+//      '$route.fullPath': ['fetchData', 'fetchNextNews']
     },
     computed: {
       convertTimeStamp () {
@@ -131,6 +151,17 @@
         this.$http.get(this.apiUrl + 'news/' + this.id)
             .then(response => {
               this.newsDetails = {...response.data}
+              this.loading = false
+            })
+            .catch(error => {
+              this.errors.push(error)
+              this.loading = false
+            })
+      },
+      fetchNextNews () {
+        this.$http.get(this.apiUrl + 'news?type=RELEASED&shortened=true')
+            .then(response => {
+              this.nextNews = {...response.data}
               this.loading = false
             })
             .catch(error => {
@@ -159,12 +190,9 @@
     @media (max-width: 435px)
       display: none
 
-  .autor
-    margin-bottom: 40px
-
   .added
     margin-bottom: -2px
-
+    margin-bottom: 40px
 
   .top-date
     font-size: 1.8em
@@ -204,6 +232,9 @@
     @media (min-width: 768px)
       height: 100%
       width: 100%
+
+  .img-normal
+    margin-bottom: 20px
 
   .text-left
     line-height: 1.35
@@ -247,7 +278,7 @@
   .last
     margin-bottom: 50px
 
-  .next-news-title
+  .next-news-section-title
     font-size: 2.5em
     font-weight: bold
     margin: 25px 0 25px 0
@@ -256,7 +287,11 @@
     @media (max-width: 767px)
       display: none
 
-  .next-news-carousel
+  .next-news-normal-link
+    margin-top: 50px
+    font-size: 1.8em
+
+  .next-news-tiny
     @media (min-width: 767px)
       display: none
 
