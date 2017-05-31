@@ -1,17 +1,19 @@
 <template>
   <div class="col-lg-3 col-12 sidebar mt-5">
-    <p class="sidebar-header">{{ $t('news.rightPanel.companyName') }}</p>
-    <p class="sidebar-text">{{ $t('news.rightPanel.address.street') }}</p>
-    <p class="sidebar-text">{{ $t('news.rightPanel.address.country') }}</p>
-    <p class="sidebar-text last">{{ $t('news.rightPanel.address.tel') }}</p>
-    <p class="sidebar-header">{{ $t('news.rightPanel.openingHours.title') }}</p>
-    <p class="sidebar-text last">{{ $t('news.rightPanel.openingHours.hours') }}</p>
-    <p class="sidebar-header">{{ $t('news.rightPanel.clinic.title') }}</p>
-    <p class="sidebar-text">{{ $t('news.rightPanel.clinic.hours') }}</p>
-    <p class="sidebar-text">{{ $t('news.rightPanel.clinic.break') }}</p>
-    <p class="sidebar-text last">{{ $t('news.rightPanel.clinic.weekend') }}</p>
+    <div class="sidebar-info py-3">
+      <p class="sidebar-header">{{ $t('sidebar.companyName') }}</p>
+      <p>{{ $t('sidebar.address.street') }}</p>
+      <p>{{ $t('sidebar.address.country') }}</p>
+      <p>{{ $t('sidebar.address.tel') }}</p>
+      <p class="sidebar-header">{{ $t('sidebar.openingHours.title') }}</p>
+      <p>{{ $t('sidebar.openingHours.hours') }}</p>
+      <p class="sidebar-header">{{ $t('sidebar.clinic.title') }}</p>
+      <p>{{ $t('sidebar.clinic.hours') }}</p>
+      <p>{{ $t('sidebar.clinic.break') }}</p>
+      <p>{{ $t('sidebar.clinic.weekend') }}</p>
+    </div>
     <div v-if="authenticated" id="recentComments" class="text-justify py-3">
-      <p class="sidebar-header text-center">{{$t('news.rightPanel.newestComments')}}</p>
+      <p class="sidebar-header text-center">{{$t('sidebar.newestComments')}}</p>
       <Comments v-for="item in comments" :comment="item" :key="item.id"></Comments>
     </div>
   </div>
@@ -49,11 +51,10 @@ export default {
 <style lang="sass">
   @import "../assets/styles/variables"
 
-  .sidebar
+  .sidebar-info
     border-top: 5px solid $green
 
   .sidebar-header
-    font-size: 1.8em
     font-weight: bold
 
   #recentComments
