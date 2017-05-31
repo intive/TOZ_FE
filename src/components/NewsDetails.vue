@@ -24,7 +24,7 @@
                           :paginationEnabled="settings.paginationEnabled"
                           :navigationClickTargetSize="settings.navigationClickTargetSize"
                           :perPageCustom="settings.perPageCustom">
-                  <slide v-for="item of nextNews" :key="item.id" v-show="item.id !== newsDetails.id">
+                  <slide v-for="item of nextNews" :key="item.id" v-show="item.id !== newsDetails.id && isNewsExpired(item.published)">
                     <div class="card" @click="openNews(item.id)">
                       <img class="card-img-top" :src="item.imageUrl" alt="">
                       <div class="card-block">
@@ -114,6 +114,13 @@
       convertTimeStamp (published) {
         const date = moment(published).locale(this.$t('common.code'))
         return date.format(this.$t('common.dateFormat'))
+      },
+      isNewsExpired (itemPublished) {
+        if (itemPublished > Date.now() - 13046400000) {
+          return true
+        } else {
+          return false
+        }
       },
       fetchData () {
         this.$http.get(this.apiUrl + 'news/' + this.id)

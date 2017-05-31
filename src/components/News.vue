@@ -7,7 +7,7 @@
       </div>
       <h5 class="news-header">{{ $t('news.news') }}</h5>
       <hr>
-      <div v-for="item of news" :key="item.id" class="row panel-item clearfix" v-show="item.published > Date.now() - 13046400000">
+      <div v-for="item of news" :key="item.id" class="row panel-item clearfix" v-show="isNewsExpired(item.published)">
         <div class="col-3">
           <img :src="item.imageUrl" alt="" class="panel-img float-left">
         </div>
@@ -75,6 +75,13 @@
       convertTimeStamp (published) {
         const date = moment(published).locale(this.$t('common.code'))
         return date.format(this.$t('common.dateFormat'))
+      },
+      isNewsExpired (itemPublished) {
+        if (itemPublished > Date.now() - 13046400000) {
+          return true
+        } else {
+          return false
+        }
       },
       sortNews (key, order = 'asc') {
         return (a, b) => {
