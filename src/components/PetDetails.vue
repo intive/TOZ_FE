@@ -7,8 +7,8 @@
     <div id="pet-container" v-else-if="!loading">
       <div id="swiper-wrapper col-12">
         <swiper :options="swiperOption">
-          <swiper-slide v-for="n in range" :key="n">
-            <div class="slide-content" @click="openModal"><img class="img-fluid" :src="concatUrl()" @error="imageHandler" alt=""></div>
+          <swiper-slide v-for="img in this.galleryLength" :key="img.id">
+            <div class="slide-content" @click="openModal"><img class="img-fluid" :src="concatUrl(img)" @error="imageHandler" alt=""></div>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
           <div class="swiper-button-prev" slot="button-prev"></div>
@@ -75,7 +75,6 @@
           number: ''
         },
         errors: [],
-        range: 10,
         swiperOption: {
           nextButton: '.swiper-button-next',
           prevButton: '.swiper-button-prev',
@@ -131,13 +130,11 @@
           return this.petDetails.imageUrl
         }
       },
-      concatUrl () {
-        if (this.petDetails.imageUrl === '' || this.petDetails.imageUrl === null || this.petDetails.imageUrl === undefined) {
+      concatUrl (img) {
+        if (this.petDetails.gallery === '' || this.petDetails.gallery === null || this.petDetails.gallery === undefined) {
           return this.imageHandler()
-        } else if (this.petDetails.imageUrl.includes('data')) {
-          return this.petDetails.imageUrl
         } else {
-          return this.apiUrl.substr(0, this.apiUrl.length - 4) + this.petDetails.imageUrl
+          return this.apiUrl.substr(0, this.apiUrl.length - 4) + img.fileUrl
         }
       }
     },
@@ -149,6 +146,14 @@
       formattedAccountNumber () {
         const accountNumber = this.bankAccount.number
         return `${accountNumber.substr(0, 2)} ${accountNumber.substr(2, 4)} ${accountNumber.substr(6, 4)} ${accountNumber.substr(10, 4)} ${accountNumber.substr(14, 4)} ${accountNumber.substr(18, 4)} ${accountNumber.substr(22, 4)}`
+      },
+      galleryLength () {
+        const ifEmpty = 1
+        if (this.petDetails.gallery === null || this.petDetails.gallery === undefined || this.petDetails.gallery === 0) {
+          return ifEmpty
+        } else {
+          return this.petDetails.gallery
+        }
       }
     }
   }
