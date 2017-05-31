@@ -89,5 +89,5 @@
     margin-top: 10em
     @media screen and (max-width: 576px)
       float: left
-      margin: 5em 0 10em 5em
+      margin: 5em 0 10em 12em
 </style>
