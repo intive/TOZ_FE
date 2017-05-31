@@ -8,7 +8,10 @@ const locales = {
         ok: 'OK',
         cancel: 'Anuluj',
         signIn: 'Zaloguj się',
-        help: 'Wspomóż tego zwierzaka'
+        help: 'Wspomóż tego zwierzaka',
+        add: 'Dodaj',
+        edit: 'Edytuj',
+        save: 'Zapisz'
       },
       label: {
         login: 'Login',
@@ -44,17 +47,13 @@ const locales = {
       schedule: 'Grafik'
     },
     news: {
+      news: 'Aktualności:',
       added: 'Dodane: ',
       readMore: 'Czytaj więcej',
-      addedBy: 'Dodane przez: ',
-      share: 'Udostępnij to!',
       nextNews: 'Następne wpisy',
-      facebook: 'Facebook',
-      twitter: 'Twitter',
-      google: 'Google',
-      pinterest: 'Pinterest',
       rightPanel: {
         companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
+        newestComments: 'Najnowsze komentarze',
         address: {
           street: 'ul. Ojca Beyzyma 17',
           country: '70-391 Szczecin',
@@ -79,7 +78,8 @@ const locales = {
       type: 'Typ',
       sex: 'Płeć',
       name: 'Imię',
-      creationDate: 'Data dodania'
+      creationDate: 'Data dodania',
+      info: 'potrzebuję wsparcia, aby tego dokonać skorzystaj z poniższego numeru konta'
     },
     calendar: {
       months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
@@ -168,6 +168,13 @@ const locales = {
       submissionFailed: 'Zgłoszenia nie zostało wysłane!',
       home: 'Strona główna',
       help: 'Pomoc'
+    },
+    comments: {
+      newComment: {
+        placeholder: 'Miejsce na twój komentarz...',
+        addComment: 'Dodaj komentarz',
+        errorMessage: 'Pole komentarza nie może być puste'
+      }
     }
   },
   en: {
@@ -176,7 +183,10 @@ const locales = {
         ok: 'OK',
         cancel: 'Cancel',
         signIn: 'Sign in',
-        help: 'Help this pet'
+        help: 'Help this pet',
+        add: 'Add',
+        edit: 'Edit',
+        save: 'Save'
       },
       label: {
         login: 'Login',
@@ -212,17 +222,13 @@ const locales = {
       signOut: 'Sign out'
     },
     news: {
+      news: 'News:',
       added: 'Added: ',
       readMore: 'Read more',
-      addedBy: 'Added by: ',
-      share: 'Share it!',
       nextNews: 'Next news',
-      facebook: 'Facebook',
-      twitter: 'Twitter',
-      google: 'Google',
-      pinterest: 'Pinterest',
       rightPanel: {
         companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
+        newestComments: 'New comments',
         address: {
           street: 'Ojca Beyzyma 17 St.',
           country: '70-391 Szczecin',
@@ -247,7 +253,8 @@ const locales = {
       type: 'Type',
       sex: 'Sex',
       name: 'Name',
-      creationDate: 'Creation Date'
+      creationDate: 'Creation Date',
+      info: 'needs help, to do so use account number below'
     },
     calendar: {
       months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -335,6 +342,13 @@ const locales = {
       submissionFailed: 'Applications have not been sent!',
       home: 'Home page',
       help: 'Help'
+    },
+    comments: {
+      newComment: {
+        placeholder: 'Place for your comment...',
+        addComment: 'Add comment',
+        errorMessage: 'Comment field cannot be empty'
+      }
     }
   }
 }
