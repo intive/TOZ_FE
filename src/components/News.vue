@@ -59,6 +59,10 @@
       this.fetchData()
     },
     methods: {
+      convertTimeStamp (publishedDate) {
+        const date = moment(publishedDate).locale(this.$t('common.code'))
+        return date.format(this.$t('common.dateFormat'))
+      },
       fetchData () {
         this.$http.get(this.apiUrl + 'news?type=RELEASED&isShortened=true&isOrdered=true')
           .then(response => {

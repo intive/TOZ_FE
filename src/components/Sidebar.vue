@@ -2,7 +2,7 @@
   <div class="col-lg-3 col-12 mt-5">
     <CompanyInfo></CompanyInfo>
     <div v-if="authenticated" id="recentComments" class="text-justify py-3">
-      <p class="sidebar-header text-center">{{$t('news.rightPanel.newestComments')}}</p>
+      <p class="sidebar-header text-center">{{$t('sidebar.newestComments')}}</p>
       <Comments v-for="item in comments" :comment="item" :key="item.id"></Comments>
     </div>
   </div>

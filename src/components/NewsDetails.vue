@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid">
-    <div class="row loader" v-if="loading"></div>
-    <div class="row errors" v-if="errors.length">
+  <div class="container">
+    <div class="loader" v-if="loading"></div>
+    <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div class="row" v-if="!errors.length">
@@ -63,6 +63,7 @@
           </div>
         </div>
       </div>
+      <Sidebar></Sidebar>
     </div>
   </div>
 </template>
@@ -150,8 +151,8 @@
 
   $green: #4CD374
 
-  p
-    line-height: 1.7
+  .content
+    margin-top: 20px
 
   .card
     cursor: pointer
@@ -174,7 +175,7 @@
   .next-news-section-title
     font-size: 2.5em
     font-weight: bold
-
+    
   .text-left
     line-height: 1.35
 
