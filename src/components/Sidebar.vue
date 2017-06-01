@@ -1,15 +1,6 @@
 <template>
-  <div class="col-lg-3 col-12 sidebar mt-5">
-    <p class="sidebar-header">{{ $t('news.rightPanel.companyName') }}</p>
-    <p class="sidebar-text">{{ $t('news.rightPanel.address.street') }}</p>
-    <p class="sidebar-text">{{ $t('news.rightPanel.address.country') }}</p>
-    <p class="sidebar-text last">{{ $t('news.rightPanel.address.tel') }}</p>
-    <p class="sidebar-header">{{ $t('news.rightPanel.openingHours.title') }}</p>
-    <p class="sidebar-text last">{{ $t('news.rightPanel.openingHours.hours') }}</p>
-    <p class="sidebar-header">{{ $t('news.rightPanel.clinic.title') }}</p>
-    <p class="sidebar-text">{{ $t('news.rightPanel.clinic.hours') }}</p>
-    <p class="sidebar-text">{{ $t('news.rightPanel.clinic.break') }}</p>
-    <p class="sidebar-text last">{{ $t('news.rightPanel.clinic.weekend') }}</p>
+  <div class="col-lg-3 col-12 mt-5">
+    <CompanyInfo></CompanyInfo>
     <div v-if="authenticated" id="recentComments" class="text-justify py-3">
       <p class="sidebar-header text-center">{{$t('news.rightPanel.newestComments')}}</p>
       <Comments v-for="item in comments" :comment="item" :key="item.id"></Comments>
@@ -20,6 +11,7 @@
 <script>
 import Comments from './RecentComments'
 import auth from '../auth.js'
+import CompanyInfo from './CompanyInfo.vue'
 
 export default {
   data () {
@@ -41,7 +33,8 @@ export default {
       })
   },
   components: {
-    Comments
+    Comments,
+    CompanyInfo
   }
 }
 </script>
@@ -49,33 +42,6 @@ export default {
 <style lang="sass">
   @import "../assets/styles/variables"
 
-  .sidebar-text
-    color: #b9b9b9
-    font-size: 1.8em
-    line-height: 1
-    text-align: center
-
-  .last
-    margin-bottom: 50px
-  .sidebar
-    border-top: 5px solid $green
-    border-bottom: 5px solid $green
-    height: 100%
-    margin: 0 50px 0 55px
-    padding: 10px 0 0 18px
-    @media (max-width: 1108px)
-      margin: 0
-    @media (max-width: 768px)
-      display: none
-    @media (min-width: 1200px)
-      margin: 0 auto
-
-  .sidebar-header
-    font-size: 1.8em
-    font-weight: bold
-    line-height: 1.3
-    text-align: center
-
   #recentComments
-    border-top: 5px solid $green
+    font-weight: bold
 </style>
