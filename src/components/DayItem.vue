@@ -101,6 +101,7 @@ export default {
     openModalAccepted () {
       this.showModal = false
       this.postReservation()
+      this.showModalAccepted = true
     },
     openModalBooked () {
       this.showModal = false
@@ -163,7 +164,6 @@ export default {
         if (this.errors.length) {
           this.showErrors = true
         } else {
-          this.showModalAccepted = true
           this.confirmed = true
           this.$emit('fetch')
         }
@@ -199,15 +199,15 @@ export default {
 
 <style scoped>
 .dayView {
-  width: 60px;
-  margin-top: 60px;
-  height: 60px;
+  width: 6em;
+  margin-top: 6em;
+  height: 6em;
   background-color: #ebebeb;
   text-align: right;
   display: inline-block;
   padding: 1em;
   position: relative;
-  border-radius: 10px;
+  border-radius: .5em;
   cursor: pointer
 }
 .dayNumber {
@@ -218,7 +218,7 @@ export default {
 .booked, .loader {
   width: 100%;
   text-align: center;
-  line-height: 60px;
+  line-height: 3em;
   position: absolute;
 }
 .booked {
@@ -226,7 +226,7 @@ export default {
   top: 0;
   left: 0;
   font-size: 2em;
-  border-radius: 5px;
+  border-radius: .25em;
 }
 .owner {
   background-color: #ff8900;
