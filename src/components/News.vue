@@ -1,43 +1,47 @@
 <template>
-  <div class="container row wrapper">
-    <div class="col-12 col-lg-9">
-      <loader v-if="loading"></loader>
-      <div class="errors" v-if="errors.length">
-        <h2 v-for="error of errors">{{ error.message }}</h2>
-      </div>
-      <h5 class="news-header">{{ $t('news.news') }}</h5>
-      <hr>
-      <div v-for="item of news" :key="item.id" class="row panel-item" v-show="isNewsExpired(item.published)">
-        <div class="col-3 hidden-md-down">
-          <img :src="item.imageUrl" alt="" class="panel-img float-left">
-        </div>
-        <div class="col-12 col-sm-9 pt-2 pl-5 pb-2">
-          <div class="row">
-            <div class="col">
-              <p class="float-right">{{ $t('news.added') }} {{ convertTimeStamp(item.published) }}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <h4 class="float-left"><u>{{ item.title }}</u></h4>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <p class="float-left">{{ item.contents }}</p>
-            </div>
-          </div>
-          <div class="row mt-5">
-            <div class="col">
-              <router-link :to="{ name: 'news', params: { id: item.id }, query: { type: 'RELEASED', isShortened: false, isOrdered: true } }" class="btn news-button">
-                {{ $t('news.readMore') }}
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="container-fluid">
+    <loader v-if="loading"></loader>
+    <div class="errors" v-if="errors.length">
+      <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
-    <Sidebar></Sidebar>
+    <transition name="slide-fade">
+      <div class="row mt-5" v-if="!loading && !errors.length">
+        <div class="col-12 col-lg-9">
+          <h5 class="news-header font-weight-bold">{{ $t('news.news') }}</h5>
+          <hr>
+          <div v-for="item of news" :key="item.id" class="row panel-item" v-show="isNewsExpired(item.published)">
+            <div class="col-12 col-lg-3 pl-0 pr-0">
+              <img :src="setImg(item)" alt="" class="img-fluid float-left">
+            </div>
+            <div class="col-12 col-lg-9 pt-2 pb-2">
+              <div class="row">
+                <div class="col">
+                  <p class="float-right">{{ $t('news.added') }} {{ convertTimeStamp(item.published) }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h4 class="float-left"><u>{{ item.title }}</u></h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <p class="float-left">{{ item.contents }}</p>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <router-link :to="{ name: 'news', params: { id: item.id } }" class="btn news-button mb-1">
+                    {{ $t('news.readMore') }}
+                  </router-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Sidebar></Sidebar>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -59,10 +63,6 @@
       this.fetchData()
     },
     methods: {
-      convertTimeStamp (publishedDate) {
-        const date = moment(publishedDate).locale(this.$t('common.code'))
-        return date.format(this.$t('common.dateFormat'))
-      },
       fetchData () {
         this.$http.get(this.apiUrl + 'news?type=RELEASED&isShortened=true&isOrdered=true')
           .then(response => {
@@ -84,6 +84,14 @@
         } else {
           return false
         }
+      },
+      setImg (news) {
+        if (!news.imageUrl) {
+          const imgUrl = require('../assets/default_avatar_dog.svg')
+          return imgUrl
+        } else {
+          return news.imageUrl
+        }
       }
     },
     components: {
@@ -97,17 +105,6 @@
   @import "../assets/styles/loader.css"
   @import "../assets/styles/variables.sass"
 
-  .card
-    border: none
-    &:hover
-      background-color: inherit
-      color: inherit
-
-  .panel-img
-    height: 278px
-    margin: 0 10px 0 -15px
-    width: 345px
-
   .panel-item
     border: 2px solid $gray
     margin: 20px 0 20px 0
@@ -119,8 +116,18 @@
     @media (min-width: 1024px)
       float: right
 
-  .wrapper
-    height: 100%
-    margin-top: 5em
-    width: 100%
+  .news-header
+    text-align: left
+    padding: 0
+    margin: 0
+
+  .slide-fade-enter-active
+    transition: all 1s ease
+
+  .slide-fade-leave-active
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+
+  .slide-fade-enter, .slide-fade-leave-to
+    transform: translateY(3em)
+    opacity: 0
 </style>
