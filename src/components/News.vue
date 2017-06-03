@@ -11,7 +11,7 @@
           <hr>
           <div v-for="item of news" :key="item.id" class="row panel-item" v-show="isNewsExpired(item.published)">
             <div class="col-12 col-lg-3 pl-0 pr-0">
-              <img :src="setImg(item)" alt="" class="img-fluid float-left">
+              <img :src="setUrl(item)" @error="defaultImg()" alt="" class="img-fluid float-left">
             </div>
             <div class="col-12 col-lg-9 pt-2 pb-2">
               <div class="row">
@@ -85,13 +85,18 @@
           return false
         }
       },
-      setImg (news) {
-        if (!news.imageUrl) {
-          const imgUrl = require('../assets/default_avatar_dog.svg')
-          return imgUrl
-        } else {
+      setUrl (news) {
+        if (news.imageUrl === '' || news.imageUrl === null || news.imageUrl === undefined) {
+          return this.defaultImg()
+        } else if (news.imageUrl.includes('data')) {
           return news.imageUrl
+        } else {
+          return this.apiUrl.substr(0, this.apiUrl.length - 4) + news.imageUrl
         }
+      },
+      defaultImg () {
+        const imgUrl = require('../assets/default_avatar_dog.svg')
+        return imgUrl
       }
     },
     components: {
