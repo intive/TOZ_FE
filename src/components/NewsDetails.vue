@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <div class="loader" v-if="loading"></div>
-    <div class="errors" v-if="errors.length">
+  <div class="container-fluid">
+    <div class="row loader" v-if="loading"></div>
+    <div class="row errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div class="row" v-if="!errors.length">
-      <div class="col">
+      <div class="col wrapper">
         <div class="row">
           <div class="col hidden-sm-up">
             <p class="text-left top-date">{{ $t('news.added') }} {{ convertTimeStamp(newsDetails.published) }}</p>
@@ -20,8 +20,7 @@
           <div class="col-12 col-lg-8">
             <div class="row">
               <div class="col">
-                <img :src="newsDetails.imageUrl" class="img-fluid float-left">
-                <!--<img src="http://lorempixel.com/1268/600/" class="img-fluid float-left">-->
+                <img :src="setUrl(newsDetails)" @error="defaultImg()" class="img-fluid float-left main-img">
               </div>
             </div>
             <div class="row">
@@ -45,7 +44,7 @@
                           :perPageCustom="settings.perPageCustom">
                   <slide v-for="item of nextNews" :key="item.id" v-show="item.id !== newsDetails.id && isNewsExpired(item.published)">
                     <div class="card" @click="openNews(item.id)">
-                      <img class="card-img-top" :src="item.imageUrl" alt="">
+                      <img class="img-fluid card-img-top" :src="setUrl(item)" @error="defaultImg()" alt="">
                       <div class="card-block">
                         <h4 class="card-title">
                         </h4>
@@ -63,7 +62,6 @@
           </div>
         </div>
       </div>
-      <Sidebar></Sidebar>
     </div>
   </div>
 </template>
@@ -138,6 +136,19 @@
             this.loading = false
           })
       },
+      setUrl (news) {
+        if (news.imageUrl === '' || news.imageUrl === null || news.imageUrl === undefined) {
+          return this.defaultImg()
+        } else if (news.imageUrl.includes('data')) {
+          return news.imageUrl
+        } else {
+          return this.apiUrl.substr(0, this.apiUrl.length - 4) + news.imageUrl
+        }
+      },
+      defaultImg () {
+        const imgUrl = require('../assets/default_avatar_dog.svg')
+        return imgUrl
+      },
       openNews (itemId) {
         this.$router.push({ name: 'news', params: { id: itemId }, query: { type: 'RELEASED', isShortened: false, isOrdered: true } })
       }
@@ -151,12 +162,13 @@
 
   $green: #4CD374
 
-  .content
-    margin-top: 20px
+  p
+    line-height: 1.7
 
   .card
     cursor: pointer
     margin: 5px
+    min-height: 500px
     &:hover
       background-color: inherit
       border: 1px solid $green
@@ -168,14 +180,22 @@
     background-color: $green
     height: 5px
 
+  .img-fluid
+    min-width: 100%
+
+  .main-img
+    height: 100%
+    width: 100%
+
   .news-info
-    @media (max-width: 435px)
+    font-size: 1rem
+    @media (max-width: 544px)
       display: none
 
   .next-news-section-title
-    font-size: 2.5em
+    font-size: 2rem
     font-weight: bold
-    
+
   .text-left
     line-height: 1.35
 
@@ -186,7 +206,11 @@
     text-align: left
 
   .top-date
-    font-size: 1.8em
+    font-size: 1.4rem
     margin-top: 35px
     margin-bottom: 12px
+
+  .wrapper
+    @media (min-width: 544px)
+      margin-left: 50px
 </style>
