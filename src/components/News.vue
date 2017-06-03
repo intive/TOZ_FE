@@ -11,7 +11,7 @@
           <hr>
           <div v-for="item of news" :key="item.id" class="row panel-item" v-show="isNewsExpired(item.published)">
             <div class="col-12 col-lg-3 pl-0 pr-0">
-              <img :src="setUrl(item)" @error="defaultImg()" alt="" class="img-fluid float-left panel-img">
+              <img :src="setUrl(item)" @error="defaultImg()" alt="" class="img-fluid float-left">
             </div>
             <div class="col-12 col-lg-9 pt-2 pb-2">
               <div class="row">
