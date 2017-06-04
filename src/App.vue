@@ -26,4 +26,8 @@
     background-color: #000
     position: absolute
     bottom: 0
+
+  @media (max-width: 991px)
+    footer
+      height: 20px
 </style>
