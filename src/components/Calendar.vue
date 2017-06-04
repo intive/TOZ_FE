@@ -1,8 +1,9 @@
 <template>
-  <div class="container row justify-content-center">
+  <div class="container row justify-content-center" v-resize="checkWidth">
     <div class="col-10 noPadding">
       <div class="row scheduleNav">
-        <div class="col-10 noPadding upper">{{ formattedStringWithDate }}</div>
+        <div v-if="mobileDevice" class="col-10 noPadding upper">{{ formattedNextDate }}</div>
+        <div v-else class="col-10 noPadding upper">{{ formattedDate }}</div>
         <div class="col-2 noPadding">
           <div v-if="nextWeek" class="next button" @click="setPreviousAndNextWeekDate(true)">{{ $t('calendar.button.next') }}</div>
           <div v-else class="next button disabledButton">{{ $t('calendar.button.next') }}</div>
@@ -21,7 +22,7 @@
               <tr>
                 <td v-for="days in firstDateInWeekMorning" :key="days.day">
                   <dayItem
-                    @fetch="fetchData"
+                    @fetch="fetchData(true)"
                     :currentDay="days.day"
                     :currentMonth="days.month"
                     :currentYear="days.year"
@@ -37,12 +38,12 @@
               </tr>
             </table>
           </div>
-          <div class="col-12 col-lg-6 col-xl-6 hidden-md-down">
+          <div class="col-12 col-lg-6 col-xl-6 noPadding hidden-md-down">
             <table class="table">
               <tr>
                 <td v-for="days in secondDateInWeekMorning" :key="days.day">
                   <dayItem
-                    @fetch="fetchData"
+                    @fetch="fetchData(true)"
                     :currentDay="days.day"
                     :currentMonth="days.month"
                     :currentYear="days.year"
@@ -71,7 +72,7 @@
               <tr>
                 <td v-for="days in firstDateInWeekAfternoon" :key="days.day">
                   <dayItem
-                    @fetch="fetchData"
+                    @fetch="fetchData(true)"
                     :currentDay="days.day"
                     :currentMonth="days.month"
                     :currentYear="days.year"
@@ -87,12 +88,12 @@
               </tr>
             </table>
           </div>
-          <div class="col-12 col-lg-6 col-xl-6 hidden-md-down">
+          <div class="col-12 col-lg-6 col-xl-6 noPadding hidden-md-down">
             <table class="table">
               <tr>
                 <td v-for="days in secondDateInWeekAfternoon" :key="days.day">
                   <dayItem
-                    @fetch="fetchData"
+                    @fetch="fetchData(true)"
                     :currentDay="days.day"
                     :currentMonth="days.month"
                     :currentYear="days.year"
@@ -115,6 +116,7 @@
 </template>
 <script>
 import DayItem from './DayItem'
+import resize from 'vue-resize-directive'
 export default {
   name: 'Calendar',
   data () {
@@ -133,17 +135,22 @@ export default {
       secondDateInWeekAfternoon: [],
       morningStartTime: '08:00',
       afternoonStartTime: '12:00',
+      breakpoint: 992,
       mobileDevice: false,
       stringDate: '',
       previousWeek: true,
       nextWeek: false,
       loading: true,
+      caught: false,
       reservations: [],
       errors: []
     }
   },
   components: {
     DayItem
+  },
+  directives: {
+    resize
   },
   methods: {
     daysInMonth (year, month) {
@@ -278,7 +285,7 @@ export default {
       this.loopCreateWeekDays(periodName, this.mondayDate, this.dayInMonth)
       this.loopCreateWeekDays(periodName, 1, remainingDays)
     },
-    fetchData () {
+    fetchData (arg) {
       const firstDay = this.fullDate(this.dateInWeekMorning[0].year, this.dateInWeekMorning[0].month, this.mondayDate)
       const lastDay = this.fullDate(this.dateInWeekMorning[13].year, this.dateInWeekMorning[13].month, this.dateInWeekMorning[13].day)
       this.loading = true
@@ -287,6 +294,9 @@ export default {
         this.reservations = [...response.data.reservations]
         this.displayBookedLaunch()
         this.loading = false
+        if (arg) {
+          this.caught = true
+        }
       })
       .catch(e => {
         this.errors.push(e)
@@ -322,23 +332,36 @@ export default {
       }
       return year + '-' + fullMonth + '-' + day
     },
+    displayDate (last) {
+      const month = this.$t('calendar.months')
+      const monDate = this.mondayDate < 10 ? `0${this.mondayDate}` : this.mondayDate
+      if (last < this.mondayDate) {
+        this.stringDate = `${month[this.monthNumber === -1 ? 11 : this.monthNumber]} ${monDate}- ${month[(this.monthNumber + 1) === 12 ? 0 : (this.monthNumber + 1)]} ${last}`
+      } else {
+        this.stringDate = `${month[this.monthNumber]} ${monDate}-${last}`
+      }
+    },
     checkDevice () {
-      if (window.innerWidth < 992) {
+      if (window.innerWidth < this.breakpoint) {
         this.mobileDevice = true
         this.nextWeek = true
+      }
+    },
+    checkWidth () {
+      if (window.innerWidth < this.breakpoint) {
+        this.mobileDevice = true
+      } else {
+        this.mobileDevice = false
       }
     }
   },
   computed: {
-    formattedStringWithDate () {
-      const month = this.$t('calendar.months')
-      const sunDate = this.nextSundayDate
-      const monDate = this.mondayDate < 10 ? `0${this.mondayDate}` : this.mondayDate
-      if (this.nextSundayDate < this.mondayDate) {
-        this.stringDate = `${month[this.monthNumber === -1 ? 11 : this.monthNumber]} ${monDate}- ${month[(this.monthNumber + 1) === 12 ? 0 : (this.monthNumber + 1)]} ${sunDate}`
-      } else {
-        this.stringDate = `${month[this.monthNumber]} ${monDate}-${sunDate}`
-      }
+    formattedDate () {
+      this.displayDate(this.nextSundayDate)
+      return this.stringDate
+    },
+    formattedNextDate () {
+      this.displayDate(this.sundayDate)
       return this.stringDate
     }
   },
@@ -388,23 +411,21 @@ export default {
   border-radius: 1em
   font-size: 1.75em
   float: right
-
-.previous:hover, .next:hover
-  cursor: pointer
-  background-color: #4CD374
+  &:hover
+    cursor: pointer
+    background-color: #4CD374
 
 .disabledButton
   color: #b9b9b9
-
-.disabledButton:hover
-  background-color: #fff
-  cursor: default
+  &:hover
+    background-color: #fff
+    cursor: default
 
 .noPadding, .table td, .dayTime
   padding: 0
 
 .line
-  display: block;
-  border-top: .2em solid #ebebeb
+  display: block
+  border-top: .2em solid #d7d7d7
 
 </style>

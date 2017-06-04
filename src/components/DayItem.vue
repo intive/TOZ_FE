@@ -101,7 +101,6 @@ export default {
     openModalAccepted () {
       this.showModal = false
       this.postReservation()
-      this.showModalAccepted = true
     },
     openModalBooked () {
       this.showModal = false
@@ -193,89 +192,89 @@ export default {
     this.switchTime()
     this.setDayShortcut()
     this.checkUser()
+    // this.catchReservation()
   }
 }
 </script>
 
-<style scoped>
-.dayView {
-  width: 6em;
-  margin-top: 6em;
-  height: 6em;
-  background-color: #ebebeb;
-  text-align: right;
-  display: inline-block;
-  padding: 1em;
-  position: relative;
-  border-radius: .5em;
+<style lang="sass" scoped>
+
+.dayView
+  width: 6em
+  margin-top: 6em
+  height: 6em
+  background-color: #ebebeb
+  text-align: right
+  display: inline-block
+  padding: 1em
+  position: relative
+  border-radius: .5em
   cursor: pointer
-}
-.dayNumber {
-  margin: 0 auto;
-  width: 2.5em;
-  text-align: right;
-}
-.booked, .loader {
-  width: 100%;
-  text-align: center;
-  line-height: 3em;
-  position: absolute;
-}
-.booked {
-  background-color: #999;
-  top: 0;
-  left: 0;
-  font-size: 2em;
-  border-radius: .25em;
-}
-.owner {
-  background-color: #ff8900;
-}
-.loader {
-  width: 8%;
-  height: 5%;
-  left: 50%;
-  top: 10%
-}
-.modalHeader {
-  margin-top: .5em
-}
-.underline {
-  width: 90%;
-  margin: 0 auto;
-  line-height: 2.5em;
-  border-bottom: .1em solid #000
-}
-h2.modalAccepted {
-  margin-top: 1.5em
-}
-.hidden {
-  display: none
-}
-.initials {
+
+.dayNumber
+  margin: 0 auto
+  width: 2.5em
+  text-align: right
+
+.booked, .loader
+  width: 100%
   text-align: center
-}
-.modalButton {
-  width: 9em;
-  font-size: 1.5em;
-  float: center;
-  margin: 1em;
-  line-height: 2em;
-  font-weight: 700;
-  border: none;
-  background-color: #fff;
+  line-height: 3em
+  position: absolute
+
+.booked
+  background-color: #999
+  top: 0
+  left: 0
+  font-size: 2em
+  border-radius: .25em
+
+.owner
+  background-color: #ff8900
+
+.loader
+  width: 8%
+  height: 5%
+  left: 50%
+  top: 10%
+
+.modalHeader
+  margin-top: .5em
+
+.underline
+  width: 90%
+  margin: 0 auto
+  line-height: 2.5em
+  border-bottom: .1em solid #000
+
+h2.modalAccepted
+  margin-top: 1.5em
+
+.hidden
+  display: none
+
+.initials
+  text-align: center
+
+.modalButton
+  width: 9em
+  font-size: 1.5em
+  float: center
+  margin: 1em
+  line-height: 2em
+  font-weight: 700
+  border: none
+  background-color: #fff
   cursor: pointer
-}
-.modalButton:nth-child(2) {
-  background-color: #ff6961;
-  color: #fff
-}
-.buttonBack {
-  width: 15em;
-  font-size: 1.5em;
-  margin-top: 2.5em;
-  border: .1em solid #404040;
+  &:nth-child(2)
+    background-color: #ff6961
+    color: #fff
+
+.buttonBack
+  width: 15em
+  font-size: 1.5em
+  margin-top: 2.5em
+  border: .1em solid #404040
   color: #404040
-}
 
 </style>
