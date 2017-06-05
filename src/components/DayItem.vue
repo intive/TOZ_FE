@@ -210,6 +210,9 @@ export default {
   position: relative
   border-radius: .5em
   cursor: pointer
+  @media screen and (max-width: 576px)
+    width: 4.2em
+    height: 4.2em
 
 .dayNumber
   margin: 0 auto
@@ -221,6 +224,8 @@ export default {
   text-align: center
   line-height: 3em
   position: absolute
+  @media screen and (max-width: 576px)
+    line-height: 2.1em
 
 .booked
   background-color: #999

@@ -1,10 +1,10 @@
 <template>
   <div class="container row justify-content-center" v-resize="checkWidth">
-    <div class="col-10 noPadding">
+    <div class="col-12 col-lg-10 noPadding">
       <div class="row scheduleNav">
-        <div v-if="mobileDevice" class="col-10 noPadding upper">{{ formattedNextDate }}</div>
-        <div v-else class="col-10 noPadding upper">{{ formattedDate }}</div>
-        <div class="col-2 noPadding">
+        <div v-if="mobileDevice" class="col-8 noPadding upper">{{ formattedNextDate }}</div>
+        <div v-else class="col-8 noPadding upper">{{ formattedDate }}</div>
+        <div class="col-4 noPadding">
           <div v-if="nextWeek" class="next button" @click="setPreviousAndNextWeekDate(true)">{{ $t('calendar.button.next') }}</div>
           <div v-else class="next button disabledButton">{{ $t('calendar.button.next') }}</div>
           <div v-if="previousWeek" class="previous button" @click="setPreviousAndNextWeekDate(false)"> {{ $t('calendar.button.previous') }}</div>
@@ -380,6 +380,8 @@ export default {
 .container 
   width: 136.6em
   margin: 0 auto
+  @media screen and (max-width: 576px)
+    max-width: 100%
 
 .table td 
   width: 6em;
