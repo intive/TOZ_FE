@@ -107,8 +107,12 @@
         const date = moment(published).locale(this.$t('common.code'))
         return date.format(this.$t('common.dateFormat'))
       },
+      addMonths (date, months) {
+        date.setMonth(date.getMonth() + months)
+        return date
+      },
       isNewsExpired (itemPublished) {
-        if (itemPublished > Date.now() - 13046400000) {
+        if (itemPublished > this.addMonths(new Date(), -6)) {
           return true
         } else {
           return false
