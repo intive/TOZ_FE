@@ -2,16 +2,22 @@
   <div class="container" id="help">
     <div class="row mt-5">
       <div class="col-12 col-lg-4 py-5">
-        <span class="fa fa-heart fa-large"></span>
-        <router-link to="/transfer" class="btn">{{ $t("help.transfer") }}</router-link>
+        <router-link to="/transfer" class="help-link">
+          <span class="fa fa-heart fa-large"></span>
+          <button class="btn">{{ $t("help.transfer") }}</button>
+        </router-link>
       </div>
       <div class="col-12 col-lg-4 py-5">
-        <span class="fa fa-user-plus fa-large"></span>
-        <router-link to="/help-info" class="btn">{{ $t("help.volunteer") }}</router-link>
+        <router-link to="/help-info" class="help-link">
+          <span class="fa fa-user-plus fa-large"></span>
+          <button class="btn">{{ $t("help.volunteer") }}</button>
+        </router-link>
       </div>
       <div class="col-12 col-lg-4 py-5">
-        <span class="fa fa-reply fa-large"></span>
-        <router-link to="/" class="btn">{{ $t("common.backHome") }}</router-link>
+        <router-link to="/" class="help-link">
+          <span class="fa fa-reply fa-large"></span>
+          <button class="btn">{{ $t("common.backHome") }}</button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -25,5 +31,10 @@
       transform: scale(1.1)
       color: $green
       transition-duration: 0.3s
+
+  .help-link:hover,
+  .help-link:focus
+    text-decoration: none
+
 
 </style>
