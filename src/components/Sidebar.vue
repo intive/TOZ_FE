@@ -1,7 +1,7 @@
 <template>
   <div class="col-lg-3 col-12 mt-5">
     <CompanyInfo></CompanyInfo>
-    <div v-if="authenticated" id="recentComments" class="text-justify py-3">
+    <div v-if="user.authenticated" id="recentComments" class="text-justify py-3">
       <p class="sidebar-header text-center">{{$t('sidebar.newestComments')}}</p>
       <Comments v-for="item in comments" :comment="item" :key="item.id"></Comments>
     </div>
@@ -16,7 +16,7 @@ import CompanyInfo from './CompanyInfo.vue'
 export default {
   data () {
     return {
-      authenticated: auth.user.authenticated,
+      user: auth.user,
       comments: [],
       loading: false
     }

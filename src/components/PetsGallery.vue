@@ -1,5 +1,5 @@
 <template>
-  <div class="container" >
+  <div class="container">
     <div v-if="loading" class="loader"></div>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
@@ -10,26 +10,26 @@
           <div class="card my-2 border-0">
             <router-link :to="{name: 'petDetails', params: { id: pet.id }}">
               <div class="card-block">
-                <img class="card-img-top img-fluid" :src="setUrl(pet)" @error="defaultImg(pet)" alt="">
+                <img class="card-img-top img-fluid" :src="setUrl(pet)" @error="defaultImg(pet)">
                 <h4 class="card-title">{{pet.name}}</h4>
                 <h6 class="card-subtitle mb-2">{{pet.type}}</h6>
               </div>
             </router-link>
           </div>
         </div>
+        <paginate
+          :page-count="paginationConfig.numberOfPages"
+          :container-class="paginationConfig.containerClass"
+          :page-class="paginationConfig.pageClass"
+          :page-link-class="paginationConfig.pageLinkClass"
+          :prev-text="paginationConfig.prevText"
+          :next-text="paginationConfig.nextText"
+          :prev-class="paginationConfig.prevClass"
+          :next-class="paginationConfig.nextClass"
+          :click-handler="paginationConfig.clickCallback">
+        </paginate>
       </div>
     </transition>
-    <paginate
-      :page-count="paginationConfig.numberOfPages"
-      :container-class="paginationConfig.containerClass"
-      :page-class="paginationConfig.pageClass"
-      :page-link-class="paginationConfig.pageLinkClass"
-      :prev-text="paginationConfig.prevText"
-      :next-text="paginationConfig.nextText"
-      :prev-class="paginationConfig.prevClass"
-      :next-class="paginationConfig.nextClass"
-      :click-handler="paginationConfig.clickCallback">
-    </paginate>
   </div>
 </template>
 
