@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container">
     <loader v-if="loading"></loader>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
@@ -9,7 +9,7 @@
         <div class="col-12 col-lg-9">
           <h5 class="news-header font-weight-bold">{{ $t('news.news') }}</h5>
           <hr>
-          <div v-for="item of news" :key="item.id" class="row panel-item" v-show="isNewsExpired(item.published)">
+          <div v-for="item of news" :key="item.id" class="row panel-item" v-if="isNewsExpired(item.published)">
             <div class="col-12 col-lg-3 pl-0 pr-0">
               <img :src="setUrl(item)" @error="defaultImg()" alt="" class="img-fluid float-left">
             </div>
@@ -21,7 +21,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <h4 class="float-left"><u>{{ item.title }}</u></h4>
+                  <h4 class="float-left news-title">{{ item.title }}</h4>
                 </div>
               </div>
               <div class="row">
@@ -117,6 +117,9 @@
     border: 2px solid $gray
     margin: 20px 0 20px 0
 
+  .news-title
+    text-decoration: underline
+    
   .news-button
     border-color: $white
     text-transform: none

@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid">
-    <div class="row loader" v-if="loading"></div>
-    <div class="row errors" v-if="errors.length">
+  <div class="container">
+    <div class="loader" v-if="loading"></div>
+    <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
     <div class="row" v-if="!errors.length">
