@@ -93,8 +93,9 @@ const locales = {
       button: {
         accept: 'Potwierdzam',
         decline: 'Rezygnuję',
-        next: '>>',
-        previous: '<<'
+        destroy: 'Usuń rezerwację',
+        next: '>',
+        previous: '<'
       },
       bookedPeriod: 'Termin zajęty przez:'
     },
@@ -264,8 +265,9 @@ const locales = {
       button: {
         accept: 'Accept',
         decline: 'Cancel',
-        next: '>>',
-        previous: '<<'
+        destroy: 'Delete reservation',
+        next: '>',
+        previous: '<'
       },
       bookedPeriod: 'Period is already booked by:'
     },

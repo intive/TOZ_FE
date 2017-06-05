@@ -1,18 +1,17 @@
 <template>
   <div>
+    <h6 class="dayNumber">{{ day }}</h6>
     <div class="dayView" v-if="dayTime === morning" @click='openModal'>
-      <h1>{{ day }}</h1>
-      {{ $t('calendar.dayInWeek[' + this.weekDay + ']') }}
-      <div v-if="!this.loading && confirmed || this.getConfirmation" class="booked">{{ inits }}</div>
+      <div v-if="confirmed" class="booked">{{ inits }}</div>
       <div v-if="loading" class="loader"></div>
     </div>
     <div class="dayView" v-else @click='openModal'>
-      <div v-if="!this.loading && confirmed || this.getConfirmation" class="booked">{{ inits }}</div>
+      <div v-if="confirmed" class="booked">{{ inits }}</div>
       <div v-if="loading" class="loader"></div>
     </div>
     <booking v-if="showModal">
-      <h3 slot="header" class="modalHeader">{{ $t('calendar.book.header') }}</h3>
-      <h4 slot="slot1" class="underline">{{ day }} {{ $t('calendar.book.months[' + this.month + ']') }} {{ year }}, {{ $t('calendar.' + this.dayTime + 'Text') }}</h4>
+      <h4 slot="header" class="modalHeader">{{ $t('calendar.book.header') }}</h4>
+      <h6 slot="slot1" class="underline">{{ day }} {{ $t('calendar.book.months[' + month + ']') }} {{ year }}, {{ $t('calendar.' + dayTime + 'Text') }}</h6>
       <span slot='slot2'>
         <button class="modalButton" @click='closeModal'>{{ $t('calendar.button.decline') }}</button>
         <button class="modalButton" @click='openModalAccepted'>{{ $t('calendar.button.accept') }}</button>
@@ -26,7 +25,10 @@
     <booking v-if="showModalBooked">
       <h5 slot="header" class="modalHeader">{{ $t('calendar.bookedPeriod') }}</h5>
       <h6 slot="slot1" class="underline"> {{ fullName }} </h6>
-      <button slot="slot2" class="modalButton buttonBack" @click='closeBooked'>{{ $t('calendar.book.goBack') }}</button>
+      <span slot="slot2">
+        <button class="modalButton" @click='closeBooked'>{{ $t('calendar.book.goBack') }}</button>
+        <button class="modalButton" v-if="reservationOwner" @click="deleteReservation">{{ $t('calendar.button.destroy') }}</button>
+      </span>
     </booking>
     <booking v-if="showErrors">
       <h2 slot="header" v-for="error of errors">{{ error.message }}</h2>
@@ -39,7 +41,7 @@
 import Booking from './Booking.vue'
 export default {
   name: 'DayItem',
-  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'firstName', 'lastName' ],
+  props: [ 'currentDay', 'currentMonth', 'currentYear', 'currentWeekDay', 'currentDayTime', 'getConfirmation', 'firstName', 'lastName', 'getUserId', 'getResId' ],
   data () {
     return {
       day: this.currentDay,
@@ -47,7 +49,6 @@ export default {
       year: this.currentYear,
       weekDay: this.currentWeekDay,
       dayTime: this.currentDayTime,
-      confirmed: false,
       dayShortcut: '',
       showModal: false,
       showModalAccepted: false,
@@ -56,6 +57,8 @@ export default {
       afternoon: 'afternoon',
       periodStartTime: '',
       periodEndTime: '',
+      confirmed: this.getConfirmation,
+      reservationOwner: false,
       getUsers: {
         forename: this.firstName,
         surname: this.lastName
@@ -87,8 +90,8 @@ export default {
     openModal () {
       const checkDate = new Date(this.fullDate + ' ' + this.periodStartTime).getTime()
       const now = new Date().getTime()
-      if (this.confirmed || this.getConfirmation) {
-        this.showModalBooked = true
+      if (this.confirmed) {
+        this.openModalBooked()
       } else if (checkDate < now) {
         return false
       } else {
@@ -100,6 +103,7 @@ export default {
       this.postReservation()
     },
     openModalBooked () {
+      this.showModal = false
       this.showModalBooked = true
     },
     closeModal () {
@@ -114,16 +118,33 @@ export default {
     closeErrors () {
       this.showErrors = false
     },
-    initials (first, last) {
-      return first.slice(0, 1) + '. ' + last.slice(0, 1) + '.'
+    checkUser () {
+      if (this.getUserId === sessionStorage.getItem('userId')) {
+        this.reservationOwner = true
+      }
+    },
+    deleteReservation () {
+      const id = this.getResId
+      this.showModalBooked = false
+      this.loading = true
+      this.$http.delete(this.apiUrl + 'schedule/' + id)
+      .then(this.deleteRes())
+      .catch(e => {
+        this.errors.push(e)
+        this.loading = false
+      })
+    },
+    deleteRes () {
+      this.confirmed = false
+      this.loading = false
     },
     switchTime () {
       if (this.dayTime === this.morning) {
         this.periodStartTime = '08:00'
         this.periodEndTime = '12:00'
       } else {
-        this.periodStartTime = '16:00'
-        this.periodEndTime = '20:00'
+        this.periodStartTime = '12:00'
+        this.periodEndTime = '16:00'
       }
     },
     createPostBody () {
@@ -132,40 +153,28 @@ export default {
       this.postBody.endTime = this.periodEndTime
     },
     postReservation () {
-      this.loading = true
       this.createPostBody()
-      this.$http.post(this.apiUrl + 'schedule', {
-        body: this.postBody
-      })
+      this.$http.post(this.apiUrl + 'schedule', this.postBody)
       .catch(e => {
         this.errors.push(e)
         this.loading = false
       })
       .then(response => {
-        if (this.errors.length && !this.loading) {
+        if (this.errors.length) {
           this.showErrors = true
         } else {
-          this.showModalAccepted = true
           this.confirmed = true
+          this.$emit('fetch')
         }
       })
     }
   },
   computed: {
     inits () {
-      if (this.getConfirmation) {
-        return this.initials(this.getUsers.forename, this.getUsers.surname)
-      } else {
-        return this.initials(this.currentUser.forename,
-          this.currentUser.surname)
-      }
+      return this.getUsers.forename.slice(0, 1) + '. ' + this.getUsers.surname.slice(0, 1) + '.'
     },
     fullName () {
-      if (this.getConfirmation) {
-        return this.getUsers.forename + ' ' + this.getUsers.surname
-      } else {
-        return this.currentUser.forename + ' ' + this.currentUser.surname
-      }
+      return this.getUsers.forename + ' ' + this.getUsers.surname
     },
     fullDate () {
       let fullDay = this.day.toString()
@@ -182,79 +191,95 @@ export default {
   created () {
     this.switchTime()
     this.setDayShortcut()
+    this.checkUser()
+    // this.catchReservation()
   }
 }
 </script>
 
-<style scoped>
-.dayView {
-  width: 100%;
-  height: 25em;
-  border-left-style: groove;
-  border-bottom-style: groove;
-  text-align: right;
-  display: inline-block;
-  padding: 1em;
+<style lang="sass" scoped>
+
+.dayView
+  width: 6em
+  margin-top: 6em
+  height: 6em
+  background-color: #ebebeb
+  text-align: right
+  display: inline-block
+  padding: 1em
   position: relative
-}
-.booked, .loader {
-  width: 100%;
-  text-align: center;
-  line-height: 12.5em;
-  position: absolute;
-}
-.booked {
-  background-color: #ddd;
-  top: 0;
-  left: 0;
-  font-size: 2em;
-  z-index: -1
-}
-.loader {
-  width: 8%;
-  height: 5%;
-  left: 50%;
-  top: 10%
-}
-.modalHeader {
-  margin-top: .5em
-}
-.underline {
-  width: 90%;
-  margin: 0 auto;
-  line-height: 2.5em;
-  border-bottom: .1em solid #000
-}
-h2.modalAccepted {
-  margin-top: 1.5em
-}
-.hidden {
-  display: none
-}
-.initials {
-  text-align: center
-}
-.modalButton {
-  width: 9em;
-  font-size: 1.5em;
-  float: center;
-  margin: 1em;
-  line-height: 2em;
-  font-weight: 700;
-  border: none;
-  background-color: #fff;
+  border-radius: .5em
   cursor: pointer
-}
-.modalButton:nth-child(2) {
-  background-color: #ff6961;
-  color: #fff
-}
-.buttonBack {
-  width: 15em;
-  font-size: 1.5em;
-  margin-top: 2.5em;
-  border: .1em solid #404040;
+  @media screen and (max-width: 576px)
+    width: 4.2em
+    height: 4.2em
+
+.dayNumber
+  margin: 0 auto
+  width: 2.5em
+  text-align: right
+
+.booked, .loader
+  width: 100%
+  text-align: center
+  line-height: 3em
+  position: absolute
+  @media screen and (max-width: 576px)
+    line-height: 2.1em
+
+.booked
+  background-color: #999
+  top: 0
+  left: 0
+  font-size: 2em
+  border-radius: .25em
+
+.owner
+  background-color: #ff8900
+
+.loader
+  width: 8%
+  height: 5%
+  left: 50%
+  top: 10%
+
+.modalHeader
+  margin-top: .5em
+
+.underline
+  width: 90%
+  margin: 0 auto
+  line-height: 2.5em
+  border-bottom: .1em solid #000
+
+h2.modalAccepted
+  margin-top: 1.5em
+
+.hidden
+  display: none
+
+.initials
+  text-align: center
+
+.modalButton
+  width: 9em
+  font-size: 1.5em
+  float: center
+  margin: 1em
+  line-height: 2em
+  font-weight: 700
+  border: none
+  background-color: #fff
+  cursor: pointer
+  &:nth-child(2)
+    background-color: #ff6961
+    color: #fff
+
+.buttonBack
+  width: 15em
+  font-size: 1.5em
+  margin-top: 2.5em
+  border: .1em solid #404040
   color: #404040
-}
 
 </style>
