@@ -4,8 +4,8 @@
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
-    <div class="row" v-if="!errors.length">
-      <div class="col wrapper">
+    <div class="row" v-if="!errors.length && !loading">
+      <div class=" col-12 col-lg-9">
         <div class="row">
           <div class="col hidden-sm-up">
             <p class="text-left top-date">{{ $t('news.added') }} {{ convertTimeStamp(newsDetails.published) }}</p>
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12 col-lg-8">
+          <div class="col-12">
             <div class="row">
               <div class="col">
                 <img :src="setUrl(newsDetails)" @error="defaultImg()" class="img-fluid float-left main-img">
@@ -38,11 +38,12 @@
             <div class="row">
               <div class="col">
                 <carousel class="carousel"
-                          :navigationEnabled="settings.navigationEnabled"
-                          :paginationEnabled="settings.paginationEnabled"
-                          :navigationClickTargetSize="settings.navigationClickTargetSize"
-                          :perPageCustom="settings.perPageCustom">
-                  <slide v-for="item of nextNews" :key="item.id" v-show="item.id !== newsDetails.id && isNewsExpired(item.published)">
+                :navigationEnabled="settings.navigationEnabled"
+                :paginationEnabled="settings.paginationEnabled"
+                :navigationClickTargetSize="settings.navigationClickTargetSize"
+                :perPageCustom="settings.perPageCustom">
+                  <slide v-for="item of nextNews" :key="item.id"
+                    v-show="item.id !== newsDetails.id && isNewsExpired(item.published)">
                     <div class="card" @click="openNews(item.id)">
                       <img class="img-fluid card-img-top" :src="setUrl(item)" @error="defaultImg()" alt="">
                       <div class="card-block">
@@ -57,11 +58,9 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-12 ml-5 mr-2 hidden-lg-down">
-            <CompanyInfo></CompanyInfo>
-          </div>
         </div>
       </div>
+      <Sidebar></Sidebar>
     </div>
   </div>
 </template>
@@ -69,13 +68,14 @@
 <script>
   import moment from 'moment'
   import { Carousel, Slide } from 'vue-carousel'
-  import CompanyInfo from './CompanyInfo.vue'
+  import Sidebar from './Sidebar.vue'
+
   export default {
     name: 'NewsDetails',
     components: {
       Carousel,
       Slide,
-      CompanyInfo
+      Sidebar
     },
     data () {
       return {
@@ -163,8 +163,6 @@
 <style lang="sass" scoped>
   @import "../assets/styles/loader.css"
   @import "../assets/styles/variables.sass"
-
-  $green: #4CD374
 
   p
     line-height: 1.7

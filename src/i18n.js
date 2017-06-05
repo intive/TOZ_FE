@@ -26,6 +26,21 @@ const locales = {
       transfer: 'Wesprzyj TOZ finansowo',
       volunteer: 'Zostań wolontariuszem TOZ!'
     },
+    companyInfo: {
+      contact: 'Dane kontaktowe',
+      address: {
+        street: 'Ulica',
+        country: '00-000 Miasto',
+        tel: 'Numer telefonu 00 000-00-00'
+      },
+      openingHours: {
+        title: 'Godziny otwarcia',
+        hours: 'Poniedziałek - Piątek: 9-17'
+      }
+    },
+    sidebar: {
+      newestComments: 'Najnowsze komentarze'
+    },
     helpInfo: {
       goToForm: 'Formularz zgłoszeniowy'
     },
@@ -50,26 +65,7 @@ const locales = {
       news: 'Aktualności:',
       added: 'Dodane: ',
       readMore: 'Czytaj więcej',
-      nextNews: 'Następne wpisy',
-      rightPanel: {
-        companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
-        newestComments: 'Najnowsze komentarze',
-        address: {
-          street: 'ul. Ojca Beyzyma 17',
-          country: '70-391 Szczecin',
-          tel: 'tel/fax. 91 487-04-37'
-        },
-        openingHours: {
-          title: 'Godziny otwarcia',
-          hours: 'Poniedziałek - Piątek: 9-17'
-        },
-        clinic: {
-          title: 'Lecznica TOZ',
-          hours: 'Poniedziałek - Piątek: 8-18',
-          break: 'Przerwa na zabiegi: 11-13',
-          weekend: 'Sobota: 10-15'
-        }
-      }
+      nextNews: 'Następne wpisy'
     },
     petsCarousel: {
       fullGallery: 'Pełna galeria'
@@ -197,6 +193,21 @@ const locales = {
       back: 'Back',
       dateFormat: 'L'
     },
+    rightPanel: {
+      contact: 'Contact',
+      address: {
+        street: 'Street',
+        country: '00-000 City',
+        tel: 'phone number 00 000-00-00'
+      },
+      openingHours: {
+        title: 'Opening hours',
+        hours: 'Mon - Fri: 9-17'
+      }
+    },
+    sidebar: {
+      newestComments: 'Recent comments'
+    },
     help: {
       transfer: 'Support ACC financally',
       volunteer: 'Become ACC volunteer'
@@ -225,26 +236,7 @@ const locales = {
       news: 'News:',
       added: 'Added: ',
       readMore: 'Read more',
-      nextNews: 'Next news',
-      rightPanel: {
-        companyName: 'Towarzystwo opieki nad zwierzętami w Szczecinie',
-        newestComments: 'New comments',
-        address: {
-          street: 'Ojca Beyzyma 17 St.',
-          country: '70-391 Szczecin',
-          tel: 'tel/fax. 91 487-04-37'
-        },
-        openingHours: {
-          title: 'Opening hours',
-          hours: 'Mon - Fri: 9-17'
-        },
-        clinic: {
-          title: 'TOZ Clinic',
-          hours: 'Mon - Fri: 8-18',
-          break: 'Surgery break: 11-13',
-          weekend: 'Sat: 10-15'
-        }
-      }
+      nextNews: 'Next news'
     },
     petsCarousel: {
       fullGallery: 'Full gallery'
