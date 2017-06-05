@@ -1,44 +1,67 @@
 <template>
-  <div class="container">
-    <div class="loader" v-if="loading"></div>
-    <div class="errors" v-if="errors.length">
+  <div class="container-fluid">
+    <div class="row loader" v-if="loading"></div>
+    <div class="row errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
     </div>
-    <div class="row mt-5" v-if="!errors.length">
-      <div class="col-lg-9 col-12">
-        <p class="text-left top-date">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
-        <h3 class="title text-left">{{ newsDetails.title }}</h3>
-        <img :src="setImg()" class="img">
-        <p class="text-left news-info added">{{ $t('news.added') }} {{ convertTimeStamp }}</p>
-        <p class="text-left content">{{ newsDetails.contents }}</p>
-        <hr class="divider">
-        <p class="next-news-title">{{ $t('news.nextNews') }}</p>
-        <div class="row next-news-normal">
-          <div class="col-md-4">
-            <img src="http://loremflickr.com/200/167" class="img-fluid img-small">
-          </div>
-          <div class="col-md-4">
-            <img src="http://loremflickr.com/200/167" class="img-fluid img-small">
-          </div>
-          <div class="col-md-4">
-            <img src="http://loremflickr.com/200/167" class="img-fluid img-small">
+    <div class="row" v-if="!errors.length">
+      <div class="col wrapper">
+        <div class="row">
+          <div class="col hidden-sm-up">
+            <p class="text-left top-date">{{ $t('news.added') }} {{ convertTimeStamp(newsDetails.published) }}</p>
           </div>
         </div>
-        <div class="row next-news-carousel">
-          <div class="col">
-            <carousel class="carousel"
-            :navigationEnabled="settings.navigationEnabled"
-            :paginationEnabled="settings.paginationEnabled"
-            :navigationClickTargetSize="settings.navigationClickTargetSize"
-            :perPageCustom="settings.perPageCustom">
-              <slide v-for="item of images" :key="item.id">
-                <img :src="item" class="img-fluid img-small">
-              </slide>
-            </carousel>
+        <div class="row">
+          <div class="col mt-3 mb-3">
+            <h3 class="title"><u>{{ newsDetails.title }}</u></h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-8">
+            <div class="row">
+              <div class="col">
+                <img :src="setUrl(newsDetails)" @error="defaultImg()" class="img-fluid float-left main-img">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col mt-4 mb-4">
+                <p class="text-left news-info">{{ $t('news.added') }} {{ convertTimeStamp(newsDetails.published) }}</p>
+                <p class="text-left">{{ newsDetails.contents }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <hr class="divider">
+                <p class="next-news-section-title">{{ $t('news.nextNews') }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <carousel class="carousel"
+                          :navigationEnabled="settings.navigationEnabled"
+                          :paginationEnabled="settings.paginationEnabled"
+                          :navigationClickTargetSize="settings.navigationClickTargetSize"
+                          :perPageCustom="settings.perPageCustom">
+                  <slide v-for="item of nextNews" :key="item.id" v-show="item.id !== newsDetails.id && isNewsExpired(item.published)">
+                    <div class="card" @click="openNews(item.id)">
+                      <img class="img-fluid card-img-top" :src="setUrl(item)" @error="defaultImg()" alt="">
+                      <div class="card-block">
+                        <h4 class="card-title">
+                        </h4>
+                        <p class="card-text">{{ item.title }}</p>
+                        <p class="card-text"><small class="text-muted">{{ convertTimeStamp(item.published) }}</small></p>
+                      </div>
+                    </div>
+                  </slide>
+                </carousel>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-12 ml-5 mr-2 hidden-lg-down">
+            <CompanyInfo></CompanyInfo>
           </div>
         </div>
       </div>
-      <Sidebar></Sidebar>
     </div>
   </div>
 </template>
@@ -46,14 +69,13 @@
 <script>
   import moment from 'moment'
   import { Carousel, Slide } from 'vue-carousel'
-  import Sidebar from './Sidebar'
-
+  import CompanyInfo from './CompanyInfo.vue'
   export default {
     name: 'NewsDetails',
     components: {
       Carousel,
       Slide,
-      Sidebar
+      CompanyInfo
     },
     data () {
       return {
@@ -61,50 +83,74 @@
           navigationEnabled: true,
           paginationEnabled: false,
           navigationClickTargetSize: 0,
-          perPageCustom: [[300, 1], [500, 2], [730, 3]]
+          perPageCustom: [[300, 1], [500, 2], [1864, 3]]
         },
         errors: [],
         newsDetails: {},
+        nextNews: {},
         id: this.$route.params.id,
-        loading: true,
-        images: [
-          'http://loremflickr.com/200/167',
-          'http://loremflickr.com/200/167',
-          'http://loremflickr.com/200/167'
-        ]
+        loading: true
       }
     },
     created () {
       this.fetchData()
+      this.fetchNextNews()
     },
     watch: {
-      '$route.fullPath': 'fetchData'
-    },
-    computed: {
-      convertTimeStamp () {
-        const date = moment(this.newsDetails.published).locale(this.$t('common.code'))
-        return date.format(this.$t('common.dateFormat'))
-      }
+      '$route': 'reloadPage'
     },
     methods: {
+      reloadPage () {
+        location.reload()
+      },
+      convertTimeStamp (published) {
+        const date = moment(published).locale(this.$t('common.code'))
+        return date.format(this.$t('common.dateFormat'))
+      },
+      isNewsExpired (itemPublished) {
+        if (itemPublished > Date.now() - 13046400000) {
+          return true
+        } else {
+          return false
+        }
+      },
       fetchData () {
         this.$http.get(this.apiUrl + 'news/' + this.id)
-        .then(response => {
-          this.newsDetails = {...response.data}
-          this.loading = false
-        })
-        .catch(error => {
-          this.errors.push(error)
-          this.loading = false
-        })
+          .then(response => {
+            this.newsDetails = response.data
+            this.loading = false
+          })
+          .catch(error => {
+            this.errors.push(error)
+            this.loading = false
+          })
       },
-      setImg () {
-        if (!this.newsDetails.imageUrl) {
-          this.newsDetails.imageUrl = require('../assets/default_avatar_dog.svg')
-          return this.newsDetails.imageUrl
+      fetchNextNews () {
+        this.$http.get(this.apiUrl + 'news?type=RELEASED&isOrdered=true')
+          .then(response => {
+            this.nextNews = response.data
+            this.loading = false
+          })
+          .catch(error => {
+            this.errors.push(error)
+            this.loading = false
+          })
+      },
+      setUrl (news) {
+        if (news.imageUrl === '' || news.imageUrl === null || news.imageUrl === undefined) {
+          return this.defaultImg()
+        } else if (news.imageUrl.includes('data')) {
+          return news.imageUrl
         } else {
-          return this.newsDetails.imageUrl
+          return this.apiUrl.substr(0, this.apiUrl.length - 4) + news.imageUrl
         }
+      },
+      defaultImg () {
+        const imgUrl = require('../assets/default_avatar_dog.svg')
+        return imgUrl
+      },
+      openNews (itemId) {
+        this.$router.push({ name: 'news', params: { id: itemId }, query: { type: 'RELEASED', isShortened: false, isOrdered: true } })
       }
     }
   }
@@ -114,54 +160,57 @@
   @import "../assets/styles/loader.css"
   @import "../assets/styles/variables.sass"
 
-  .title
-    text-decoration: underline
-    margin-bottom: 35px
+  $green: #4CD374
 
-  .content
-    margin-top: 20px
+  p
+    line-height: 1.7
 
-  .news-info
-    @media (max-width: 435px)
-      display: none
+  .card
+    cursor: pointer
+    margin: 5px
+    min-height: 500px
+    &:hover
+      background-color: inherit
+      border: 1px solid $green
 
-  .top-date
-    font-size: 1.8em
-    margin: 35px 0 12px 0
-    @media (min-width: 435px)
-      display: none
+  .card-text
+    font-size: 1.41rem
 
   .divider
     background-color: $green
     height: 5px
 
-  .img
-    float: left
-    height: 287px
-    margin-bottom: 30px
-    width: 344px
-    @media (min-width: 430px)
-      height: 600px
-      width: 100%
+  .img-fluid
+    min-width: 100%
 
-  .img-small
-    width: 200px
-    height: 167px
-    @media (min-width: 768px)
-      height: 100%
-      width: 100%
+  .main-img
+    height: 100%
+    width: 100%
 
-  .next-news-title
-    font-size: 2.5em
+  .news-info
+    font-size: 1rem
+    @media (max-width: 544px)
+      display: none
+
+  .next-news-section-title
+    font-size: 2rem
     font-weight: bold
-    margin: 25px 0 25px 0
 
-  .next-news-normal
-    @media (max-width: 767px)
-      display: none
+  .text-left
+    line-height: 1.35
 
-  .next-news-carousel
-    @media (min-width: 767px)
-      display: none
+  .text-muted
+    font-size: .9rem
 
+  .title
+    text-align: left
+
+  .top-date
+    font-size: 1.4rem
+    margin-top: 35px
+    margin-bottom: 12px
+
+  .wrapper
+    @media (min-width: 544px)
+      margin-left: 50px
 </style>

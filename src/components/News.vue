@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <loader v-if="loading"></loader>
     <div class="errors" v-if="errors.length">
       <h2 v-for="error of errors">{{ error.message }}</h2>
@@ -7,22 +7,36 @@
     <transition name="slide-fade">
       <div class="row mt-5" v-if="!loading && !errors.length">
         <div class="col-12 col-lg-9">
-          <h5 class="news-header font-weight-bold">{{ $t('news.news') }}:</h5>
+          <h5 class="news-header font-weight-bold">{{ $t('news.news') }}</h5>
           <hr>
-          <div v-for="item of news" :key="item.id" class="news-item clearfix">
-            <p class="news-date">
-              {{ $t('news.added') }} {{ convertTimeStamp(item.published) }}
-            </p>
-            <h2 class="news-title">
-              <router-link :to="{ name: 'news', params: { id: item.id } }">
-                {{ item.title }}
-              </router-link>
-            </h2>
-            <img :src="setImg(item)" class="news-image img-fluid">
-            <p class="news-body text-left"> {{ shortenContent(item) }} </p>
-            <router-link :to="{ name: 'news', params: { id: item.id } }" class="btn news-button">
-              {{ $t('news.readMore') }}
-            </router-link>
+          <div v-for="item of news" :key="item.id" class="row panel-item" v-show="isNewsExpired(item.published)">
+            <div class="col-12 col-lg-3 pl-0 pr-0">
+              <img :src="setUrl(item)" @error="defaultImg()" alt="" class="img-fluid float-left">
+            </div>
+            <div class="col-12 col-lg-9 pt-2 pb-2">
+              <div class="row">
+                <div class="col">
+                  <p class="float-right">{{ $t('news.added') }} {{ convertTimeStamp(item.published) }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <h4 class="float-left"><u>{{ item.title }}</u></h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <p class="float-left">{{ item.contents }}</p>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  <router-link :to="{ name: 'news', params: { id: item.id } }" class="btn news-button mb-1">
+                    {{ $t('news.readMore') }}
+                  </router-link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <Sidebar></Sidebar>
@@ -40,7 +54,7 @@
     name: 'News',
     data () {
       return {
-        news: [],
+        news: {},
         errors: [],
         loading: true
       }
@@ -49,10 +63,6 @@
       this.fetchData()
     },
     methods: {
-      convertTimeStamp (publishedDate) {
-        const date = moment(publishedDate).locale(this.$t('common.code'))
-        return date.format(this.$t('common.dateFormat'))
-      },
       fetchData () {
         this.$http.get(this.apiUrl + 'news?type=RELEASED&isShortened=true&isOrdered=true')
           .then(response => {
@@ -64,26 +74,29 @@
             this.loading = false
           })
       },
-      shortenContent (item) {
-        const MAX_WORDS = 30
-        const words = item.contents.split(' ')
-        const wordCount = words.length
-
-        if (wordCount > MAX_WORDS) {
-          const sliced = words.slice(0, MAX_WORDS)
-          sliced.push(' [...]')
-          return sliced.join(' ')
+      convertTimeStamp (published) {
+        const date = moment(published).locale(this.$t('common.code'))
+        return date.format(this.$t('common.dateFormat'))
+      },
+      isNewsExpired (itemPublished) {
+        if (itemPublished > Date.now() - 13046400000) {
+          return true
         } else {
-          return item.contents
+          return false
         }
       },
-      setImg (news) {
-        if (!news.imageUrl) {
-          const imgUrl = require('../assets/default_avatar_dog.svg')
-          return imgUrl
-        } else {
+      setUrl (news) {
+        if (news.imageUrl === '' || news.imageUrl === null || news.imageUrl === undefined) {
+          return this.defaultImg()
+        } else if (news.imageUrl.includes('data')) {
           return news.imageUrl
+        } else {
+          return this.apiUrl.substr(0, this.apiUrl.length - 4) + news.imageUrl
         }
+      },
+      defaultImg () {
+        const imgUrl = require('../assets/default_avatar_dog.svg')
+        return imgUrl
       }
     },
     components: {
@@ -97,48 +110,24 @@
   @import "../assets/styles/loader.css"
   @import "../assets/styles/variables.sass"
 
-  .news-item
-    padding: 1rem
-    border-bottom: 2px solid $gray
+  .img-fluid
+    min-width: 100%
+
+  .panel-item
+    border: 2px solid $gray
+    margin: 20px 0 20px 0
+
+  .news-button
+    border-color: $white
+    text-transform: none
+    text-align: center
     @media (min-width: 1024px)
-      position: relative
-      border: 2px solid $gray
-      padding: 2rem
-      margin-bottom: 1rem
+      float: right
 
   .news-header
     text-align: left
     padding: 0
     margin: 0
-
-  .news-title
-    font: $font-stack
-    font-size: 2em
-    text-decoration: underline
-    a
-      color: black
-    @media (min-width: 1024px)
-      display: inline
-
-  .news-image
-      width: 345px
-      height: 278px
-      @media (min-width: 1024px)
-        float: left
-        margin: -2rem 2rem -2rem -2rem
-
-  .news-date
-    font-size: 1em
-    text-align: left
-    @media (min-width: 1024px)
-      float: right
-
-  .news-button
-      border-color: $white
-      text-transform: none
-      text-align: center
-      @media (min-width: 1024px)
-        float: right
 
   .slide-fade-enter-active
     transition: all 1s ease
