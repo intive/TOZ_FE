@@ -1,6 +1,6 @@
 const transfer = '/transfer'
 const home = '/'
-const pets = '/pets'
+const pets = '/pets/:page'
 const petDetails = '/pet-details/:id'
 const news = '/news/:id'
 const calendar = '/calendar'

@@ -17,17 +17,21 @@
             </router-link>
           </div>
         </div>
-        <paginate
-          :page-count="paginationConfig.numberOfPages"
-          :container-class="paginationConfig.containerClass"
-          :page-class="paginationConfig.pageClass"
-          :page-link-class="paginationConfig.pageLinkClass"
-          :prev-text="paginationConfig.prevText"
-          :next-text="paginationConfig.nextText"
-          :prev-class="paginationConfig.prevClass"
-          :next-class="paginationConfig.nextClass"
-          :click-handler="paginationConfig.clickCallback">
-        </paginate>
+        <div class="col-12">
+            <paginate
+              :page-count="paginationConfig.numberOfPages"
+              :container-class="paginationConfig.containerClass"
+              :page-class="paginationConfig.pageClass"
+              :page-link-class="paginationConfig.pageLinkClass"
+              :prev-text="paginationConfig.prevText"
+              :next-text="paginationConfig.nextText"
+              :prev-class="paginationConfig.prevClass"
+              :next-class="paginationConfig.nextClass"
+              :click-handler="paginationConfig.clickCallback"
+              :initial-page="paginationConfig.initialPage"
+              ref="paginate">
+            </paginate>
+        </div>
       </div>
     </transition>
   </div>
@@ -51,15 +55,23 @@
           nextText: '>>',
           prevClass: 'page-link prev',
           nextClass: 'page-link next',
-          clickCallback: this.changePage
+          clickCallback: this.changePage,
+          initialPage: this.$route.params.page - 1
         },
         itemsPerPage: 9,
         loading: true
       }
     },
+    watch: {
+      '$route' (to, from) {
+        this.paginationConfig.numberOfPages < this.$route.params.page ? this.changePage(1) : this.changePage(this.$route.params.page)
+        this.$refs.paginate.selected = this.$route.params.page - 1
+      }
+    },
     methods: {
       changePage (pageNum) {
         this.currentPage = this.petsList.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
+        this.$router.push({name: 'pets', params: { page: pageNum }})
       },
       setUrl (pet) {
         if (pet.imageUrl === '' || pet.imageUrl === null || pet.imageUrl === undefined) {
@@ -85,7 +97,7 @@
         .then(response => {
           this.petsList = response.data
           this.paginationConfig.numberOfPages = Math.ceil(this.petsList.length / this.itemsPerPage)
-          this.changePage(1)
+          this.changePage(this.$route.params.page)
           this.loading = false
         })
         .catch(error => {
