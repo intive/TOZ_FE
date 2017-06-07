@@ -117,6 +117,10 @@ export default new Router({
       path: paths.accountActivation,
       name: 'accountActivation',
       component: AccountActivation
+    },
+    {
+      path: '/pets',
+      redirect: '/pets/1'
     }
   ]
 })

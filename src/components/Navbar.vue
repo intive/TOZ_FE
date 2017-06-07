@@ -17,7 +17,7 @@
           <router-link to="/" tag="li" class="nav-item" active-class="active" exact>
             <a class="nav-link">{{ $t("navbar.home") }}</a>
           </router-link>
-          <router-link to="/pets" tag="li" class="nav-item" active-class="active" exact>
+          <router-link to='/pets' tag="li" class="nav-item" active-class="active">
             <a class="nav-link">{{ $t("navbar.petsGallery") }}</a>
           </router-link>
           <router-link to="/help" tag="li" class="nav-item" active-class="active" exact>
