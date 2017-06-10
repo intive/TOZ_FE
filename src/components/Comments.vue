@@ -78,7 +78,6 @@
       },
       changePage (pageNum) {
         this.currentPage = this.commentsTable.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
-        console.log(this.currentPage.length)
       },
       checkLength () {
         this.commentsTable.length > 20 ? this.paginatorFlag = true : this.paginatorFlag = false
