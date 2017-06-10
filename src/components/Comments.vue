@@ -7,7 +7,7 @@
     <div v-else-if="!loading">
     <newComment :petId="petId" @newComment="updateComments"></newComment>
     <comment v-for="item in currentPage" :comment="item" :key="item.id"></comment>
-    <paginate class="paginator"
+    <paginate v-if="paginatorFlag" class="paginator"
       :page-count="paginationConfig.numberOfPages"
       :container-class="paginationConfig.containerClass"
       :page-class="paginationConfig.pageClass"
@@ -32,6 +32,7 @@
         commentsTable: [],
         errors: [],
         currentPage: [],
+        paginatorFlag: false,
         paginationConfig: {
           numberOfPages: 0,
           containerClass: 'pagination justify-content-center',
@@ -63,6 +64,7 @@
             this.commentsTable = [...response.data]
             this.paginationConfig.numberOfPages = Math.ceil(this.commentsTable.length / this.itemsPerPage)
             this.changePage(1)
+            this.checkLength()
             this.loading = false
           })
           .catch(error => {
@@ -76,6 +78,10 @@
       },
       changePage (pageNum) {
         this.currentPage = this.commentsTable.slice((pageNum - 1) * this.itemsPerPage, (pageNum - 1) * this.itemsPerPage + this.itemsPerPage)
+        console.log(this.currentPage.length)
+      },
+      checkLength () {
+        this.commentsTable.length > 20 ? this.paginatorFlag = true : this.paginatorFlag = false
       }
     }
   }
