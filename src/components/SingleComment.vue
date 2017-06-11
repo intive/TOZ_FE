@@ -67,7 +67,11 @@
       },
       cancelEdit () {
         this.editFlag = !this.editFlag
-        this.newContents = this.editedContent
+        if (!this.editedContent) {
+          this.newContents = this.comment.contents
+        } else {
+          this.newContents = this.editedContent
+        }
       },
       saveEditedComment () {
         if (this.checkIfEmpty()) {
