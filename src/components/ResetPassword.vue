@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form @submit.prevent>
+    <form @submit.prevent v-if="!success">
       <div class="form-group row"
           :class="{'has-danger': emailWarning}">
         <div class="offset-lg-2 col-lg-8 col-xs-12">
@@ -17,6 +17,10 @@
         </div>
       </div>
     </form>
+    <div class="row mt-5">
+      <h2 v-for="error of errors">{{ error.message }}</h2>
+      <h2 v-if="success">{{ $t('resetPassword.successMessage') }}</h2>
+    </div>
   </div>
 </template>
 
@@ -26,7 +30,8 @@ export default {
   data () {
     return {
       login: '',
-      emailWarning: false
+      emailWarning: false,
+      success: false
     }
   },
   methods: {
@@ -43,7 +48,15 @@ export default {
       if (!this.validateEmail()) {
         return false
       }
-      // TODO: make an API call
+      this.$http.post(this.apiUrl + 'users/passwords/reset/send', {
+        email: this.login
+      })
+      .then(response => {
+        this.success = true
+      })
+      .catch(error => {
+        this.errors.push(error)
+      })
     }
   }
 }

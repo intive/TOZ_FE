@@ -147,7 +147,8 @@ const locales = {
     },
     resetPassword: {
       message: 'W celu zresetowania hasła podaj swój login (adres e-mail)',
-      invalidLogin: 'Niepoprawny login'
+      invalidLogin: 'Niepoprawny login',
+      successMessage: 'Twoje hasło zostało zresetowane. Sprawdź e-mail.'
     },
     volunteer: {
       name: 'Imię',
@@ -318,7 +319,8 @@ const locales = {
     },
     resetPassword: {
       message: 'To reset your password, please enter your login(e-mail address)',
-      invalidLogin: 'Invalid login'
+      invalidLogin: 'Invalid login',
+      successMessage: 'Your request to reset password has been sent. Check your e-mail.'
     },
     volunteer: {
       name: 'Name',
