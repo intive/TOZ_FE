@@ -1,5 +1,5 @@
 <template>
-  <div class="container row justify-content-center" v-resize="checkWidth">
+  <div class="container row justify-content-center noPadding" v-resize="checkWidth">
     <div class="col-12 col-lg-10 noPadding">
       <div class="row scheduleNav">
         <div v-if="mobileDevice" class="col-8 noPadding upper">{{ formattedNextDate }}</div>
@@ -14,15 +14,15 @@
       <div class="dayTime">{{ $t('calendar.morningText') }}
       <div class="col-12 line"></div>
       </div>
-      <span class="fullWeek">
+      <span>
         <div v-if="loading" class="loader"></div>
-        <div v-else class="row">
+        <div v-else class="row fullWeek">
           <div class="col-12 col-lg-6 col-xl-6 noPadding">
             <table class="table">
               <tr>
                 <td v-for="days in firstDateInWeekMorning" :key="days.day">
                   <dayItem
-                    @fetch="fetchData(true)"
+                    @fetch="fetchData"
                     :currentDay="days.day"
                     :currentMonth="days.month"
                     :currentYear="days.year"
@@ -43,7 +43,7 @@
               <tr>
                 <td v-for="days in secondDateInWeekMorning" :key="days.day">
                   <dayItem
-                    @fetch="fetchData(true)"
+                    @fetch="fetchData"
                     :currentDay="days.day"
                     :currentMonth="days.month"
                     :currentYear="days.year"
@@ -64,15 +64,15 @@
       <div class="dayTime">{{ $t('calendar.afternoonText') }}
       <div class="col-12 line"></div>
       </div>
-      <span class="fullWeek">
+      <span>
         <div v-if="loading" class="loader"></div>
-        <div v-else class="row">
+        <div v-else class="row fullWeek">
           <div class="col-12 col-lg-6 col-xl-6 noPadding">
             <table class="table">
               <tr>
                 <td v-for="days in firstDateInWeekAfternoon" :key="days.day">
                   <dayItem
-                    @fetch="fetchData(true)"
+                    @fetch="fetchData"
                     :currentDay="days.day"
                     :currentMonth="days.month"
                     :currentYear="days.year"
@@ -93,7 +93,7 @@
               <tr>
                 <td v-for="days in secondDateInWeekAfternoon" :key="days.day">
                   <dayItem
-                    @fetch="fetchData(true)"
+                    @fetch="fetchData"
                     :currentDay="days.day"
                     :currentMonth="days.month"
                     :currentYear="days.year"
@@ -294,9 +294,6 @@ export default {
         this.reservations = [...response.data.reservations]
         this.displayBookedLaunch()
         this.loading = false
-        if (arg) {
-          this.caught = true
-        }
       })
       .catch(e => {
         this.errors.push(e)
@@ -384,8 +381,10 @@ export default {
     max-width: 100%
 
 .table td 
-  width: 6em;
+  width: 6em
   border: none
+  @media screen and (max-width: 576px)
+    width: 4.2em
 
 .scheduleNav 
   font-size: 2em
@@ -393,11 +392,11 @@ export default {
   margin: 4em 0 0 0
 
 .table 
-  border: none;
+  border: none
   margin-top: .5em
 
 .dayTime
-  width: 100%;
+  width: 100%
   text-align: left
   font-size: 2.5em
   margin-top: 3em
@@ -422,6 +421,9 @@ export default {
   &:hover
     background-color: #fff
     cursor: default
+
+.fullWeek
+  margin: 0
 
 .noPadding, .table td, .dayTime
   padding: 0
