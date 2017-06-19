@@ -102,7 +102,7 @@ export default {
     activate () {
       if (this.isEmailValid() && (this.password && !this.passwordWarning) && (this.confirmedPassword && !this.confirmedPasswordWarning)) {
         this.loading = true
-        this.$http.post(this.apiUrl + 'users/register/activate_user', {
+        this.$http.post(this.apiUrl + '/users/register/activate', {
           email: this.email,
           password: this.password,
           token: this.token
