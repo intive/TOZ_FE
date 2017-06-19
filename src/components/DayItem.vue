@@ -23,7 +23,7 @@
       <button slot="slot2" class="modalButton buttonBack" @click='closeAccepted'>{{ $t('calendar.book.goBack') }}</button>
     </booking>
     <booking v-if="showModalBooked">
-      <h5 slot="header" class="modalHeader">{{ $t('calendar.bookedPeriod') }}</h5>
+      <h5 slot="header" class="modalHeaderBooked">{{ $t('calendar.bookedPeriod') }}</h5>
       <h6 slot="slot1" class="underline"> {{ fullName }} </h6>
       <span slot="slot2">
         <button class="modalButton" @click='closeBooked'>{{ $t('calendar.book.goBack') }}</button>
@@ -119,7 +119,9 @@ export default {
       this.showErrors = false
     },
     checkUser () {
-      if (this.getUserId === sessionStorage.getItem('userId')) {
+      const checkDate = new Date(this.fullDate + ' ' + this.periodStartTime).getTime()
+      const now = new Date().getTime()
+      if (this.getUserId === sessionStorage.getItem('userId') && checkDate > now) {
         this.reservationOwner = true
       }
     },
@@ -192,7 +194,6 @@ export default {
     this.switchTime()
     this.setDayShortcut()
     this.checkUser()
-    // this.catchReservation()
   }
 }
 </script>
@@ -215,8 +216,8 @@ export default {
     height: 4.2em
 
 .dayNumber
+  width: 2em
   margin: 0 auto
-  width: 2.5em
   text-align: right
 
 .booked, .loader
@@ -246,11 +247,15 @@ export default {
 .modalHeader
   margin-top: .5em
 
+.modalHeaderBooked
+  margin-top: 1em
+
 .underline
-  width: 90%
   margin: 0 auto
   line-height: 2.5em
   border-bottom: .1em solid #000
+  @media screen and (max-width: 576px)
+    font-size: 2.2em
 
 h2.modalAccepted
   margin-top: 1.5em
@@ -274,6 +279,10 @@ h2.modalAccepted
   &:nth-child(2)
     background-color: #ff6961
     color: #fff
+  @media screen and (max-width: 576px)
+    max-width: 8em
+  @media screen and (max-width: 375px)
+    max-width: 7em
 
 .buttonBack
   width: 15em
