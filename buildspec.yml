@@ -18,7 +18,7 @@ phases:
       - echo Build completed on `date`
       - echo Packaging files...
       - cp package.json dist && cp app.js dist
-      - cd dist && mv * ../
+      - aws s3 sync s3://awsguild-webhosting-training/dist s3://awsguild.pl/
 artifacts:
   files:
     - '**/*'
